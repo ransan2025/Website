@@ -187,6 +187,11 @@
       color: #764ba2;
     }
 
+    .card h4 {
+      vertical-align: top;
+      color: #764ba2;
+    }
+   
     form {
       background: white;
       padding: 2rem;
