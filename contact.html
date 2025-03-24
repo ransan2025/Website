@@ -76,8 +76,8 @@
       color: #555;
     }
 
-    iframe2 {
-      display: none; /* hide the iframe */
+    .container iframe {
+      border: none;
     }
 
     /* Live chat placeholder */
@@ -122,14 +122,14 @@
 <div class="container">
   <h2>Contact Us</h2>
 
-  <iframe2 name="hidden_iframe2" id="hidden_iframe2"></iframe2>
+  <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
   
 
   <form
   action="https://docs.google.com/forms/d/e/1FAIpQLScAQlTwm0byfchZdq8F_6jrqt6VUNURV0rXHNtic9TPUExBOA/formResponse"
   method="POST"
-  target="hidden_iframe2"
-  onsubmit="submittedForm(); return false;"
+  target="hidden_iframe"
+  onsubmit="submittedForm(); return true;"
 >
   <label for="name">Name</label>
   <input type="text" name="entry.682084142" placeholder="Your name" required>
