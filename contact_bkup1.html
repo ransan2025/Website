@@ -76,9 +76,6 @@
       color: #555;
     }
 
-    iframe2 {
-      display: none; /* hide the iframe */
-    }
 
     /* Live chat placeholder */
     .chat-widget {
@@ -122,36 +119,23 @@
 <div class="container">
   <h2>Contact Us</h2>
 
-  <iframe2 name="hidden_iframe2" id="hidden_iframe2"></iframe2>
-  
+  <iframe name="hidden_iframe" id="hidden_iframe">
+    
+  </iframe>
 
-  <form
-  action="https://docs.google.com/forms/d/e/1FAIpQLScAQlTwm0byfchZdq8F_6jrqt6VUNURV0rXHNtic9TPUExBOA/formResponse"
-  method="POST"
-  target="hidden_iframe2"
-  onsubmit="submittedForm(); return false;"
->
-  <label for="name">Name</label>
-  <input type="text" name="entry.682084142" placeholder="Your name" required>
+  <form action="https://forms.gle/JiAGKqCeLxEqjyvw7" method="POST" target="hidden_iframe" onsubmit="submittedForm(); return false;">
+    <label for="name">Name</label>
+    <input type="text" name="entry.682084142" placeholder="Your name" required>
 
-  <label for="email">Email</label>
-  <input type="email" name="entry.844276875" placeholder="Your email" required>
+    <label for="email">Email</label>
+    <input type="email" name="entry.844276875" placeholder="Your email" required>
 
-  <label for="message">Message</label>
-  <textarea name="entry.348374371" rows="5" placeholder="Your message..." required></textarea>
+    <label for="message">Message</label>
+    <textarea name="entry.348374371" rows="5" placeholder="Your message..." required></textarea>
 
-  <button type="submit">Send</button>
-</form>
+    <button type="submit">Send</button>
+  </form>
 
-<script>
-  function submittedForm() {
-    // Delay 1 second, then redirect
-    setTimeout(function () {
-      window.location.href = "contact.html"; // Your custom thank you page
-    }, 1000);
-  }
-</script>
-  
   <div class="map">
     <!-- Replace the src below with your own location or business address -->
 
@@ -175,14 +159,19 @@
   </div>
 </div>
 
-
-
 <!-- Live chat placeholder -->
 <div class="chat-widget" onclick="alert('This is a placeholder for a live chat widget!')">
   💬 Chat with us
 </div>
 
-
+<script>
+  function submittedForm() {
+    // Delay 1 second, then redirect
+    setTimeout(function () {
+      window.location.href = "contact.html"; // Your custom thank you page
+    }, 1000);
+  }
+</script>
 
 </body>
 </html>
