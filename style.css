@@ -167,7 +167,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
-      padding: 3rem 2rem;
+      padding: 1rem 1rem;
     }
 
     .card {
@@ -179,7 +179,8 @@
     }
 
     .card:hover {
-      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(251, 115, 83, 1);
+      transform: translateY(-5px);
     }
 
     .card h3 {
