@@ -6,6 +6,7 @@
   <title>Technology</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="header.css" rel="stylesheet"/>
   <style>
     * {
       margin: 0; padding: 0;
@@ -25,6 +26,22 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: linear-gradient(90deg, #9a22f6, #fb7353);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 50px;
+    }
+
 
     .header {
       text-align: center;
@@ -125,9 +142,26 @@
 </head>
 <body>
 
+  <header>
+    <img src="images/rasalogo.png" alt="Logo" width="50px">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">Services ▾</a>
+          <div class="dropdown">
+            <a href="technology.html">Technology</a>
+            <a href="digital.html">Digital Marketing</a>
+            <a href="events.html">Event Management</a>
+            <a href="travel.html">Travel</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-
-  
   <div class="header">
     <h1>Our Technology</h1>
   </div>

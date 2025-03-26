@@ -6,6 +6,7 @@
   <title>Travel & Service Hub</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="header.css" rel="stylesheet"/>
   <style>
     * {
       box-sizing: border-box;
@@ -20,18 +21,19 @@
       line-height: 1.6;
     }
 
-    header {
+    .hero {
       padding: 80px 20px 40px;
       text-align: center;
       background: rgba(0, 0, 0, 0.3);
+      max-width: 100%;
     }
 
-    header h1 {
+    .hero h1 {
       font-size: 3rem;
       margin-bottom: 10px;
     }
 
-    header p {
+    .hero p {
       font-size: 1.2rem;
       max-width: 800px;
       margin: 0 auto;
@@ -166,12 +168,35 @@
 </head>
 <body>
 
-  <!-- Header -->
+
   <header>
+    <img src="images/rasalogo.png" alt="Logo" width="50px">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li>
+          <a href="#">Services ▾</a>
+          <div class="dropdown">
+            <a href="technology.html">Technology</a>
+            <a href="digital.html">Digital Marketing</a>
+            <a href="events.html">Event Management</a>
+            <a href="travel.html">Travel</a>
+          </div>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <br>
+  
+  <!-- Header -->
+  <section class="hero">
     <h1>Travel & Service Hub</h1>
     <p>Your one-stop destination for travel, ticketing, and government services!</p>
     <button class="btn">Book Now</button>
-  </header>
+  </section>
 
   <!-- Services Section -->
   <section>

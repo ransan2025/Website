@@ -8,8 +8,16 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+  <link href="header.css" rel="stylesheet"/>
   <style>
+
+    :root {
+      --primary: linear-gradient(90deg, #9a22f6, #fb7353);
+      --text-light: #ffffff;
+      --text-dark: #333333;
+      --bg-light: #f9f9f9;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -42,50 +50,6 @@
 
     header h1 {
       font-size: 1.8rem;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      transition: color 0.3s;
-      font-size: 1.1rem;
-    }
-
-    nav a:hover {
-      color: #f0f0f0;
-    }
-
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      display: none;
-      flex-direction: column;
-      min-width: 180px;
-    }
-
-    nav li {
-      position: relative;
-    }
-
-    nav li:hover .dropdown {
-      display: flex;
-    }
-
-    .dropdown a {
-      color: #333;
-      padding: 0.5rem 0;
     }
 
     .contact-wrapper {
@@ -232,18 +196,26 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-
- :root {
-      --primary: linear-gradient(90deg, #9a22f6, #fb7353);
-      --text-light: #ffffff;
-      --text-dark: #333333;
-      --bg-light: #f9f9f9;
+    header {
+      background: var(--primary);
+      padding: 1.2rem 2rem;
+      color: var(--text-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-  </style>
+</style>
 </head>
 
 <body>
+
   <header>
     <img src="images/rasalogo.png" alt="Logo" width="50px">
     <nav>
@@ -252,10 +224,10 @@
         <li>
           <a href="#">Services ▾</a>
           <div class="dropdown">
-            <a href="#">Technology</a>
-            <a href="#">Digital Marketing</a>
-            <a href="#">Event Management</a>
-            <a href="#">Travel</a>
+            <a href="technology.html">Technology</a>
+            <a href="digital.html">Digital Marketing</a>
+            <a href="events.html">Event Management</a>
+            <a href="travel.html">Travel</a>
           </div>
         </li>
         <li><a href="about.html">About</a></li>
@@ -263,7 +235,7 @@
       </ul>
     </nav>
   </header>
-
+<br><br>
   <div class="contact-wrapper">
     <div class="contact-info">
       <h2>Let's Connect</h2>
