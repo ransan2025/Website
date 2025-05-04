@@ -1,251 +1,817 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Technology</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link href="header.css" rel="stylesheet"/>
-  <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #9a22f6, #fb7353, #fdbb2d);
-      background-size: 200% 200%;
-      animation: gradientShift 10s ease infinite;
-      color: #fff;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 30px;
-      background: linear-gradient(90deg, #9a22f6, #fb7353);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    header img {
-      height: 50px;
-    }
-
-
-    .header {
-      text-align: center;
-      padding: 60px 20px 30px;
-    }
-
-    .header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 48px;
-      color: #ffffff;
-      text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    .section {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .section h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      color: #fff;
-      text-align: center;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card .icon {
-      font-size: 36px;
-      margin-bottom: 12px;
-      color: #fff;
-    }
-
-    .card h3 {
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .card p {
-      color: #f0f0f0;
-      font-size: 14px;
-    }
-
-    .metrics {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 30px;
-    }
-
-    .metric {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 20px 25px;
-      border-radius: 12px;
-      text-align: center;
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .metric h4 {
-      font-size: 16px;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .metric p {
-      font-size: 22px;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px 20px;
-      color: #fff;
-      font-size: 14px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RanSan Groups</title>
+    <!-- Favicon img -->
+    <link rel="shortcut icon" href="assets\images\logo\ransan_color_png2.png">
+    <!-- Bootstarp min css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Mean menu css -->
+    <link rel="stylesheet" href="assets/css/meanmenu.css">
+    <!-- All min css -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Swiper bundle min css -->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <!-- Magnigic popup css -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Nice select css -->
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <!-- Style css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/service.css">
 </head>
+
 <body>
 
-  <header>
-    <img src="images/rasalogo.png" alt="Logo" width="50px">
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li>
-          <a href="#">Services ▾</a>
-          <div class="dropdown">
-            <a href="technology.html">Technology</a>
-            <a href="digital.html">Digital Marketing</a>
-            <a href="events.html">Event Management</a>
-            <a href="travel.html">Travel</a>
-          </div>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Preloader area start -->
+    <div class="loading">
+        <span class="text-capitalize">L</span>
+        <span>o</span>
+        <span>a</span>
+        <span>d</span>
+        <span>i</span>
+        <span>n</span>
+        <span>g</span>
+    </div>
+    <div id="preloader">
+    </div>
+    <!-- Preloader area end -->
 
-  <div class="header">
-    <h1>Our Technology</h1>
-  </div>
+    <!-- Mouse cursor area start here -->
+    <div class="mouse-cursor cursor-outer"></div>
+    <div class="mouse-cursor cursor-inner"></div>
+    <!-- Mouse cursor area end here -->
 
-  <!-- 🌐 Tech Stack -->
-  <div class="section">
-    <h2>Technology Stack</h2>
-    <div class="card-grid">
-      <div class="card">
-        <div class="icon"><i class="fab fa-react"></i></div>
-        <h3>Frontend</h3>
-        <p>React.js, TailwindCSS, TypeScript for dynamic, responsive interfaces.</p>
+    <!-- Top header area start here -->
+    <div class="header-top d-none d-lg-block">
+        <div class="container header__container">
+            <div class="header-top-wrp">
+                <ul class="info">
+                    <li><svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M13.8748 8.50453C13.8748 9.85566 12.7757 10.953 11.4263 10.953H3.39325C2.04384 10.953 0.94475 9.85563 0.94475 8.50453V3.39322C0.944449 2.95776 1.06111 2.53021 1.28253 2.15525L5.20216 6.07488C5.78856 6.663 6.57384 6.98706 7.41059 6.98706C8.24563 6.98706 9.03091 6.663 9.61731 6.07488L13.5369 2.15525C13.7584 2.5302 13.875 2.95776 13.8747 3.39322V8.50453H13.8748ZM11.4263 0.94475H3.39325C2.836 0.94475 2.32159 1.13334 1.91009 1.44712L5.86916 5.40791C6.27897 5.81597 6.82591 6.04231 7.41059 6.04231C7.99356 6.04231 8.54053 5.81597 8.95031 5.40791L12.9094 1.44712C12.4979 1.13334 11.9835 0.94475 11.4263 0.94475ZM11.4263 0H3.39325C1.52259 0 0 1.52259 0 3.39325V8.50456C0 10.3769 1.52259 11.8978 3.39325 11.8978H11.4263C13.2969 11.8978 14.8195 10.3769 14.8195 8.50456V3.39322C14.8195 1.52256 13.2969 0 11.4263 0Z"
+                                fill="white" />
+                        </svg>
+
+                        <a href="#0" class="ms-1">support@ransangroups.com</a>
+                    </li>
+                    <li class="ms-4"><svg width="16" height="15" viewBox="0 0 16 15" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_529_224)">
+                                <path
+                                    d="M14.8984 10.5909C14.8735 10.5703 12.0629 8.57063 11.304 8.69297C10.9379 8.75766 10.7288 9.0075 10.3093 9.50719C10.1933 9.6463 10.0747 9.7832 9.95352 9.91781C9.68836 9.83143 9.42973 9.72616 9.17961 9.60281C7.88845 8.97422 6.84524 7.93101 6.21665 6.63984C6.0933 6.38973 5.98803 6.1311 5.90165 5.86594C6.03946 5.73984 6.23258 5.57719 6.31508 5.50781C6.81243 5.09062 7.0618 4.88109 7.12649 4.51453C7.25915 3.75562 5.24915 0.945937 5.22852 0.920625C5.13698 0.790808 5.01777 0.682933 4.87948 0.604789C4.74118 0.526645 4.58726 0.480181 4.42883 0.46875C3.61415 0.46875 1.28821 3.48563 1.28821 3.99422C1.28821 4.02375 1.33086 7.02562 5.03258 10.7911C8.79383 14.4886 11.7957 14.5312 11.8252 14.5312C12.3334 14.5312 15.3507 12.2053 15.3507 11.3906C15.3392 11.2322 15.2926 11.0783 15.2144 10.94C15.1362 10.8017 15.0282 10.6825 14.8984 10.5909ZM11.7732 13.5909C11.3663 13.5562 8.84446 13.2239 5.69446 10.1297C2.58524 6.96422 2.26133 4.43813 2.22899 4.04672C2.84342 3.08233 3.58545 2.20548 4.43493 1.44C4.45368 1.45875 4.47852 1.48688 4.5104 1.52344C5.16188 2.41276 5.72309 3.36481 6.18571 4.36547C6.03527 4.51682 5.87626 4.65939 5.70946 4.7925C5.4508 4.98959 5.21328 5.21297 5.00071 5.45906C4.96474 5.50953 4.93914 5.56663 4.92538 5.62705C4.91162 5.68748 4.90998 5.75003 4.92055 5.81109C5.01975 6.24081 5.17169 6.65662 5.3729 7.04906C6.09378 8.52939 7.28997 9.72541 8.7704 10.4461C9.16276 10.6476 9.57859 10.7997 10.0084 10.8989C10.0694 10.9097 10.132 10.9082 10.1925 10.8944C10.2529 10.8807 10.31 10.8549 10.3604 10.8188C10.6074 10.6053 10.8315 10.3669 11.0293 10.1072C11.1765 9.93188 11.3729 9.69797 11.4474 9.63188C12.4506 10.094 13.4048 10.6559 14.2956 11.3091C14.3345 11.3419 14.3621 11.3672 14.3804 11.3836C13.6149 12.2333 12.7379 12.9755 11.7732 13.59V13.5909ZM11.6007 7.03125H12.5382C12.5371 6.03703 12.1416 5.08385 11.4386 4.38083C10.7356 3.67781 9.78243 3.28237 8.78821 3.28125V4.21875C9.5339 4.21949 10.2488 4.51605 10.7761 5.04333C11.3034 5.57062 11.6 6.28556 11.6007 7.03125Z"
+                                    fill="white" />
+                                <path
+                                    d="M13.9445 7.03125H14.882C14.8801 5.41566 14.2375 3.86677 13.0951 2.72437C11.9527 1.58198 10.4038 0.939361 8.78821 0.9375V1.875C10.1552 1.87661 11.4658 2.42038 12.4324 3.38701C13.3991 4.35365 13.9428 5.66422 13.9445 7.03125Z"
+                                    fill="white" />
+                            </g>
+                            <defs>
+                                <clipPath>
+                                    <rect width="15" height="15" fill="white" transform="translate(0.819458)" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+
+                        <a href="#0" class="ms-1">+91 8148610567</a>
+                    </li>
+                </ul>
+                <ul class="link-info">
+                    <li><a href="#0"><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a href="#0"><i class="fa-brands fa-twitter"></i></a></li>
+                    <li><a href="#0"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                    <li><a href="#0"><i class="fa-brands fa-youtube"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Top header area end here -->
+
+    <!-- Header area start here -->
+    <header class="header-area">
+        <div class="container header__container">
+            <div class="header__main">
+                <a href="index.html" class="logo">
+                    <img  src="assets/images/logo/logo.svg" width="100" height="100" alt="logo">
+                </a>
+                <div class="main-menu">
+                    <nav>
+                        <ul>
+                            <li class="has-megamenu">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li><a href="about.html">About</a></li>
+                            <li>
+                                <a href="#0">Services</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="technology.html">Technology</a>
+                                    </li>
+                                    <li>
+                                        <a href="digital.html">Digital Marketing</a>
+                                    </li>
+                                    <li>
+                                        <a href="event.html">Event Management</a>
+                                    </li>
+                                    <li>
+                                        <a href="online.html">Online Services</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#0">Pages</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="team.html">Our Team</a>
+                                    </li>
+                                    <li>
+                                        <a href="team-details.html">Team Details</a>
+                                    </li>
+                                    <li>
+                                        <a href="pricing.html">Pricing</a>
+                                    </li>
+                                    <li>
+                                        <a href="faq.html">FAQ's</a>
+                                    </li>
+                                    <li>
+                                        <a href="error.html">404 Error</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li class="ml-20 d-none d-lg-block"><a class="search-trigger" href="#0"><svg width="17"
+                                        height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_307_344)">
+                                            <path
+                                                d="M16.0375 14.9381L12.0784 11.0334C13.0625 9.86621 13.6554 8.36744 13.6554 6.73438C13.6554 3.02103 10.5925 0 6.82774 0C3.0629 0 0 3.02103 0 6.73438C0 10.4475 3.0629 13.4683 6.82774 13.4683C8.4834 13.4683 10.0031 12.8836 11.1865 11.913L15.1456 15.8178C15.2687 15.9393 15.4301 16 15.5915 16C15.7529 16 15.9143 15.9393 16.0375 15.8178C16.2839 15.5748 16.2839 15.181 16.0375 14.9381ZM1.26142 6.73438C1.26142 3.70705 3.75845 1.24414 6.82774 1.24414C9.89695 1.24414 12.3939 3.70705 12.3939 6.73438C12.3939 9.76146 9.89695 12.2241 6.82774 12.2241C3.75845 12.2241 1.26142 9.76146 1.26142 6.73438Z"
+                                                fill="#0F0D1D" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_307_344">
+                                                <rect width="16.2222" height="16" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="d-none d-lg-inline-block">
+                    <a href="contact.html" class="btn-one">Get A Quote <i
+                            class="fa-regular fa-arrow-right-long"></i></a>
+                </div>
+                <div class="bars d-block d-lg-none">
+                    <i id="openButton" class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header area end here -->
+
+    <!-- Sidebar area start here -->
+    <div id="targetElement" class="sidebar-area sidebar__hide">
+        <div class="sidebar__overlay"></div>
+        <a href="index.html" class="logo mb-40">
+            <img src="assets/images/logo/logo.svg" alt="logo">
+        </a>
+        <div class="sidebar__search mb-30">
+            <input type="text" placeholder="Search...">
+            <i class="fa-regular fa-magnifying-glass"></i>
+        </div>
+        <div class="mobile-menu overflow-hidden"></div>
+        <ul class="info pt-40">
+            <li><i class="fa-solid primary-color fa-location-dot"></i> <a href="#0">example@example.com</a>
+            </li>
+            <li class="py-2"><i class="fa-solid primary-color fa-phone-volume"></i> <a
+                    href="tel:+208-6666-0112">+208-6666-0112</a>
+            </li>
+            <li><i class="fa-solid primary-color fa-paper-plane"></i> <a href="#0">info@example.com</a></li>
+        </ul>
+        <div class="social-icon mt-20">
+            <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#0"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#0"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <button id="closeButton" class="text-white"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <!-- Sidebar area end here -->
+
+    <!-- Fullscreen search area start here -->
+    <div class="search-wrap">
+        <div class="search-inner">
+            <i class="fas fa-times search-close" id="search-close"></i>
+            <div class="search-cell">
+                <form method="get">
+                    <div class="search-field-holder">
+                        <input type="search" class="main-search-input" placeholder="Search...">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fullscreen search area end here -->
+
+    <main>
+        <!-- Page banner area start here -->
+        <section class="banner__inner-page bg-image pt-180 pb-180 bg-image"
+            data-background="assets/images/banner/banner-inner-page.jpg">
+            <div class="shape2 wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                <img src="assets/images/banner/inner-banner-shape2.png" alt="shape">
+            </div>
+            <div class="shape1 wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
+                <img src="assets/images/banner/inner-banner-shape1.png" alt="shape">
+            </div>
+            <div class="shape3 wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+                <img class="sway__animationX" src="assets/images/banner/inner-banner-shape3.png" alt="shape">
+            </div>
+            <div class="container">
+                <h2 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">Technology Services</h2>
+                <div class="breadcrumb-list wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    <a href="index.html">Home</a><span><i class="fa-regular fa-angles-right mx-2"></i>Technology Services</span>
+                </div>
+            </div>
+        </section>
+        <!-- Page banner area end here -->
+
+        <!-- Make us area start here -->
+        <section class="service-area pt-40">            
+            <div class="container">
+                <div class="d-flex flex-wrap gap-4 align-items-center justify-content-between mb-60">
+                    <div class="section-header">
+                        <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+                            Technology Services
+                        </h5>
+                        <h2>Empowering Innovation Through Intelligent Technology</h2>
+                        <p>At <b>RanSan Groups,</b> we harness the power of technology to fuel 
+                            business transformation. Our Technology Services are tailored to meet the
+                             needs of forward-thinking organizations seeking innovative, scalable, and future-ready solutions.</p>                        
+                    </div>                    
+                </div>                                
+            </div>
+        </section>
+        <!-- Make us area end here -->
+
+<!-- core area start here -->
+
+<h5 style="margin-left: 72px;margin-bottom: 24px;margin-top: -30px;" class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+    <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+    Core Technology Offerings</h5>
+
+<div class="accordion">
+    <div class="accordion-item">
+      <div class="accordion-header">🖥️ Software Development</div>
+      <div class="accordion-content">
+        <p>We craft enterprise-grade software that powers business growth, productivity, and innovation.</p>
+        <p><b>Our Specialized Software Services:</b></p>
+        <ul>
+          <li><b>Corporate Software Development</b><br>Build robust, scalable, and secure desktop or 
+            cloud-based applications tailored to specific business workflows (HR, finance, logistics, etc.).</li>
+          <li><b>Mobile Application Development</b><br>Native and cross-platform apps using Flutter, 
+            React Native, Android (Java/Kotlin), and iOS (Swift) for business, e-commerce, 
+            utilities, and customer service.</li>
+          <li><b>Database Administration (DBA)</b><br>Setup, management, optimization, and migration of 
+            databases like MySQL, PostgreSQL, SQL Server, MongoDB, and 
+            Firebase — with performance tuning and security controls.</li>          
+        </ul>
+        <p><i>All custom software is built with version control, modular architecture, and user-focused design.</i></p>
       </div>
-      <div class="card">
-        <div class="icon"><i class="fas fa-server"></i></div>
-        <h3>Backend</h3>
-        <p>Node.js, FastAPI, PostgreSQL, MongoDB with REST & GraphQL APIs.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><i class="fas fa-cloud"></i></div>
-        <h3>DevOps</h3>
-        <p>Docker, Kubernetes, GitHub Actions, AWS/GCP infrastructure & CI/CD pipelines.</p>
-      </div>
-      <div class="card">
-        <div class="icon"><i class="fas fa-brain"></i></div>
-        <h3>AI / ML</h3>
-        <p>OpenAI, TensorFlow, Python-based data pipelines, custom LLM integrations.</p>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">📣 Website Development</div>
+      <div class="accordion-content">
+        <p>Create powerful online experiences that engage, convert, and scale.</p>
+        <p><b>Our Website Solutions Include:</b></p>
+        <ul>
+          <li><b>Corporate Website</b><br>Professional websites for brands, startups, or 
+            enterprises with SEO optimization, performance tracking, and CMS support.</li>
+          <li><b>School/Education Website</b><br>Clean and interactive websites for schools, 
+            coaching centers, and educational institutions with student portals, results, announcements, and galleries.</li>
+          <li><b>E-Commerce Website</b><br>Complete online stores using WooCommerce, Shopify, Magento, 
+            or custom frameworks — with secure payment gateways, cart systems, and inventory tools.</li>
+          <li><b>CRM Website (Customer Relationship Management)</b><br>Web platforms for managing leads, sales, 
+            support tickets, and marketing funnels, integrated with email tools and dashboards.</li>
+          <li><b>HRMS Website (Human Resource Management System)</b><br>Platforms to manage recruitment, 
+            employee data, attendance, payroll, and performance reviews.</li>           
+        </ul>
+        <p><i>Built with HTML5, CSS3, React, Vue, Laravel, WordPress, and headless CMS on request.</i></p>
       </div>
     </div>
   </div>
 
-  <!-- 🔬 Core Technologies -->
-  <div class="section">
-    <h2>Core Technologies</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Microservices</h3>
-        <p>Loosely coupled services communicating via event-driven architecture.</p>
-      </div>
-      <div class="card">
-        <h3>GraphQL + REST</h3>
-        <p>Flexible, efficient data access layer for modern apps.</p>
-      </div>
-      <div class="card">
-        <h3>Real-Time</h3>
-        <p>Socket.IO, Firebase, and Redis Pub/Sub powering live updates & notifications.</p>
-      </div>
-      <div class="card">
-        <h3>Security</h3>
-        <p>JWT, OAuth2.0, Rate-limiting, 2FA, and secure coding practices.</p>
-      </div>
+  <script>
+    const items = document.querySelectorAll('.accordion-item');
+
+    items.forEach(item => {
+      item.querySelector('.accordion-header').addEventListener('click', () => {
+        items.forEach(i => i !== item && i.classList.remove('active'));
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+<!-- core area end here -->
+
+
+        <!-- offered area start here -->
+        <section class="service-three-area pt-100 pb-120">
+            <div class="service-three__shape">
+                <img class="sway__animationX" src="assets/images/shape/service-three-shape.png" alt="shape">
+            </div>
+            <div class="container">
+                <div class="section-header text-center mb-60">
+                    <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+                        Also Offered in Technology
+                    </h5>
+                </div>
+                <div class="row g-4">
+                    <div class="col-xl-4 col-md-6 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="service-three__item">
+                            <div class="service-three__image image">
+                                <img src="assets/images/service/service-three-image.jpg" alt="image">
+                            </div>
+                            <div class="service-three__content">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4>Cloud Services & DevOps</h4>                                
+                            </div>
+                            <div class="service-three__up-content text-center">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#ffffff;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4 style="font-size: 18px;"><a href="service-single.html" class="text-white mt-25 mb-15">Cloud Services & DevOps</a>
+                                </h4>
+                                <ul style="margin-left: 60px;text-indent: -20px;">
+                                    <li><i class="fa-solid fa-check"></i>&#9;AWS, Azure, GCP setup and scaling</li>
+                                    <li><i class="fa-solid fa-check"></i>&#9;Docker & Kubernetes</li>
+                                    <li ><i class="fa-solid fa-check"></i>&#9;CI/CD pipelines & monitoring</li>                                    
+                                </ul>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <div class="service-three__item">
+                            <div class="service-three__image image">
+                                <img src="assets/images/service/service-three-image.jpg" alt="image">
+                            </div>
+                            <div class="service-three__content">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4>Cybersecurity</h4>                                
+                            </div>
+                            <div class="service-three__up-content text-center">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#ffffff;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4 style="font-size: 18px;"><a href="service-single.html" class="text-white mt-25 mb-15">Cybersecurity</a>
+                                </h4>
+                                <ul style="margin-left: 60px;text-indent: -20px;">
+                                    <li><i class="fa-solid fa-check"></i>&#9;Firewall setup, vulnerability testing</li>
+                                    <li><i class="fa-solid fa-check"></i>&#9;Compliance with GDPR, ISO 27001, etc.</li>
+                                </ul>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                        <div class="service-three__item">
+                            <div class="service-three__image image">
+                                <img src="assets/images/service/service-three-image.jpg" alt="image">
+                            </div>
+                            <div class="service-three__content">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4>AI & Automation</h4>                                
+                            </div>
+                            <div class="service-three__up-content text-center">
+                                <div class="icon">
+                                    <i style="vertical-align: middle; color:#ffffff;" class="fas fa-laptop-code fa-3x"></i>
+                                </div>
+                                <h4 style="font-size: 18px;"><a href="service-single.html" class="text-white mt-25 mb-15">AI & Automation</a>
+                                </h4>
+                                <ul style="margin-left: 60px;text-indent: -20px;">
+                                    <li><i class="fa-solid fa-check"></i>&#9;Custom chatbots, data dashboards</li>
+                                    <li><i class="fa-solid fa-check"></i>&#9;Predictive analytics & process automation</li>
+                                </ul>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- offered area end here -->        
+
+        <!-- choose area start here -->
+        <section class="service-two-area secondary-bg pt-30 pb-30">
+            <div class="service-two__shape-left sway_Y__animationY">
+                <img src="assets/images/shape/service-two-shape-left.png" alt="shape">
+            </div>
+            <div class="service-two__shape-right sway_Y__animation">
+                <img src="assets/images/shape/service-two-shape-right.png" alt="shape">
+            </div>
+            <div class="container">
+                <div class="d-flex gap-4 flex-wrap align-items-center justify-content-between mb-60">
+                    <div class="section-header">
+                        <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <svg class="me-1" width="20" height="12" viewBox="0 0 20 12" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.75" y="0.750061" width="18.5" height="10.5" rx="5.25" stroke="#9a22f6"
+                                    stroke-width="1.5" />
+                                <mask id="path-2-inside-1_670_477" fill="white">
+                                    <path
+                                        d="M3 6.00006C3 3.79092 4.79086 2.00006 7 2.00006H13C15.2091 2.00006 17 3.79092 17 6.00006C17 8.2092 15.2091 10.0001 13 10.0001H7C4.79086 10.0001 3 8.2092 3 6.00006Z" />
+                                </mask>
+                                <path
+                                    d="M3 6.00006C3 2.96249 5.46243 0.500061 8.5 0.500061H11.5C14.5376 0.500061 17 2.96249 17 6.00006C17 4.61935 15.2091 3.50006 13 3.50006H7C4.79086 3.50006 3 4.61935 3 6.00006ZM17 6.00006C17 9.03763 14.5376 11.5001 11.5 11.5001H8.5C5.46243 11.5001 3 9.03763 3 6.00006C3 7.38077 4.79086 8.50006 7 8.50006H13C15.2091 8.50006 17 7.38077 17 6.00006ZM3 10.0001V2.00006V10.0001ZM17 2.00006V10.0001V2.00006Z"
+                                    fill="#9a22f6" mask="url(#path-2-inside-1_670_477)" />
+                            </svg>
+                            Why Choose RanSan for Your Tech Needs?
+                        </h5>                        
+                    </div>
+                    <div class="arry-btn  d-flex gap-3 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <button class="arry-prev service__arry-prev"><i class="fa-light fa-chevron-left"></i></button>
+                        <button class="arry-next service__arry-next active"><i
+                                class="fa-light fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="swiper service-two__slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="service-two__item">                                
+                                <div class="service-two__choose">
+                                    <div class="icon">
+                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-handshake fa-3x"></i>
+                                    </div>
+                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
+                                            alt="shape"></div>
+                                    <h4><a href="service-details.html" class="primary-hover">Agile Approach:</a></h4>
+                                    <p>Rapid and adaptive development tailored to your timeline and evolving needs.</p>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="service-two__item">                                
+                                <div class="service-two__choose">
+                                    <div class="icon">
+                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-users fa-3x"></i>
+                                    </div>
+                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
+                                            alt="shape"></div>
+                                    <h4><a href="service-details.html" class="primary-hover">Security First:</a></h4>
+                                    <p>Cybersecurity is embedded into everything we build.</p>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="service-two__item">                                
+                                <div class="service-two__choose">
+                                    <div class="icon">
+                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-paint-brush fa-3x"></i>
+                                    </div>
+                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
+                                            alt="shape"></div>
+                                    <h4><a href="service-details.html" class="primary-hover">Global Delivery Model:</a></h4>
+                                    <p>Serving clients across borders with remote-ready solutions.</p>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="service-two__item">                                
+                                <div class="service-two__choose">
+                                    <div class="icon">
+                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-paint-brush fa-3x"></i>
+                                    </div>
+                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
+                                            alt="shape"></div>
+                                    <h4><a href="service-details.html" class="primary-hover">Expertise Across Industries:</a></h4>
+                                    <p>Healthcare, Fintech, Retail, Logistics, Real Estate, and more.</p>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="service-two__item">                                
+                                <div class="service-two__choose">
+                                    <div class="icon">
+                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-paint-brush fa-3x"></i>
+                                    </div>
+                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
+                                            alt="shape"></div>
+                                    <h4><a href="service-details.html" class="primary-hover">Data-Driven Decisions:</a></h4>
+                                    <p>Using advanced analytics and dashboards to empower smarter strategies.</p>                                    
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- choose area end here -->
+
+        <!-- Counter area start here -->
+        <section class="counter-area">
+            <div class="container">
+                <div class="counter__wrp gradient-bg">                    
+                    <div class="counter__shape wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <img src="assets/images/shape/counnter-bg-shape.png" alt="shape">
+                    </div>
+                    <div class="counter__item wow bounceInUp" data-wow-delay="00ms" data-wow-duration="1000ms">
+                        <img src="assets/images/icon/counter-icon1.png" alt="icon">
+                        <div class="content">
+                            <h3><span class="count">6,561</span>+</h3>
+                            <p class="text-white">Satisfied Clients</p>
+                        </div>
+                    </div>
+                    <div class="counter__item wow bounceInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
+                        <img src="assets/images/icon/counter-icon2.png" alt="icon">
+                        <div class="content">
+                            <h3><span class="count">600</span>+</h3>
+                            <p class="text-white">Finished Projects</p>
+                        </div>
+                    </div>
+                    <div class="counter__item wow bounceInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
+                        <img src="assets/images/icon/counter-icon3.png" alt="icon">
+                        <div class="content">
+                            <h3><span class="count">250</span>+</h3>
+                            <p class="text-white">Skilled Experts</p>
+                        </div>
+                    </div>
+                    <div class="counter__item wow bounceInUp" data-wow-delay="800ms" data-wow-duration="1000ms">
+                        <img src="assets/images/icon/counter-icon4.png" alt="icon">
+                        <div class="content">
+                            <h3><span class="count">590</span>+</h3>
+                            <p class="text-white">Media Posts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Counter area end here -->
+
+        <!-- Tech Stack area start here -->
+        <section class="service-area pt-40">
+            <div class="service__shape wow slideInRight">
+                <img class="sway_Y__animation" src="assets/images/shape/service-bg-shape.png" alt="shape">
+            </div>
+            <div class="container">
+                <div class="d-flex flex-wrap gap-4 align-items-center justify-content-between mb-60">
+                    <div class="section-header">
+                        <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                            <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+                            Our Tech Stack Expertise
+                        </h5>                        
+                    </div>                    
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="00ms" data-wow-duration="1000ms">
+                        <div class="service__item">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-puzzle-piece fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>Frontend: </b></a></h4>
+                            <p>React.js, Angular, Vue.js</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
+                        <div class="service__item active">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-handshake fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>Backend:</b></a></h4>
+                            <p>Node.js, .NET, Python, Java, PHP</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
+                        <div class="service__item">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-rocket fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>Mobile:</b></a></h4>
+                            <p>Flutter, React Native, Swift, Kotlin</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="600ms" data-wow-duration="1000ms">
+                        <div class="service__item">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-lightbulb fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>Cloud Platforms:</b></a></h4>
+                            <p>AWS, Azure, GCP</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="600ms" data-wow-duration="1000ms">
+                        <div class="service__item">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-lightbulb fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>Database:</b></a></h4>
+                            <p>MySQL, PostgreSQL, MongoDB, Firebase</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 wow bounceInUp" data-wow-delay="600ms" data-wow-duration="1000ms">
+                        <div class="service__item">                            
+                            <div class="service__icon">
+                                <i style="vertical-align: middle; color:#9a22f6;" class="fas fa-lightbulb fa-3x"></i>
+                            </div>
+                            <h4><a href="service-details.html"><b>DevOps:</b></a></h4>
+                            <p>Docker, Kubernetes, Jenkins, GitLab CI/CD</p>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </section>
+        <!-- Tech Stack area end here -->
+
+        <!-- case area start here -->
+        <section class="testimonial-area bg-image pt-120 pb-30">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <div class="talk-us__item">
+                            <div class="section-header mb-30">
+                                <h5 class="text-white">
+                                    <svg width="28" height="12" viewBox="0 0 28 12" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="0.75" y="0.75" width="18.5" height="10.5" rx="5.25" stroke="white"
+                                            stroke-width="1.5" />
+                                        <rect x="8" width="20" height="12" rx="6" fill="white" />
+                                    </svg>
+                                    Case Study Highlight <i class="fas fa-building"></i>
+                                </h5>
+                                <h2 class="text-white">Retail AI Solution for Predictive Analytics</h2>
+                                <P class="text-white">We helped a retail chain increase their customer 
+                                    retention by 35% by implementing a cloud-based predictive analytics platform using 
+                                    AI and machine learning.</P>                                
+                            </div>                         
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-6 ps-2 ps-lg-5">
+                        <div class="section-header mb-40">                            
+                            <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+                                Partner With Us <i class="fas fa-rocket"></i>
+                            </h5>
+                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">Let’s build something 
+                                powerful together. Whether you're a startup aiming to disrupt or an enterprise looking to 
+                                modernize, our team is ready to turn your vision into reality.</p>                                
+                        </div>
+                        <div class="section-header mb-40">
+                            <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
+                                Schedule a Free Consultation <i class="fas fa-globe"></i>
+                            </h5>
+                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms"><B>Email:</B> support@ransangroups.com</p>
+                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms"><B>Call:</B> +91 8148610567</p>    
+                        </div>
+                        <div class="about__info mt-50 wow fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms">
+                            <a href="contact.html" class="btn-one">Contact Us <i
+                                    class="fa-regular fa-arrow-right-long"></i></a>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- case area end here -->   
+
+    <!-- Footer area start here -->
+    <footer class="footer-area secondary-bg">
+        <div class="footer__shape-regular-left wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+            <img src="assets/images/shape/footer-regular-left.png" alt="shape">
+        </div>
+        <div class="footer__shape-solid-left wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
+            <img class="sway_Y__animation" src="assets/images/shape/footer-solid-left.png" alt="shape">
+        </div>
+        <div class="footer__shape-solid-right wow slideInRight" data-wow-delay="00ms" data-wow-duration="1500ms">
+            <img class="sway_Y__animation" src="assets/images/shape/footer-regular-right.png" alt="shape">
+        </div>
+        <div class="footer__shape-regular-right wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
+            <img src="assets/images/shape/footer-solid-right.png" alt="shape">
+        </div>
+        <div class="footer__shadow-shape">
+            <img src="assets/images/shape/footer-shadow-shape.png" alt="shodow">
+        </div>
+        <div class="container">
+            <div class="footer__wrp pt-100 pb-100">
+                <div class="footer__item item-big wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                    <a href="index.html" class="logo mb-30">
+                        <img src="assets/images/logo/logo.svg" width="80" height="80" alt="image">
+                    </a>
+                    <p>To become a leading multi-service provider recognized for trust, quality, and innovation.</p>
+                    <div class="social-icon">
+                        <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#0"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#0"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer__item item-sm wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    <h3 class="footer-title">Services</h3>
+                    <ul>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i>Technology</a></li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i>Digital Mareting</a>
+                        </li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i>Event Management</a>
+                        </li>
+                        <li><a href="service-details.html"><i class="fa-regular fa-angles-right me-1"></i>Online Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer__item item-med wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                    <h3 class="footer-title">Quick Link</h3>
+                    <ul>
+                        <li><a href="about.html"><i class="fa-regular fa-angles-right me-1"></i> About RanSan Groups</a></li>
+                        <li><a href="service.html"><i class="fa-regular fa-angles-right me-1"></i> Our Services</a>
+                        </li>
+                        <li><a href="pricing.html"><i class="fa-regular fa-angles-right me-1"></i> Pricing Plan</a>
+                        </li>
+                        <li><a href="case.html"><i class="fa-regular fa-angles-right me-1"></i> Our Projects</a></li>
+                        <li><a href="team.html"><i class="fa-regular fa-angles-right me-1"></i> Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer__item item-big wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <p class="mb-20">16/6, Star Illam, Ramakrishna 1<sup>st</sup> cross street, Porur, Chennai-600116</p>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fa-regular fa-clock"></i>
+                            <div class="info">
+                                <h5>
+                                    Opening Hours:
+                                </h5>
+                                <p>Mon - Sat: 9.00 AM - 10.00 PM</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-duotone fa-phone"></i>
+                            <div class="info">
+                                <h5>
+                                    Phone Call:
+                                </h5>
+                                <p>+91 8148610567</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__copyright">
+            <div class="container">
+                <div
+                    class="d-flex gap-1 flex-wrap align-items-center justify-content-md-between justify-content-center">
+                    <p class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1500ms">&copy; All Copyright 2025
+                        by <a href="index.html">RanSan Groups</a></p>
+                    <ul class="d-flex align-items-center gap-4 wow fadeInDown" data-wow-delay="200ms"
+                        data-wow-duration="1500ms">
+                        <li><a href="#0">Terms & Condition</a></li>
+                        <li><a href="#0">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer area end here -->
+
+
+    <!-- Back to top area start here -->
+    <div class="scroll-up">
+        <svg class="scroll-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
     </div>
-  </div>
+    <!-- Back to top area end here -->
 
-  <!-- 📊 Architecture & Metrics -->
-  <div class="section">
-    <h2>Architecture & Performance</h2>
-    <div class="card">
-      <p><strong>Overview:</strong> Distributed microservice architecture with autoscaling, caching, and CDN edge nodes for global delivery. All communication is encrypted and monitored.</p>
-    </div>
-
-    <div class="metrics">
-      <div class="metric">
-        <h4>Uptime</h4>
-        <p>99.99%</p>
-      </div>
-      <div class="metric">
-        <h4>Latency</h4>
-        <p>&lt;100ms</p>
-      </div>
-      <div class="metric">
-        <h4>TPS</h4>
-        <p>12,000+</p>
-      </div>
-      <div class="metric">
-        <h4>Data Encrypted</h4>
-        <p>256-bit</p>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <p>© 2025 Your Company — Built on scalable, intelligent tech.</p>
-  </footer>
-
+    <!-- Jquery 3.7.0 Min Js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap min Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Mean menu Js -->
+    <script src="assets/js/meanmenu.js"></script>
+    <!-- Swiper bundle min Js -->
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <!-- Counterup min Js -->
+    <script src="assets/js/jquery.counterup.min.js"></script>
+    <!-- Wow min Js -->
+    <script src="assets/js/wow.min.js"></script>
+    <!-- Pace min Js -->
+    <script src="assets/js/pace.min.js"></script>
+    <!-- Magnific popup min Js -->
+    <script src="assets/js/magnific-popup.min.js"></script>
+    <!-- Nice select min Js -->
+    <script src="assets/js/nice-select.min.js"></script>
+    <!-- Isotope pkgd min Js -->
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <!-- Waypoints Js -->
+    <script src="assets/js/jquery.waypoints.js"></script>
+    <!-- Script Js -->
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>
