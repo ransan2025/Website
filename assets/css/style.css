@@ -3511,7 +3511,7 @@ input.main-search-input::placeholder {
   width: 100%;
   max-width: 80px;
   border-radius: 0;
-  background-color: var(--primary10);
+  background-color: #f3e4fe;
 }
 .about__info {
   position: relative;
@@ -5106,6 +5106,12 @@ input.main-search-input::placeholder {
   opacity: 0.8;
 }
 .footer__item.item-big {
+  Margin-right:50px;
+  max-width: 270px;
+  width: 100%;
+}
+.footer__item.item-start {
+  margin-left:30px;
   max-width: 270px;
   width: 100%;
 }
