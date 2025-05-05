@@ -5285,18 +5285,24 @@ input.main-search-input::placeholder {
 
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .accordion {
+  .core-tech-box {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
 }
+
+
+
 @media screen and (max-width: 767px) {
-  .accordion {
+  .core-tech-box {
     display: block;
   }
 }
-.accordion {
+
+
+
+.core-tech-item {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 20px;
