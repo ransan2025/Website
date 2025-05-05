@@ -5283,7 +5283,7 @@ input.main-search-input::placeholder {
   }
 }/*# sourceMappingURL=style.css.map */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .core-tech-box {
+  .accordion {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
