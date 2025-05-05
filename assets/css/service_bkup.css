@@ -4,9 +4,10 @@
       
       color: #333;
     }
-    .accordion {      
-      padding-left:72px;
-	  padding-right:72px;      
+    .accordion {
+      max-width: 1120px;
+      margin: 0 auto;
+      background: #fff;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -58,19 +59,3 @@
       max-height: 600px;
       padding-bottom: 20px;
     }
-	
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .accordion {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-}
-
-
-
-@media screen and (max-width: 767px) {
-  .accordion {
-    display: block;
-  }
-}
