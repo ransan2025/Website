@@ -25,6 +25,12 @@
     <!-- Style css -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/service.css">
+
+    <script>
+        // Auto-update year
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
 </head>
 
 <body>
@@ -221,26 +227,6 @@
     <!-- Fullscreen search area end here -->
 
     <main>
-        <!-- Page banner area start here -->
-        <section class="banner__inner-page bg-image pt-180 pb-180 bg-image"
-            data-background="assets/images/banner/banner-inner-page_digi_online.png">
-            <div class="shape2 wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                <img src="assets/images/banner/inner-banner-shape2.png" alt="shape">
-            </div>
-            <div class="shape1 wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
-                <img src="assets/images/banner/inner-banner-shape1.png" alt="shape">
-            </div>
-            <div class="shape3 wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
-                <img class="sway__animationX" src="assets/images/banner/inner-banner-shape3.png" alt="shape">
-            </div>
-            <div class="container">
-                <h2 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">Online Services</h2>
-                <div class="breadcrumb-list wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                    <a href="index.html">Home</a><span><i class="fa-regular fa-angles-right mx-2"></i>Online Services</span>
-                </div>
-            </div>
-        </section>
-        <!-- Page banner area end here -->
 
         <!-- Make us area start here -->
         <section class="service-area pt-40">            
@@ -249,14 +235,13 @@
                     <div class="section-header">
                         <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
-                            Online Services
+                            Privacy Policy
                         </h5>
-                        <h2>Smart, Simple & Seamless Digital Solutions for Everyday Needs</h2>
-                        <p>At RanSan Groups, we simplify your life and business by offering 
-                            a wide range of online services — all in one place. Whether you're a startup 
-                            needing compliance assistance, a traveler looking to plan the perfect getaway, 
-                            or a citizen accessing essential government services, we've got you covered 
-                            with secure, fast, and reliable support.</p>                        
+                        <h2>Privacy Policy</h2>
+                        <p><strong>Last Updated:</strong> <span id="updateDate1"></span></p>
+                        <p>RanSan Groups is committed to protecting your privacy. 
+                            This Privacy Policy explains how we collect, use, and safeguard your information 
+                            when you visit www.ransangroups.com.</p>                        
                     </div>                    
                 </div>                                
             </div>
@@ -265,122 +250,76 @@
 
 <!-- core area start here -->
 
-<h5 style="margin-left: 72px;margin-bottom: 24px;margin-top: -30px;" class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-    <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
-    Our Online Service Categories</h5>
 
 <div class="accordion">
     <div class="accordion-item">
-      <div class="accordion-header">🏛️ Government Online Services</div>
+      <div class="accordion-header">1. Information We Collect</div>
       <div class="accordion-content">
-        <p>We act as your digital bridge to essential government services — no queues, no confusion, just results.</p>
-        <p><b>Our Offerings Include:</b></p>
         <ul>
-          <li>PAN Card Application</li>
-          <li>Aadhaar Card Update Assistance</li>
-          <li>Voter ID Services</li>
-          <li>Ration Card Assistance</li>
-          <li>Birth/Death Certificate Application</li>
-          <li>Police Clearance Certificate (PCC)</li>
-          <li>e-Governance Support</li>  
+          <li>Personal Information (Name, Email, Phone) via forms and signups</li>
+          <li>Usage data via cookies and analytics tools (e.g., Google Analytics)</li>
         </ul>
-        <p><i>Timely Submissions, Accurate Documentation, Complete Support</i></p>
        </div>
     </div>
 
     <div class="accordion-item">
-      <div class="accordion-header">💼 GST Registration & ITR Filing</div>
+      <div class="accordion-header">2. How We Use Your Information</div>
       <div class="accordion-content">
-        <p>Make tax compliance stress-free with our expert-led support.</p>
-        <p><b>Services:</b></p>
         <ul>
-          <li>New GST Registration (Business or Individual)</li>
-          <li>GST Return Filing (Monthly/Quarterly)</li>
-          <li>Income Tax Return Filing (ITR 1–7)</li>
-          <li>Form 16 & TDS Reconciliation</li>
-          <li>Business PAN & TAN Application</li>
-          <li>Advisory for Tax Planning & Deductions</li>
+          <li>To respond to inquiries</li>
+          <li>To improve our services and website performance</li>
+          <li>To send updates, offers, and newsletters (if you opt-in)</li>
         </ul>
-        <p><i>Govt. portal integration, secure filing, and CA-reviewed processes.</i></p>
       </div>
     </div>
 
     <div class="accordion-item">
-        <div class="accordion-header">✈️ Travel Ticket Booking</div>
+        <div class="accordion-header">3. Sharing Your Information</div>
         <div class="accordion-content">
-          <p>Need to go somewhere? We’ll get you there—affordably and efficiently.</p>
-          <p><b>Services Include:</b></p>
+          <p>We do not sell your data. We may share data with:</p>
           <ul>
-            <li>Domestic & International Flight Bookings</li>
-            <li>Train Ticket Booking (IRCTC)</li>
-            <li>Bus & Cab Reservations</li>
-            <li>Hotel & Resort Booking</li>
-            <li>Group Booking Discounts</li>
+            <li>Trusted third parties (e.g., payment processors, analytics services)</li>
+            <li>Legal authorities when required by law</li>
           </ul>
-          <p><i>Best deals, instant confirmation, and 24/7 travel assistance.</i></p>
         </div>
     </div>
   
   <div class="accordion-item">
-    <div class="accordion-header">🏞️🚗🎒 Domestic Travel Packages</div>
+    <div class="accordion-header">4. Data Security</div>
     <div class="accordion-content">
-      <p>Explore India like never before with curated travel experiences.</p>
-      <p><b>Top Destinations:</b></p>
-      <ul>
-        <li>Goa Beaches & Luxury Stay</li>
-        <li>Himachal Hills & Adventure Tours</li>
-        <li>Kerala Backwater Getaways</li>
-        <li>Rajasthan Heritage Trails</li>
-        <li>North-East Cultural Explorer</li>
-      </ul>
-      <p><b>What's Included:</b></p>
-      <ul>
-        <li>Accommodation + Transport + Sightseeing</li>
-        <li>Custom Itineraries</li>
-        <li>Budget & Luxury Packages</li>
-        <li>Honeymoon, Solo, and Group Packages</li>
-      </ul>
-      <p><i>Personalized travel with full support—start to finish.</i></p>
+      <p>We implement industry-standard security measures to protect your information, 
+        but no method of transmission over the internet is 100% secure.</p>
     </div>
   </div>
 
 
-<div class="accordion-item">
-    <div class="accordion-header">🗺️ Personal Travel Planner</div>
-    <div class="accordion-content">
-      <p>Your dream trip, tailored just for you.</p>
-      <p><b>We Help You:</b></p>
-      <ul>
-        <li>Build custom itineraries</li>
-        <li>Plan routes and logistics</li>
-        <li>Recommend must-visit spots</li>
-        <li>Suggest food, stay & local experiences</li>
-        <li>Estimate budgets with options</li>
-        <p><i>You focus on fun, we handle the planning.</i></p>
-      </ul>
+    <div class="accordion-item">
+        <div class="accordion-header">5. Your Rights</div>
+        <div class="accordion-content">
+          <ul>
+            <li>Request access or deletion of your data</li>
+            <li>Opt-out of promotional emails</li>
+          </ul>
+        </div>
     </div>
-  </div>
 
-
-  <div class="accordion-item">
-    <div class="accordion-header">💳 Utility Bill Payments</div>
-    <div class="accordion-content">
-      <p>No more missed due dates—pay everything online, in one place.</p>
-      <p><b>Pay For:</b></p>
-      <ul>
-        <li>Electricity (All States)</li>
-        <li>Water Supply</li>
-        <li>LPG & Gas Cylinder Refill</li>
-        <li>DTH & Broadband Recharge</li>
-        <li>Mobile Postpaid Bills</li>
-        <li>Insurance Premiums</li>
-      </ul>
-      <p><i>Fast, secure transactions with instant receipts and reminders.</i></p>
+    <div class="accordion-item">
+        <div class="accordion-header">6. Cookies</div>
+        <div class="accordion-content">
+          <p>Our site uses cookies to enhance user experience. By using our site, you consent to our cookie policy.</p>
+        </div>
     </div>
-  </div>
+
+    <div class="accordion-item">
+        <div class="accordion-header">7. Contact Us</div>
+        <div class="accordion-content">
+          <p>For questions or concerns, email us at <a href="mailto:support@ransangroups.com">support@ransangroups.com</a>.</p>
+        </div>
+    </div>
+    <br>
 </div>
 
-  <script>
+<script>
     const items = document.querySelectorAll('.accordion-item');
 
     items.forEach(item => {
@@ -391,206 +330,6 @@
     });
   </script>
 <!-- core area end here -->
-      
-
-        <!-- choose area start here -->
-        <section class="service-two-area secondary-bg pt-30 pb-30">
-            <div class="service-two__shape-left sway_Y__animationY">
-                <img src="assets/images/shape/service-two-shape-left.png" alt="shape">
-            </div>
-            <div class="service-two__shape-right sway_Y__animation">
-                <img src="assets/images/shape/service-two-shape-right.png" alt="shape">
-            </div>
-            <div class="container">
-                <div class="d-flex gap-4 flex-wrap align-items-center justify-content-between mb-60">
-                    <div class="section-header">
-                        <h5 class="wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                            <svg class="me-1" width="20" height="12" viewBox="0 0 20 12" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.75" y="0.750061" width="18.5" height="10.5" rx="5.25" stroke="#9a22f6"
-                                    stroke-width="1.5" />
-                                <mask id="path-2-inside-1_670_477" fill="white">
-                                    <path
-                                        d="M3 6.00006C3 3.79092 4.79086 2.00006 7 2.00006H13C15.2091 2.00006 17 3.79092 17 6.00006C17 8.2092 15.2091 10.0001 13 10.0001H7C4.79086 10.0001 3 8.2092 3 6.00006Z" />
-                                </mask>
-                                <path
-                                    d="M3 6.00006C3 2.96249 5.46243 0.500061 8.5 0.500061H11.5C14.5376 0.500061 17 2.96249 17 6.00006C17 4.61935 15.2091 3.50006 13 3.50006H7C4.79086 3.50006 3 4.61935 3 6.00006ZM17 6.00006C17 9.03763 14.5376 11.5001 11.5 11.5001H8.5C5.46243 11.5001 3 9.03763 3 6.00006C3 7.38077 4.79086 8.50006 7 8.50006H13C15.2091 8.50006 17 7.38077 17 6.00006ZM3 10.0001V2.00006V10.0001ZM17 2.00006V10.0001V2.00006Z"
-                                    fill="#9a22f6" mask="url(#path-2-inside-1_670_477)" />
-                            </svg>
-                            Why Choose RanSan for Online Services?
-                        </h5>                        
-                    </div>
-                    <div class="arry-btn  d-flex gap-3 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                        <button class="arry-prev service__arry-prev"><i class="fa-light fa-chevron-left"></i></button>
-                        <button class="arry-next service__arry-next active"><i
-                                class="fa-light fa-chevron-right"></i></button>
-                    </div>
-                </div>
-                <div class="swiper service-two__slider">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="service-two__item">                                
-                                <div class="service-two__choose">
-                                    <div class="icon">
-                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-store fa-3x"></i>
-                                    </div>
-                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
-                                            alt="shape"></div>
-                                    <h4><a href="service-details.html" class="primary-hover">One-Stop Convenience:</a></h4>
-                                    <p>Everything you need — from tax filing to travel — under one roof</p>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="service-two__item">                                
-                                <div class="service-two__choose">
-                                    <div class="icon">
-                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-headset fa-3x"></i>
-                                    </div>
-                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
-                                            alt="shape"></div>
-                                    <h4><a href="service-details.html" class="primary-hover">Trusted Support:</a></h4>
-                                    <p>Real human experts, not just bots</p>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="service-two__item">                                
-                                <div class="service-two__choose">
-                                    <div class="icon">
-                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-lock fa-3x"></i>
-                                    </div>
-                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
-                                            alt="shape"></div>
-                                    <h4><a href="service-details.html" class="primary-hover">Secure Processing:</a></h4>
-                                    <p>100% confidential handling of personal & financial info</p>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="service-two__item">                                
-                                <div class="service-two__choose">
-                                    <div class="icon">
-                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-clock fa-3x"></i>
-                                    </div>
-                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
-                                            alt="shape"></div>
-                                    <h4><a href="service-details.html" class="primary-hover">24/7 Accessibility:</a></h4>
-                                    <p>Anytime, anywhere access via phone, email, or WhatsApp</p>                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="service-two__item">                                
-                                <div class="service-two__choose">
-                                    <div class="icon">
-                                        <i style="vertical-align: middle; color:#ffffff;" class="fas fa-tag fa-3x"></i>
-                                    </div>
-                                    <div class="shape"><img src="assets/images/shape/service-two-item-shape.png"
-                                            alt="shape"></div>
-                                    <h4><a href="service-details.html" class="primary-hover">Affordable Pricing:</a></h4>
-                                    <p>Transparent and budget-friendly with no hidden fees</p>                                    
-                                </div>
-                            </div>
-                        </div>                        
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- choose area end here -->
-
-        <!-- Counter area start here -->
-        <section class="counter-area">
-            <div class="container">
-                <div class="counter__wrp gradient-bg">                    
-                    <div class="counter__shape wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
-                        <img src="assets/images/shape/counnter-bg-shape.png" alt="shape">
-                    </div>
-                    <div class="counter__item wow bounceInUp" data-wow-delay="00ms" data-wow-duration="1000ms">
-                        <img src="assets/images/icon/counter-icon1.png" alt="icon">
-                        <div class="content">
-                            <h3><span class="count">2,123</span>+</h3>
-                            <p class="text-white">Satisfied Clients</p>
-                        </div>
-                    </div>
-                    <div class="counter__item wow bounceInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
-                        <img src="assets/images/icon/counter-icon2.png" alt="icon">
-                        <div class="content">
-                            <h3><span class="count">600</span>+</h3>
-                            <p class="text-white">Finished Projects</p>
-                        </div>
-                    </div>
-                    <div class="counter__item wow bounceInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
-                        <img src="assets/images/icon/counter-icon3.png" alt="icon">
-                        <div class="content">
-                            <h3><span class="count">75</span>+</h3>
-                            <p class="text-white">Skilled Experts</p>
-                        </div>
-                    </div>
-                    <div class="counter__item wow bounceInUp" data-wow-delay="800ms" data-wow-duration="1000ms">
-                        <img src="assets/images/icon/counter-icon4.png" alt="icon">
-                        <div class="content">
-                            <h3><span class="count">290</span>+</h3>
-                            <p class="text-white">Media Posts</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Counter area end here -->
-
-
-        <!-- case area start here -->
-        <section class="testimonial-area bg-image pt-120 pb-30">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
-                        <div class="talk-us__item">
-                            <div class="section-header mb-30">
-                                <h5 class="text-white">
-                                    <svg width="28" height="12" viewBox="0 0 28 12" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="0.75" y="0.75" width="18.5" height="10.5" rx="5.25" stroke="white"
-                                            stroke-width="1.5" />
-                                        <rect x="8" width="20" height="12" rx="6" fill="white" />
-                                    </svg>
-                                    Client Testimonials <i class="fas fa-building"></i>
-                                </h5>
-                                <P class="text-white">“I’ve been filing my GST through 
-                                    RanSan for 3 years now — accurate, fast, and they always remind me before due dates!”<br>
-                                    – Shivam R., Business Owner</P>
-                                <P class="text-white">“We planned our honeymoon to 
-                                    Kerala through them, and it was perfect. Smooth travel, amazing hotel, great memories.”<br>
-                                    – Tanvi & Rajat M.</P>                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 ps-2 ps-lg-5">
-                        <div class="section-header mb-40">                            
-                            <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
-                                Get Started Now <i class="fas fa-rocket"></i>
-                            </h5>
-                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">Whether 
-                                it’s taxes, tickets, or travel—you’re in good hands with RanSan Groups.</p>                                
-                        </div>
-                        <div class="section-header mb-40">
-                            <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <img class="me-1" src="assets/images/icon/section-title.png" alt="icon">
-                                Request a Callback <i class="fas fa-globe"></i>
-                            </h5>
-                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms"><B>Email:</B> support@ransangroups.com</p>
-                            <p style="margin-top: 0px;" class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms"><B>Call:</B> +91 8148610567</p>    
-                        </div>
-                        <div class="about__info mt-50 wow fadeInDown" data-wow-delay="400ms" data-wow-duration="1500ms">
-                            <a href="contact.html" class="btn-one">Contact Us <i
-                                    class="fa-regular fa-arrow-right-long"></i></a>                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- case area end here -->   
 
     <!-- Footer area start here -->
     <footer class="footer-two-area secondary-bg">
@@ -693,6 +432,7 @@
     <!-- Footer area end here -->
 
 
+
     <!-- Back to top area start here -->
     <div class="scroll-up">
         <svg class="scroll-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
@@ -725,6 +465,11 @@
     <script src="assets/js/jquery.waypoints.js"></script>
     <!-- Script Js -->
     <script src="assets/js/script.js"></script>
+
+    <script>
+        document.getElementById("updateDate1").textContent = new Date().toLocaleDateString();
+    </script>
+
 </body>
 
 </html>
