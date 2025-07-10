@@ -390,30 +390,3 @@ body {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
-
-.category-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 20px;
-}
-.category-btn {
-  background: #eee;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.category-btn.active {
-  background: #9a22f6;
-  color: white;
-}
-.product-rating {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #f9c22e;
-  font-weight: bold;
-}
