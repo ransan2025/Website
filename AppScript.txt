@@ -1,0 +1,42 @@
+function doPost(e) {
+  try {
+    const data = e.parameter;
+    const email = data.email;
+    const name = data.name || "Customer";
+    const productName = data.productName?.trim();
+
+    const sheet = SpreadsheetApp.openById("1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU").getSheetByName("Sheet1");
+    const values = sheet.getDataRange().getValues();
+
+    let setupUrl = "";
+    for (let i = 1; i < values.length; i++) {
+      const sheetProduct = values[i][0]?.toString().trim();
+      if (sheetProduct === productName) {
+        setupUrl = values[i][8]?.toString().trim();
+        break;
+      }
+    }
+
+    if (!setupUrl) throw new Error("No setup URL found for: " + productName);
+
+    const subject = `Your Access to ${productName}`;
+    const body = `Hi ${name},
+
+Thank you for purchasing ${productName}.
+
+You can set it up using the following link:
+${setupUrl}
+
+If you have any questions, feel free to reach out.
+
+Regards,  
+RanSan Groups`;
+
+    MailApp.sendEmail({ to: email, subject, body, name: "RanSan Groups" });
+
+    // ✅ Respond with plain text (no HTML, no redirect)
+    return ContentService.createTextOutput("Email sent");
+  } catch (err) {
+    return ContentService.createTextOutput("Error: " + err.message);
+  }
+}

@@ -87,8 +87,6 @@
   </div>
 </div>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
-
 <style>
 .modal {
   display: none; /* ✅ Always hidden unless toggled via JS */
@@ -238,13 +236,12 @@ function payWithRazorpay(productName, price) {
 function closeBuyerModal() {
   document.getElementById('buyer-modal').classList.remove('show');
 }
-
 function proceedToPay() {
   const email = document.getElementById("buyer-email").value.trim();
   const phone = document.getElementById("buyer-phone").value.trim();
   if (!email.includes("@")) return alert("Enter valid email.");
   if (phone.length < 8) return alert("Enter valid phone.");
-  document.getElementById('buyer-modal').style.display = 'none';
+  document.getElementById("buyer-modal").style.display = 'none';
 
   const options = {
     key: "rzp_test_iOdWWEhKlikqRy",
@@ -254,30 +251,23 @@ function proceedToPay() {
     description: selectedProductName,
     prefill: { name: "Customer", email: email, contact: phone },
     handler: function () {
-      // Submit to Apps Script in background
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = "https://script.google.com/macros/s/AKfycbx0Cw9FDyhLX5gvg_BrB15j-N6u78_ASL08ey7YDBWvLx-RmdGcc3d_d17eAh57Q4zSkw/exec";
-      form.target = "hidden_iframe";
+      form.action = "https://script.google.com/macros/s/AKfycbwUR5q6NsEu4vKbG5mxOGn7C3nE5xM9GOs4rYAKAT6NjXL3BLv4hF7DCkNlhA2llH0m/exec";
       form.innerHTML = `
         <input type="hidden" name="email" value="${email}">
         <input type="hidden" name="name" value="Customer">
         <input type="hidden" name="productName" value="${selectedProductName}">
       `;
+      form.target = "_self";
       document.body.appendChild(form);
       form.submit();
-
-      // Then redirect to thank-you
-      setTimeout(() => {
-        window.location.href = "https://www.ransangroups.com/thank-you.html";
-      }, 1000);
     },
     theme: { color: "#9a22f6" }
   };
   const rzp = new Razorpay(options);
   rzp.open();
 }
-
 
 document.querySelectorAll('.category-btn').forEach(btn => {
   btn.addEventListener('click', () => {

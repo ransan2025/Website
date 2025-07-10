@@ -246,34 +246,58 @@ function proceedToPay() {
   if (phone.length < 8) return alert("Enter valid phone.");
   document.getElementById('buyer-modal').style.display = 'none';
 
-  const options = {
-    key: "rzp_test_iOdWWEhKlikqRy",
-    amount: selectedPrice * 100,
-    currency: "INR",
-    name: "RanSan Groups eStore",
-    description: selectedProductName,
-    prefill: { name: "Customer", email: email, contact: phone },
-    handler: function () {
-      // Submit to Apps Script in background
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = "https://script.google.com/macros/s/AKfycbx0Cw9FDyhLX5gvg_BrB15j-N6u78_ASL08ey7YDBWvLx-RmdGcc3d_d17eAh57Q4zSkw/exec";
-      form.target = "hidden_iframe";
-      form.innerHTML = `
-        <input type="hidden" name="email" value="${email}">
-        <input type="hidden" name="name" value="Customer">
-        <input type="hidden" name="productName" value="${selectedProductName}">
-      `;
-      document.body.appendChild(form);
-      form.submit();
+const options = {
+  key: "rzp_test_iOdWWEhKlikqRy",
+  amount: selectedPrice * 100,
+  currency: "INR",
+  name: "RanSan Groups eStore",
+  description: selectedProductName,
+  prefill: { name: "Customer", email: email, contact: phone },
+  handler: function () {
+    // ✅ Close buyer modal
+    document.getElementById('buyer-modal').classList.remove('show');
 
-      // Then redirect to thank-you
-      setTimeout(() => {
-        window.location.href = "https://www.ransangroups.com/thank-you.html";
-      }, 1000);
-    },
-    theme: { color: "#9a22f6" }
-  };
+    // ✅ Compose WhatsApp message
+    const message = `
+Hi Customer,
+
+Thank you for purchasing ${selectedProductName} from RanSan Groups.
+
+Your setup link has been sent to your email (${email}).
+
+If you need help, feel free to reach out.
+
+- RanSan Groups
+    `.trim();
+
+    // ✅ Open WhatsApp in new tab
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    const newTab = window.open(whatsappUrl, "_blank");
+    if (!newTab || newTab.closed || typeof newTab.closed == 'undefined') {
+      alert("⚠️ Please allow popups to send WhatsApp message.");
+    }
+
+    // ✅ Submit form to Google Apps Script
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "https://script.google.com/macros/s/AKfycbx0Cw9FDyhLX5gvg_BrB15j-N6u78_ASL08ey7YDBWvLx-RmdGcc3d_d17eAh57Q4zSkw/exec";
+    form.target = "hidden_iframe";
+    form.innerHTML = `
+      <input type="hidden" name="email" value="${email}">
+      <input type="hidden" name="name" value="Customer">
+      <input type="hidden" name="productName" value="${selectedProductName}">
+    `;
+    document.body.appendChild(form);
+    form.submit();
+
+    // ✅ Redirect
+    setTimeout(() => {
+       //window.location.href = `https://www.ransangroups.com/thank-you.html?phone=${phone}&name=Customer&product=${encodeURIComponent(selectedProductName)}`;
+       window.location.href = `file:///D:/Practice/Website/thank-you.html?phone=${phone}&name=Customer&product=${encodeURIComponent(selectedProductName)}`;
+    }, 1000);
+  }, // ✅ This comma is required
+  theme: { color: "#9a22f6" }
+};
   const rzp = new Razorpay(options);
   rzp.open();
 }
