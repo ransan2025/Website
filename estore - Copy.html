@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="RanSan Groups eStore – Best digital products and deals online. Limited-time offers!">
+  <meta name="keywords" content="RanSan, eStore, digital products, best deals, offers">
+  <meta name="author" content="RanSan Groups">
   <title>RanSan Groups eStore</title>
   <link rel="stylesheet" href="assets/estore/style.css">
   <link rel="icon" type="image/png" href="assets/estore/RanSan_Logo_small.png">
@@ -19,12 +22,50 @@
   </div>
 </header>
 
+<div class="deal-marquee">
+  <div class="marquee-content">
+    <a href="#" class="marquee-item">Explore our top-rated digital products and services</a>
+  </div>
+</div>
+
+<div class="timer-box">
+  <div><strong class="flash-text">⚡ Offer Ends In:</strong></div>
+  <div class="countdown-wrapper">
+    <div id="countdown" class="countdown-container">
+      <div class="countdown-row">
+        <div class="countdown-block"><span id="days" class="timer">00</span></div>
+        <div class="colon">:</div>
+        <div class="countdown-block"><span id="hours" class="timer">00</span></div>
+        <div class="colon">:</div>
+        <div class="countdown-block"><span id="minutes" class="timer">00</span></div>
+        <div class="colon">:</div>
+        <div class="countdown-block"><span id="seconds" class="timer">00</span></div>
+      </div>
+      <div class="countdown-row">
+        <div class="countdown-block"><span class="label">Day</span></div>
+        <div class="colon">&nbsp;</div>
+        <div class="countdown-block"><span class="label">Hrs</span></div>
+        <div class="colon">&nbsp;</div>
+        <div class="countdown-block"><span class="label">Min</span></div>
+        <div class="colon">&nbsp;</div>
+        <div class="countdown-block"><span class="label">Sec</span></div>
+      </div>
+    </div>
+  </div>  
+</div>
+
+<div class="deal-marquee">
+  <div class="marquee-content">
+    <a href="#ads-section" class="marquee-item">🔥 Amazon Prime Day Sale (12 - 14 July) (Click for more details)</a>
+  </div>
+</div>
+
 <div class="category-tabs">
   <button class="category-btn active" data-category="all">All</button>
   <button class="category-btn" data-category="office">🧾 Office & Tools</button>
   <button class="category-btn" data-category="design">🧑‍🎨 Design & Media</button>
   <button class="category-btn" data-category="marketing">💬 Marketing</button>
-  <button class="category-btn" data-category="ai">🤖 AI & Digital Tools</button>
+  <button class="category-btn" data-category="ai">🤖 AI & Digital Tools</button>  
 </div>
 
 <main class="product-grid"></main>
@@ -49,6 +90,8 @@
   </div>
 </div>
 
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
 <style>
 .modal {
   display: none; /* ✅ Always hidden unless toggled via JS */
@@ -62,12 +105,13 @@
   align-items: center;
   z-index: 999;
 }
+
 .modal.show {
   display: flex !important; /* ✅ Only show via JS when needed */
 }
 .modal-content {
   background: white; padding: 20px;
-  border-radius: 10px; width: 300px; text-align: center;
+  border-radius: 10px; width: 700px; text-align: left;
 }
 .modal-content input {
   width: 90%; padding: 8px; margin: 5px 0;
@@ -76,6 +120,14 @@
   margin: 10px 5px; padding: 8px 16px;
 }
 </style>
+
+<section class="ads-section" id="ads-section">
+  <div class="ads-box">
+    <h3>🔥 Amazon Prime Day Sale (12 - 14 July)</h3>
+    <p>The wait is over! Amazon Prime Day is here from <strong>12th to 14th July</strong>. Enjoy massive discounts on electronics, fashion, home essentials, and more. Exclusive offers for Prime Members — Save Big!</p>
+    <a href="https://amzn.to/4lwo4b0" target="_blank">Explore Prime Day Deals</a>
+  </div>
+</section>
 
 <footer class="footer">
   <p>&copy; 2025 RanSan Groups. All Rights Reserved.</p>
@@ -126,6 +178,32 @@ function displayProducts(products) {
   calculateDiscounts();
 }
 
+function updateCountdown() {
+  const countdownEl = document.getElementById('countdown');
+  const targetDate = new Date("July 12, 2025 23:59:59").getTime();
+
+  const timer = setInterval(function () {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance < 0) {
+      clearInterval(timer);
+      countdownEl.innerHTML = "Offer Expired";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
+  }, 1000);
+}
+
 function calculateDiscounts() {
   document.querySelectorAll('.price-block').forEach(b => {
     const orig = parseFloat(b.dataset.original);
@@ -164,12 +242,13 @@ function payWithRazorpay(productName, price) {
 function closeBuyerModal() {
   document.getElementById('buyer-modal').classList.remove('show');
 }
+
 function proceedToPay() {
   const email = document.getElementById("buyer-email").value.trim();
   const phone = document.getElementById("buyer-phone").value.trim();
   if (!email.includes("@")) return alert("Enter valid email.");
   if (phone.length < 8) return alert("Enter valid phone.");
-  document.getElementById("buyer-modal").style.display = 'none';
+  document.getElementById('buyer-modal').style.display = 'none';
 
   const options = {
     key: "rzp_test_iOdWWEhKlikqRy",
@@ -179,23 +258,30 @@ function proceedToPay() {
     description: selectedProductName,
     prefill: { name: "Customer", email: email, contact: phone },
     handler: function () {
+      // Submit to Apps Script in background
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = "https://script.google.com/macros/s/AKfycbwUR5q6NsEu4vKbG5mxOGn7C3nE5xM9GOs4rYAKAT6NjXL3BLv4hF7DCkNlhA2llH0m/exec";
+      form.action = "https://script.google.com/macros/s/AKfycbx0Cw9FDyhLX5gvg_BrB15j-N6u78_ASL08ey7YDBWvLx-RmdGcc3d_d17eAh57Q4zSkw/exec";
+      form.target = "hidden_iframe";
       form.innerHTML = `
         <input type="hidden" name="email" value="${email}">
         <input type="hidden" name="name" value="Customer">
         <input type="hidden" name="productName" value="${selectedProductName}">
       `;
-      form.target = "_self";
       document.body.appendChild(form);
       form.submit();
+
+      // Then redirect to thank-you
+      setTimeout(() => {
+        window.location.href = "https://www.ransangroups.com/thank-you.html";
+      }, 1000);
     },
     theme: { color: "#9a22f6" }
   };
   const rzp = new Razorpay(options);
   rzp.open();
 }
+
 
 document.querySelectorAll('.category-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -207,7 +293,12 @@ document.querySelectorAll('.category-btn').forEach(btn => {
   });
 });
 
-window.onload = fetchProductData;
+//window.onload = fetchProductData;
+
+window.onload = function() {
+  updateCountdown();
+  fetchProductData();
+};
 
 function getStars(r) {
   const f = '★'.repeat(Math.floor(r));
