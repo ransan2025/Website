@@ -421,3 +421,15 @@ text-align:center;
   color: #f9c22e;
   font-weight: bold;
 }
+/* 2 products per row on tablets */
+@media (max-width: 991px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* 1 product per row on mobile */
+@media (max-width: 575px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
