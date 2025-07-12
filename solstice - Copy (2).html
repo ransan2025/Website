@@ -160,56 +160,6 @@
   to {bottom: 0; opacity: 0;}
 }
 
-/* === Mobile Navigation Enhancements === */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    font-size: 28px;
-    cursor: pointer;
-    color: white;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: #0a2342;
-    position: absolute;
-    top: 58px;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  .nav-links a {
-    padding: 12px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-}
-
-/* Hide hamburger on desktop */
-.menu-toggle {
-  display: none;
-}
-
-/* === Mobile Modal Fix === */
-@media (max-width: 480px) {
-  .modal-content {
-    width: 90% !important;
-    margin: 20% auto !important;
-    padding: 20px 15px !important;
-  }
-
-  .modal input,
-  .modal button {
-    font-size: 16px;
-    padding: 12px;
-  }
-}
-
   </style>
   <!-- Facebook Pixel Code -->
 <script>
@@ -232,8 +182,7 @@ src="https://www.facebook.com/tr?id=1220465292709630&ev=PageView&noscript=1"/></
 
 <div class="navbar">
   <div><strong>Solstice</strong></div>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <div class="nav-links">
+  <div>
     <a href="#home">Home</a>
     <a href="#highlights">Highlights</a>
     <a href="#gallery">Gallery</a>
@@ -433,10 +382,6 @@ function submitBrochure() {
     const toast = document.getElementById("toast");
     toast.className = "show";
     setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-  }
-  
-  function toggleMenu() {
-    document.querySelector(".nav-links").classList.toggle("active");
   }
   
 </script>
