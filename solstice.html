@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solstice by The Baya Company – Andheri East</title>
+  <meta name="description" content="2 & 3 BHK Luxury Apartments in Andheri East – Solstice by The Baya Company. RERA Approved. Starting from ₹2.09 Cr. Enquire now.">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <meta property="og:title" content="Solstice – Premium 2 & 3 BHK Apartments in Andheri East">
+  <meta property="og:image" content="assets/solstice/hero-banner.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet"/>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f4f4f4; color: #333; }
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: #0a2342;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+    .swiper { width: 100%; height: 80vh; }
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+      font-size: 2em;
+      font-weight: bold;
+    }
+    section {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: auto;
+  scroll-margin-top: 100px;
+}
+    h2 { color: #0a2342; text-align: center; }
+    ul { max-width: 700px; margin: auto; }
+    ul li { margin: 10px 0; }
+    .gallery-filters { text-align: center; margin-bottom: 20px; }
+    .gallery-filters button {
+      margin: 5px;
+      padding: 8px 16px;
+      background: #0a2342;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+.gallery-grid a img {
+  width: 100%;
+  height: 220px; /* or 250px, depending on your layout */
+  object-fit: cover; /* ensures image fills the box without distortion */
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15),
+              0 6px 6px rgba(0, 0, 0, 0.10);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 4px solid #fff;
+}
+
+.image-card {
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+    .gallery-grid a img:hover {
+      transform: scale(1.05);
+    }
+    .badges { text-align: center; margin-top: 20px; }
+    .badge {
+      display: inline-block;
+      background: #0a2342;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    footer {
+      background: #0a2342;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .modal {
+      display: none; position: fixed; z-index: 9999; padding-top: 100px;
+      left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fff; margin: auto; padding: 20px;
+      border-radius: 10px; width: 90%; max-width: 400px; text-align: center;
+    }
+    .modal input, .modal button {
+      width: 100%; padding: 10px; margin-top: 10px;
+      border-radius: 5px; border: 1px solid #ccc;
+    }
+    .modal-close { float: right; cursor: pointer; font-weight: bold; }
+	.whatsapp-btn { background-color: #25D366; }
+    .enquiry-btn { background-color: #007BFF; }
+    .brochure-btn { background-color: #FF9900; }
+    .visit-btn { background-color: #6f42c1; }
+	    .btns a, .btns button {
+      display: inline-block; margin: 10px 10px 0 0; padding: 12px 20px;
+      border: none; border-radius: 5px; color: white; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+    }
+	#toast {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  padding: 14px;
+  position: fixed;
+  z-index: 9999;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+#toast.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+  </style>
+  <!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod ?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1220465292709630'); 
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" 
+src="https://www.facebook.com/tr?id=1220465292709630&ev=PageView&noscript=1"/></noscript>
+
+</head>
+<body>
+
+<div class="navbar">
+  <div><strong>Solstice</strong></div>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#highlights">Highlights</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#location">Location</a>
+  </div>
+</div>
+
+<div id="home" class="swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" style="background-image:url('assets/solstice/hero-banner.png')">Premium Living at Marol</div>
+    <div class="swiper-slide" style="background-image:url('assets/solstice/gallery-rooftop.jpeg')">Sky Lounge & Rooftop Views</div>
+    <div class="swiper-slide" style="background-image:url('assets/solstice/gallery-pool.jpeg')">Luxury Amenities</div>
+    <div class="swiper-slide" style="background-image:url('assets/solstice/gallery-front.jpeg')">Grand Entrance</div>
+  </div>
+</div>
+
+<section id="highlights" data-aos="fade-up">
+  <h2>Key Highlights</h2>
+  <ul>
+    <li>🏙️ A Masterpiece by The Baya Company on Makwana Road, Marol</li>
+    <li>🔹 Largest-In-Size 2 & 3 Bed Residences designed for the connoisseurs of fine living</li>
+    <li>🔹 3.5 Acre Gated Enclave with World-Class Amenities</li>
+	<li>🌟 Majestic Living, Crafted to Perfection🌟</li>
+    <li>✅ 35,000 Sq. Ft. of signature lifestyle amenities across the Podium & Rooftop</li>
+	<li>✅ Spacious Decks in every apartment for breathtaking views🌟</li>
+    <li>✅ 10' 6" Feet Internal Height</li>
+	<li>✅ Attached Servant Room in all apartments</li>
+	<li>✅ Utility Spaces for effortless living</li>
+    <li>🔺 4B + G + P + 20 Floors | RERA Approved (RERA No. P51800055310)</li>
+	<li>🎉 Limited-Time Launch Benefits – Luxury Has Never Been This Attainable</li>
+	<li>📍 A Landmark of Distinction. A Statement of Prestige</li>
+  </ul>
+</section>
+
+<section id="gallery" data-aos="fade-up">
+  <h2>Project Gallery</h2>
+  <div class="gallery-filters">
+    <button onclick="filterGallery('all')">All</button>
+    <button onclick="filterGallery('exterior')">Exteriors</button>
+    <button onclick="filterGallery('interior')">Interiors</button>
+    <button onclick="filterGallery('amenities')">Amenities</button>
+    <button onclick="filterGallery('views')">Views</button>
+  </div>
+  <div class="gallery-grid">
+    <a href="assets/solstice/gallery-front.jpeg" data-lightbox="gallery" data-category="exterior"><img src="assets/solstice/gallery-front.jpeg" alt="Front"/></a>
+	<a href="assets/solstice/gallery-front.jpeg" data-lightbox="gallery" data-category="exterior"><img src="assets/solstice/gallery-front2.jpeg" alt="Front"/></a>
+    <a href="assets/solstice/gallery-living.jpeg" data-lightbox="gallery" data-category="interior"><img src="assets/solstice/gallery-living.jpeg" alt="Living Room"/></a>
+	<a href="assets/solstice/gallery-living.jpeg" data-lightbox="gallery" data-category="interior"><img src="assets/solstice/gallery-living2.jpeg" alt="Living Room"/></a>
+    <a href="assets/solstice/gallery-club.jpeg" data-lightbox="gallery" data-category="amenities"><img src="assets/solstice/gallery-gym.jpeg" alt="gallery-gym"/></a>
+    <a href="assets/solstice/gallery-pool.jpeg" data-lightbox="gallery" data-category="amenities"><img src="assets/solstice/gallery-pool.jpeg" alt="Swimming Pool"/></a>
+    <a href="assets/solstice/gallery-rooftop.jpeg" data-lightbox="gallery" data-category="views"><img src="assets/solstice/gallery-rooftop.jpeg" alt="Rooftop View"/></a>
+	<a href="assets/solstice/gallery-rooftop.jpeg" data-lightbox="gallery" data-category="views"><img src="assets/solstice/gallery-rooftop2.jpeg" alt="Rooftop View"/></a>
+  </div>
+</section>
+
+<section id="why" data-aos="fade-up">
+  <h2>Why Choose Solstice?</h2>
+  <div class="badges">
+    <div class="badge">✅ RERA Approved</div>
+    <div class="badge">🏢 Trusted Developer</div>
+    <div class="badge">🛡 Secure Booking</div>
+  </div>
+</section>
+
+<section id="location" data-aos="fade-up">
+  <h2>Project Location</h2>
+  <p style="text-align:center;">Makwana Road, Marol, Andheri East, Mumbai – 400059</p>
+  <iframe src="https://www.google.com/maps?q=Makwana+Road,+Marol,+Mumbai,+400059&output=embed" width="100%" height="300" style="border:0; border-radius:8px;" loading="lazy"></iframe>
+</section>
+
+
+<section id="walkthrough" data-aos="fade-up" style="text-align: center; padding: 40px 20px;">
+  <h2 style="color: #0a2342;">Project Video Walkthrough</h2>
+  <video 
+    controls 
+    autoplay 
+    muted 
+    loop 
+    style="
+      width: 280px;
+      height: 500px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+      margin-top: 20px;
+    ">
+    <source src="assets/solstice/test.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
+
+<section class="section btns" data-aos="zoom-in">
+  <h2>Ready to Book a Visit?</h2>
+  <div style="text-align:center;">
+    <a href="https://wa.me/918148610567?text=Hi, I'm interested in Solstice by The Baya Company." class="whatsapp-btn" target="_blank">📲 WhatsApp Us</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScYwRRCaVghGqJZfQFHeWk1SRmmLXwkBcqYSdC-7yXOUs9qnQ/viewform" class="enquiry-btn" target="_blank">📝 Enquire Now</a>
+    <button onclick="document.getElementById('brochureModal').style.display='block'" class="brochure-btn">📩 Download Brochure</button>
+    <button onclick="document.getElementById('visitModal').style.display='block'" class="visit-btn">📅 Book a Site Visit</button>
+  </div>
+</section>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/918148610567?text=Hi, I'm interested in Solstice Project." class="floating-whatsapp" target="_blank">
+  <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" width="60" alt="WhatsApp">
+</a>
+
+<!-- Brochure Modal -->
+<div id="brochureModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="document.getElementById('brochureModal').style.display='none'">&times;</span>
+    <h3>Download Brochure</h3>
+    <input type="text" id="brochureName" placeholder="Your Name" required />
+    <input type="tel" id="brochurePhone" placeholder="Your Phone" required />
+    <input type="email" id="brochureEmail" placeholder="Your Email" required />	
+    <button onclick="submitBrochure()">Submit & Download</button>
+  </div>
+</div>
+
+
+<!-- Site Visit Modal -->
+<div id="visitModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="document.getElementById('visitModal').style.display='none'">&times;</span>
+    <h3>Book a Site Visit</h3>
+    <input type="text" id="visitName" placeholder="Your Name" />
+    <input type="tel" id="visitPhone" placeholder="Your Phone" />
+    <input type="date" id="visitDate" />
+    <button onclick="submitVisit()">Book Appointment</button>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 RanSan Digital. All Rights Reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+  AOS.init();
+  const swiper = new Swiper('.swiper', {
+    autoplay: { delay: 4000 },
+    loop: true,
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+  });
+
+  function filterGallery(category) {
+    document.querySelectorAll('[data-lightbox="gallery"]').forEach(item => {
+      const show = category === 'all' || item.dataset.category === category;
+      item.style.display = show ? 'block' : 'none';
+    });
+  }
+
+ // Brochure Submission
+function submitBrochure() {
+  const name = document.getElementById("brochureName").value;
+  const phone = document.getElementById("brochurePhone").value;
+  const email = document.getElementById("brochureEmail").value;
+
+  if (!name || !email || !phone) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbzIO5pCS4MGs8bYbeF-a6pxVD0IOPJLy7K6YG2IXigiUzeW27frw39NjjFJE5etQlOQPw/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&type=brochure`
+  });
+
+  window.open("https://drive.google.com/file/d/1dPPZ_a7NgDyQFcfNHeEIFh_ks7xkFDDR/view", "_blank");
+  document.getElementById("brochureModal").style.display = 'none';
+}	
+
+  // Visit Submission
+  function submitVisit() {
+    const name = document.getElementById("visitName").value;
+    const phone = document.getElementById("visitPhone").value;
+    const date = document.getElementById("visitDate").value;
+
+    if (!name || !phone || !date) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbzIO5pCS4MGs8bYbeF-a6pxVD0IOPJLy7K6YG2IXigiUzeW27frw39NjjFJE5etQlOQPw/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&date=${encodeURIComponent(date)}&type=visit`
+    });
+
+    showToast();
+    document.getElementById("visitModal").style.display = 'none';
+  }
+  
+  function showToast() {
+    const toast = document.getElementById("toast");
+    toast.className = "show";
+    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+  }
+  
+</script>
+
+
+<div id="toast">✅ Thank you! We've received your info.</div>
+
+</body>
+</html>
