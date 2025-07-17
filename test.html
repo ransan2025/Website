@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Page</title>
+  <style>
+    .main-menu ul li a.active {
+      color: red;
+      font-weight: bold;
+      border-bottom: 2px solid red;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="main-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const page = window.location.pathname.split("/").pop() || "index.html";
+      document.querySelectorAll(".main-menu ul li a").forEach(link => {
+        if (link.getAttribute("href") === page) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

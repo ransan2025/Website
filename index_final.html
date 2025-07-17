@@ -54,21 +54,6 @@
 </noscript>
 <!-- End Meta Pixel Code -->
 
-
-<style>
-  a.active {
-    color: #9a22f6 !important;
-    font-weight: bold;
-    position: relative;
-  }
-
-  a.active::after {
-  height: 1px;
-  background: rgba(154, 34, 246, 0.5);
-}
-</style>
-
-
 </head>
 
 <body>
@@ -109,7 +94,7 @@
                     <nav>
                         <ul>
                             <li class="has-megamenu">
-                                <a href="index.html" id="nav-home">Home</a>
+                                <a href="index.html">Home</a>
                             </li>
                             <li><a href="about.html">About</a></li>
                             <li>
@@ -1876,29 +1861,16 @@
     <!-- Script Js -->
     <script src="assets/js/script.js"></script>
 
-<script>
-  window.onload = function () {
-    const pageMap = {
-      "index.html": "nav-home",
-      "about.html": "nav-about",
-      "contact.html": "nav-contact",
-      "services.html": "nav-services",
-      "realestate.html": "nav-realestate",
-      "digital.html": "nav-digital",
-      "event.html": "nav-event",
-      "online.html": "nav-online",
-      "technology.html": "nav-tech"
-    };
-
-    const current = window.location.pathname.split("/").pop() || "index.html";
-    const currentId = pageMap[current];
-
-    if (currentId) {
-      const link = document.getElementById(currentId);
-      if (link) link.classList.add("active");
-    }
-  };
-</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const page = window.location.pathname.split("/").pop() || "index.html";
+      document.querySelectorAll(".main-menu ul li a").forEach(link => {
+        if (link.getAttribute("href") === page) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
 
 </body>
 
