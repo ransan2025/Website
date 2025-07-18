@@ -1,7 +1,7 @@
 {
   "name": "RanSan Groups",
   "short_name": "RanSan",
-  "start_url": "./card.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1535",
   "theme_color": "#5e2e91",
