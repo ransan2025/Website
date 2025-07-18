@@ -1,36 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Test Page</title>
-  <style>
-    .main-menu ul li a.active {
-      color: red;
-      font-weight: bold;
-      border-bottom: 2px solid red;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Ransan Group</title>
+    <meta name="description"
+        content="Learn about Ransan Group's mission, values, and team behind our diverse service offerings.">
+    <meta name="keywords" content="About Ransan Group, Company Info, Our Team, Mission, Vision">
+    <meta name="robots" content="index, follow">
+    <!-- Favicon img -->
+    <link rel="shortcut icon" href="assets\images\logo\ransan_color_png2.png">
+    <!-- Bootstarp min css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Mean menu css -->
+    <link rel="stylesheet" href="assets/css/meanmenu.css">
+    <!-- All min css -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- Swiper bundle min css -->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <!-- Magnigic popup css -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- Animate css -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- Nice select css -->
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <!-- Style css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 </head>
+
 <body>
 
-  <nav class="main-menu">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+<!-- Include AOS in <head> -->
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const page = window.location.pathname.split("/").pop() || "index.html";
-      document.querySelectorAll(".main-menu ul li a").forEach(link => {
-        if (link.getAttribute("href") === page) {
-          link.classList.add("active");
+<!-- Include Swiper (if not already included) -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<!-- Section with Visual Enhancements Start -->
+<section class="testimonial-cta-area pt-120 pb-120">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+
+            <!-- Testimonial Column -->
+            <div class="col-lg-6">
+                <div class="testimonial__item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="assets/images/testimonial/client1.jpg" class="testimonial-avatar" alt="client">
+                    <h4>Arvind Patel <span class="role">CTO</span></h4>
+                    <p class="testimonial-text">
+                        RanSan Groups transformed our infrastructure.
+                        <span class="more-text" style="display:none;">
+                            The results were instant and proactive solutions were delivered beyond expectations.
+                        </span>
+                    </p>
+                    <a href="#" class="read-more">Read More</a>
+                    <div class="stars">★★★★★</div>
+                </div>
+            </div>
+
+            <!-- CTA Column -->
+            <div class="col-lg-6">
+                <div class="cta-box glass-effect" data-aos="fade-left" data-aos-delay="300">
+                    <h2>Let's <span style="color:#FFD700;" id="dynamic-word">Scale Faster</span></h2>
+                    <p>Partner with us to build, grow, and innovate your business journey.</p>
+                    <a href="contact.html" class="btn-two mt-3">Schedule a Call <i class="fas fa-calendar-alt"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SVG Divider -->
+    <svg viewBox="0 0 1440 150" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100px; display:block;">
+      <path d="M0,50 C480,150 960,0 1440,50 L1440,150 L0,150 Z" fill="#9a22f6"/>
+    </svg>
+</section>
+<!-- Section End -->
+
+<!-- Include JS at the bottom -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+});
+
+// Read More Toggle
+document.querySelectorAll('.read-more').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const moreText = this.previousElementSibling.querySelector('.more-text');
+        if (moreText.style.display === 'none') {
+            moreText.style.display = 'inline';
+            this.textContent = 'Read Less';
+        } else {
+            moreText.style.display = 'none';
+            this.textContent = 'Read More';
         }
-      });
     });
-  </script>
+});
 
+// Dynamic CTA Text
+const words = ["Scale Faster", "Build Better", "Grow Smarter", "Innovate Together"];
+let index = 0;
+const dynamicWord = document.getElementById("dynamic-word");
+
+setInterval(() => {
+    index = (index + 1) % words.length;
+    dynamicWord.textContent = words[index];
+}, 3000);
+</script>
+
+<!-- Add CSS in <style> or style.css -->
+<style>
+.testimonial__item, .cta-box {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial__item:hover, .cta-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+.testimonial-avatar {
+    transition: transform 0.3s ease;
+}
+
+.testimonial-avatar:hover {
+    transform: scale(1.1);
+}
+
+.btn-two {
+    transition: all 0.3s ease;
+}
+
+.btn-two:hover {
+    background: #000;
+    color: #fff;
+    transform: scale(1.05);
+    animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.glass-effect {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+}
+</style>
+
+   
 </body>
+
 </html>

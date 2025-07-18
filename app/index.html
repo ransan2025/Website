@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RanSan Groups | Digital Card</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#5e2e91" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #1a1535, #5e2e91);
+      color: white;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      background: #201c3c;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+    .logo img, .profile img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+    }
+    h1, h2 { margin: 10px 0; }
+    .btns a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #a78bfa;
+      color: #000;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="ransan_color_png.png" alt="RanSan Logo" />
+    </div>
+    <div class="profile" style="margin: 20px 0;">
+      <img src="profile.jpg" alt="Sudhakar R" />
+    </div>
+    <h1>Sudhakar R</h1>
+    <h2>Founder, RanSan Groups</h2>
+    <p>Empowering Your Growth</p>
+    <div class="btns">
+      <a href="https://wa.me/918148610567">💬 WhatsApp</a>
+      <a href="mailto:support@ransangroups.com">✉️ Email</a>
+      <a href="https://www.ransangroups.com">🌐 Website</a>
+    </div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>

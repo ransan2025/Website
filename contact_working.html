@@ -85,62 +85,40 @@
             font-weight: bold;
         }
 
-        .progressbar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.progressbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .progress-step {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #ccc;
-            color: #fff;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
+.progress-step {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
 
-        .progress-step.active {
-            background: #9a22f6;
-        }
+.progress-step.active {
+    background: #9a22f6;
+}
 
-        .progress-line {
-            width: 60px;
-            height: 4px;
-            background: #ccc;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-        }
+.progress-line {
+    width: 60px;
+    height: 4px;
+    background: #ccc;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
 
-        .progress-line.active {
-            background: #9a22f6;
-        }
+.progress-line.active {
+    background: #9a22f6;
+}
 
-        #form-status.loading::after {
-            content: '';
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin-left: 8px;
-            border: 2px solid #fff;
-            border-top: 2px solid #9a22f6;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
     </style>
 
 </head>
@@ -347,15 +325,15 @@
                             <div class="contact__form">
 
                                 <div class="progressbar-wrapper text-center mb-4">
-                                    <div class="progressbar">
-                                        <div class="progress-step active">1</div>
-                                        <div class="progress-line"></div>
-                                        <div class="progress-step">2</div>
-                                        <div class="progress-line"></div>
-                                        <div class="progress-step">3</div>
-                                    </div>
-                                </div>
-
+            <div class="progressbar">
+                <div class="progress-step active">1</div>
+                <div class="progress-line"></div>
+                <div class="progress-step">2</div>
+                <div class="progress-line"></div>
+                <div class="progress-step">3</div>
+            </div>
+        </div>
+                                
                                 <form id="multiStepForm" novalidate>
                                     <!-- Step 1 -->
                                     <div class="step active" id="step1">
@@ -403,12 +381,8 @@
                                         <button type="button" class="btn-one" onclick="prevStep(3)"><i
                                                 class="fas fa-arrow-left-long"></i>&nbsp;&nbsp;Back</button>
                                         <button type="submit" class="btn-one">Submit<i
-                                                class="fas fa-arrow-right-long"></i>
-                                            <span id="spinner" style="display:none; margin-left:10px;">
-                                                <i class="fas fa-spinner fa-spin"></i>
-                                            </span>
-                                        </button>
-                                        <p id="form-status" style="margin-top:15px; font-weight:bold;"></p>
+                                                class="fas fa-arrow-right-long"></i></button>
+                                        <p id="form-status"></p>
                                     </div>
                                 </form>
                             </div>
@@ -581,15 +555,11 @@
             const formData = new FormData(this);
             const scriptURL = "https://script.google.com/macros/s/AKfycbxqbr_sHRmqW-1pHpKauOCKlI_hdXn8PXPQieVrvGLPgKdES1hXEo3t_7K2fECkbW75/exec"; // Replace with your script URL
 
-            document.getElementById("spinner").style.display = "inline-block";
-            statusEl.textContent = "⏳ Sending your message, please wait...";
-            statusEl.style.color = "#333";
-
             fetch(scriptURL, { method: "POST", body: formData })
                 .then((response) => {
                     if (response.ok) {
-                        statusEl.classList.remove("loading");
-                        statusEl.textContent = "✅ Thank you! Your message has been sent.";
+                        alert("✅ Thank you! Your message has been sent.");
+                        statusEl.textContent = "✅ Message sent successfully!";
                         statusEl.style.color = "green";
 
                         setTimeout(() => {
@@ -597,7 +567,6 @@
                             document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
                             document.getElementById("step1").classList.add("active");
                             currentStep = 1;
-                            updateProgress(1); // Reset progress bar
                             statusEl.textContent = "";
                         }, 2000);
                     } else {
@@ -606,7 +575,6 @@
                 })
                 .catch((error) => {
                     console.error("Error!", error);
-                    statusEl.classList.remove("loading");
                     statusEl.textContent = "❌ Submission failed. Please try again.";
                     statusEl.style.color = "red";
                 });
@@ -631,29 +599,29 @@
         }
     </script>
 
-    <script>
-        function updateProgress(step) {
-            const steps = document.querySelectorAll('.progress-step');
-            const lines = document.querySelectorAll('.progress-line');
+<script>
+function updateProgress(step) {
+    const steps = document.querySelectorAll('.progress-step');
+    const lines = document.querySelectorAll('.progress-line');
 
-            steps.forEach((s, i) => {
-                if (i < step) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-
-            lines.forEach((l, i) => {
-                if (i < step - 1) {
-                    l.classList.add('active');
-                } else {
-                    l.classList.remove('active');
-                }
-            });
+    steps.forEach((s, i) => {
+        if (i < step) {
+            s.classList.add('active');
+        } else {
+            s.classList.remove('active');
         }
+    });
 
-    </script>
+    lines.forEach((l, i) => {
+        if (i < step - 1) {
+            l.classList.add('active');
+        } else {
+            l.classList.remove('active');
+        }
+    });
+}
+
+</script>
 
 </body>
 
