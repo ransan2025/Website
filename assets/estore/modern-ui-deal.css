@@ -1,0 +1,139 @@
+/* flashdeals.css - Fully Isolated Flash Deals & Deals of the Day */
+
+#flash-deals-widget {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    border-radius: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+    overflow: hidden;
+    animation: slideInFlash 0.6s ease-out;
+}
+
+@keyframes slideInFlash {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.flash-deals-header {
+    background: linear-gradient(90deg, #a100ff, #ff00a6);
+    color: #fff;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flash-deals-content {
+    padding: 12px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.flash-deal-item {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+.flash-deal-item:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.flash-deal-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flash-deal-badge {
+    background: #ff006e;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 12px;
+    border-radius: 50px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.flash-deal-meta {
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+}
+
+.flash-no-deals {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 20px;
+}
+
+/* Deals of the Day Section */
+
+#deals-of-day {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #ffe5f9, #f4e1ff);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.deal-day-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.deal-day-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.deal-day-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+    padding: 15px;
+    transition: transform 0.3s;
+}
+
+.deal-day-card:hover {
+    transform: translateY(-5px);
+}
+
+.deal-day-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.deal-day-discount {
+    background: #00c853;
+    color: #fff;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 50px;
+    display: inline-block;
+}

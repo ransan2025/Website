@@ -1,0 +1,57 @@
+/* FLASH DEALS MODULE CSS */
+#flashDealsModule {
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 15px;
+    width: 320px;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    animation: fadeInFlash 0.5s ease;
+}
+
+.flashDealItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    background: #f8f4ff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.flashDealIcon {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.flashDealContent {
+    flex-grow: 1;
+}
+
+.flashDealTitle {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.flashDealTag {
+    font-size: 12px;
+    color: #6c63ff;
+    background: #e9e5ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+}
+
+.flashDealDiscount, .flashDealExpiry {
+    font-size: 12px;
+    color: #333;
+}
+
+@keyframes fadeInFlash {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}

@@ -1,0 +1,47 @@
+.flash-deals-ticker {
+  position: fixed;
+  right: 20px;
+  top: 100px;
+  width: 220px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+.flash-deals-ticker .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  padding: 8px;
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease;
+  cursor: pointer;
+}
+
+.flash-deals-ticker .swiper-slide img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.flash-deals-ticker .swiper-slide .deal-text {
+  flex: 1;
+}
+
+.flash-deals-ticker .icon {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}

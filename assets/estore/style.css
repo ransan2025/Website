@@ -102,14 +102,74 @@ body {
   transform: scale(1.05);
 }
 .details-btn {
-  background: #eee;
-  color: #333;
-  border: 1px solid #ccc;
-  transition: background 0.3s, transform 0.3s;
+  position: relative;
+  font-size: 20px;
+  padding: 10px;
+  background: #6E0DD0;
+  color: #fff;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 .details-btn:hover {
-  background: #ddd;
-  transform: translateY(-2px);
+  background: #8224E3;
+}
+.details-btn::after {
+  content: "\f25a"; /* Font Awesome hand-pointer icon */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #fff;
+  color: #8224E3;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.details-btn:hover::after {
+  opacity: 1;
+  transform: scale(1);
+  animation: hand-bounce 0.4s;
+}
+.details-btn::before {
+  content: "More Details";
+  position: absolute;
+  bottom: 130%; /* Above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.details-btn:hover::before {
+  opacity: 1;
+}
+.details-btn::after-tooltip {
+  content: "";
+  position: absolute;
+  bottom: 120%; /* Arrow just below tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+@keyframes hand-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
 }
 .action-buttons {
   margin: 10px 0;
@@ -446,22 +506,41 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(90deg, #9A22F6, #6B3E99);
+  background: linear-gradient(45deg, #9A22F6, #6E0DD0);
   padding: 12px;
   text-align: center;
   z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
 }
 .mobile-buy-bar button {
   background: #fff;
   color: #9A22F6;
-  font-size: 18px;
-  padding: 12px 24px;
-  border-radius: 8px;
   border: none;
-  font-weight: bold;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.mobile-buy-bar button:hover {
+  background: #f3f3f3;
+  transform: translateY(-2px);
+}
+
+/* Hide by default, show only on mobile */
+.hidden {
+  display: none;
+}
+
+/* Show on mobile only */
+@media (max-width: 767px) {
+  .mobile-buy-bar.hidden {
+    display: block;
+  }
 }
 
 .site-header {
@@ -506,19 +585,20 @@ body {
 }
 
 .header-cta {
-  background: #9A22F6;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
+    background: linear-gradient(45deg, #9A22F6, #6E0DD0);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
 }
 
 .header-cta:hover {
-  background: linear-gradient(90deg, #6B3E99, #9A22F6);
-  transform: scale(1.05);
+    background: linear-gradient(45deg, #B833FF, #8224E3);
+    transform: translateY(-2px);
 }
 
 .amazon-banner {

@@ -1,0 +1,78 @@
+.fd-module {
+  width: 100%;
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  overflow: hidden;
+  border-radius: 16px;
+  margin: 20px auto;
+  max-width: 1200px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+.fd-module .fd-swiper {
+  width: 100%;
+}
+
+.fd-module .fd-slide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+.fd-module .fd-slide:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.fd-module .fd-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.fd-module .fd-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.fd-module .fd-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.fd-module .fd-badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 4px;
+  display: inline-block;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  color: #fff;
+  font-weight: 500;
+  animation: fdGradientMove 3s infinite linear;
+}
+
+.fd-module .fd-badge.deal {
+  background: linear-gradient(90deg, #1fd1f9, #b621fe);
+}
+
+@keyframes fdGradientMove {
+  0% {background-position: 0%;}
+  100% {background-position: 200%;}
+}
+
+.fd-module .swiper-wrapper {
+  display: flex;
+  align-items: center;
+}

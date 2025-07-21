@@ -1,0 +1,63 @@
+#rs-flash-ticker {
+  position: fixed;
+  top: 120px;  /* Better position below navbar */
+  right: 0;
+  width: 250px;
+  background: rgba(255,255,255,0.95);
+  box-shadow: -4px 4px 12px rgba(0,0,0,0.1);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  overflow: hidden;
+  z-index: 9999;
+  font-family: Poppins, sans-serif;
+}
+
+.rs-flash-header {
+  background: linear-gradient(45deg, #9A22F6, #6E0DD0);
+  color: #fff;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#rs-flash-items {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.rs-flash-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.rs-flash-item:hover {
+  background: #f9f9f9;
+}
+
+.rs-flash-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+}
+
+.rs-flash-item .rs-flash-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.rs-flash-item .rs-flash-badge {
+  background: #FF5252;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: auto;
+  font-size: 12px;
+}
