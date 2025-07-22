@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Step Enquiry Form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link href="assets/enquiry/enquiry.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header
+    style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #fff; border-bottom: 1px solid #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;">
+    <div style="display: flex; align-items: center;">
+      <img src="https://www.ransangroups.com/images/logo.png" alt="RanSan Logo"
+        style="height: 40px; margin-right: 10px;">
+      <h1 style="margin: 0; font-size: 20px; color: #9a22f6;">RanSan Groups</h1>
+    </div>
+    <nav>
+      <a href="/" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">Home</a>
+      <a href="/about.html" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">About</a>
+      <a href="/services.html"
+        style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">Services</a>
+      <a href="/contact.html"
+        style="margin: 0 12px; color: #9a22f6; font-weight: bold; text-decoration: none;">Contact</a>
+    </nav>
+  </header>
+
+
+  <div class="form-container">
+    <ul class="form-progressbar">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <form id="enquiryForm" onsubmit="submitForm(event)">
+      <div class="form-step active" id="step1">
+        <div class="form-group">
+          <label for="mainService">Select Service</label>
+          <select id="mainService" name="mainService" required>
+            <option value="">-- Choose Service --</option>
+            <option value="Technology">Technology</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Event Management">Event Management</option>
+            <option value="Real Estate">Real Estate</option>
+            <option value="Online">Online</option>
+            <option value="Private Financing">Private Financing</option>
+            <option value="Stocks">Stocks</option>
+            <option value="Mutual Fund">Mutual Fund</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="subServiceContainer"></div>
+
+        <div class="btn-group">
+          <button type="button" id="next1">Next</button>
+        </div>
+      </div>
+
+      <div class="form-step" id="step2"></div>
+
+      <div class="form-step" id="step3">
+        <h2>Thank you!</h2>
+        <p>Your enquiry was successfully submitted. Our team will contact you shortly.</p>
+      </div>
+    </form>
+  </div>
+
+
+  <footer style="text-align:center; padding: 20px; color:#888; font-size: 14px;">
+    &copy; 2025 <strong>RanSan Groups</strong>. All rights reserved. | Contact: <a
+      href="mailto:support@ransangroups.com" style="color:#9a22f6;">support@ransangroups.com</a>
+  </footer>
+
+  <script>
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const next1 = document.getElementById('next1');
+    const mainService = document.getElementById('mainService');
+    const subServiceContainer = document.getElementById('subServiceContainer');
+    const progressSteps = document.querySelectorAll(".progressbar li");
+
+    const servicesWithSub = {
+      "Technology": ["Software Development", "Website Development"],
+      "Digital Marketing": ["SEO", "Paid Advertising", "Social Media marketing", "Email Marketing & Automation"],
+      "Event Management": ["Corporate Event", "Private Event", "Brand Activation"],
+      "Real Estate": ["Real Estate", "Construction"],
+      "Online": ["Government Online Services", "GST Registration", "ITR Filing", "Travel Ticket Booking", "Domestic Travel Package", "Personal Travel Planner", "Utility Payment"]
+    };
+
+    const nestedSubServices = {
+      "Real Estate": ["Property Development & Acquisition", "Buy, Sell, Lease & Rent Services"],
+      "Construction": ["Residential Projects", "Commercial Construction"]
+    };
+
+    mainService.addEventListener('change', e => {
+      const selected = e.target.value;
+      subServiceContainer.innerHTML = '';
+
+      if (servicesWithSub[selected]) {
+        const label = document.createElement('label');
+        label.textContent = 'Select Sub-Service';
+        const select = document.createElement('select');
+        select.id = 'subService';
+        select.name = 'subService';
+        select.required = true;
+
+        select.innerHTML = '<option value="">-- Choose --</option>' +
+          servicesWithSub[selected].map(option => `<option value="${option}">${option}</option>`).join('');
+
+        subServiceContainer.appendChild(label);
+        subServiceContainer.appendChild(select);
+
+        if (selected === 'Real Estate') {
+          select.addEventListener('change', ev => {
+            const nested = nestedSubServices[ev.target.value];
+            document.querySelector("#nestedSubService")?.remove();
+
+            if (nested) {
+              const subLabel = document.createElement('label');
+              subLabel.textContent = 'Select Specific Real Estate Service';
+              const subSelect = document.createElement('select');
+              subSelect.id = 'nestedSubService';
+              subSelect.name = 'nestedSubService';
+              subSelect.required = true;
+              subSelect.innerHTML = '<option value="">-- Choose --</option>' +
+                nested.map(opt => `<option value="${opt}">${opt}</option>`).join('');
+
+              subServiceContainer.appendChild(subLabel);
+              subServiceContainer.appendChild(subSelect);
+            }
+          });
+        }
+      }
+    });
+
+    next1.addEventListener('click', () => {
+      const selectedService = mainService.value;
+      const subServiceElem = document.getElementById('subService');
+      const nestedSubServiceElem = document.getElementById('nestedSubService');
+
+      const subService = subServiceElem?.value;
+      const nested = nestedSubServiceElem?.value;
+
+      let key = selectedService;
+
+      if (!selectedService) return alert("Please select a service.");
+
+      if (selectedService === "Real Estate") {
+        if (!subService) return alert("Please select a sub-service.");
+        if (nestedSubServiceElem && !nested) return alert("Please select specific Real Estate service.");
+        key = nested || subService;
+      } else if (subService) {
+        key = subService;
+      }
+
+      const rawHtml = step2Fields[key];
+      if (!rawHtml) return alert("Step 2 form not found for selected service.");
+
+      // ✅ Properly wrap the raw HTML into form-grid
+      const wrappedFields = wrapFieldsInFormGroup(rawHtml);
+
+      step2.innerHTML = `
+    ${wrappedFields}
+    <div class="btn-group">
+      <button type="button" onclick="backToStep(1)">Back</button>
+      <button type="button" onclick="nextToStep3()">Next</button>
+    </div>`;
+
+      goToStep(2);
+      updateProgressBar(2);
+    });
+
+    function backToStep(stepNum) {
+      step1.classList.remove('active');
+      step2.classList.remove('active');
+      step3.classList.remove('active');
+      document.getElementById(`step${stepNum}`).classList.add('active');
+      updateProgressBar(stepNum);
+    }
+
+function nextToStep3() {
+  const step3Html = getStep3HTML();
+  step3.innerHTML = step3Html + `
+    <div class="btn-group">
+      <button type="button" onclick="backToStep(2)">Back</button>
+      <button type="submit" id="submitBtn">Submit</button>
+    </div>`;
+
+  goToStep(3);
+  updateProgressBar(3);
+
+  // 🔥 Fix: Attach event listener after button is injected!
+  const submitBtn = document.getElementById("submitBtn");
+  submitBtn.addEventListener("click", submitForm);
+}
+
+    function goToStep(stepNum) {
+      [step1, step2, step3].forEach((s, i) => {
+        s.classList.toggle('active', i === stepNum - 1);
+      });
+      updateProgressBar(stepNum);
+    }
+
+    function updateProgressBar(step) {
+      const steps = document.querySelectorAll(".form-progressbar li");
+      steps.forEach((el, idx) => {
+        el.classList.remove("active", "completed");
+        if (idx + 1 < step) {
+          el.classList.add("completed");
+        }
+        if (idx + 1 === step) {
+          el.classList.add("active");
+        }
+      });
+    }
+
+    function getStep2HTML(serviceKey) {
+      const data = step2Fields[serviceKey];
+      if (!data) return '';
+
+      return data.map(field => {
+        if (field.type === 'select') {
+          return `
+            <div class="form-group">
+              <label>${field.label}</label>
+              <select name="${field.name}" required>
+                ${field.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+              </select>
+            </div>`;
+        } else if (field.type === 'checkbox') {
+          return `
+            <div class="form-group">
+              <label>${field.label}</label>
+              ${field.options.map(opt => `
+                <label style="display:inline-block; margin-right:10px">
+                  <input type="checkbox" name="${field.name}" value="${opt}"> ${opt}
+                </label>`).join('')}
+            </div>`;
+        } else {
+          return `
+            <div class="form-group">
+              <label>${field.label}</label>
+              <input type="${field.type}" name="${field.name}" required />
+            </div>`;
+        }
+      }).join('');
+    }
+
+    function getStep3HTML() {
+      return `
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" required />
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" name="mobile" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label>Preferred Contact Method</label>
+          <select name="contactMethod" required>
+            <option value="Phone">Phone</option>
+            <option value="Email">Email</option>
+            <option value="WhatsApp">WhatsApp</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Remark</label>
+          <textarea name="remark" rows="3"></textarea>
+        </div>`;
+    }
+
+    const step2Fields = {
+      "Software Development": `
+      <label>Type of Software</label>
+      <select name="softwareType" required>
+        <option>Web App</option><option>Mobile App</option><option>ERP</option><option>CRM</option><option>Billing</option><option>Custom</option>
+      </select>
+      <label>Platform</label>
+      <select name="platform" required>
+        <option>Web</option><option>Android</option><option>iOS</option><option>Cross-Platform</option>
+      </select>
+      <label>Project Description</label>
+      <textarea name="projectDesc" required></textarea>
+      <label>Estimated Users</label>
+      <input type="number" name="users" required>
+      <label>Expected Delivery Timeline</label>
+      <select name="timeline" required>
+        <option>1 Month</option><option>3 Months</option><option>6+ Months</option>
+      </select>
+      <label>Budget Range</label>
+      <input type="text" name="budget" required>
+    `,
+
+      "Website Development": `
+      <label>Type of Website</label>
+      <select name="websiteType" required>
+        <option>Business</option><option>eCommerce</option><option>Portfolio</option><option>Blog</option><option>Custom</option>
+      </select>
+      <label>Number of Pages</label>
+      <input type="text" name="pages" required>
+      <label>Do you need SEO?</label>
+      <select name="seo" required>
+        <option>Yes</option><option>No</option>
+      </select>
+      <label>Do you need hosting?</label>
+      <select name="hosting" required>
+        <option>Yes</option><option>No</option>
+      </select>
+      <label>Content Provided By</label>
+      <select name="content" required>
+        <option>Client</option><option>Agency</option>
+      </select>
+      <label>Budget Range</label>
+      <input type="text" name="budget" required>
+    `,
+
+      "SEO": `
+      <label>Website URL</label>
+      <input type="text" name="website" required>
+      <label>Business Niche</label>
+      <input type="text" name="niche" required>
+      <label>SEO Goal</label>
+      <select name="goal" required>
+        <option>Lead Generation</option><option>Ranking</option><option>Brand Visibility</option><option>Traffic</option>
+      </select>
+      <label>Target Keywords</label>
+      <textarea name="keywords" required></textarea>
+      <label>Target Geography</label>
+      <input type="text" name="geo" required>
+      <label>Current SEO Tools Used</label>
+      <input type="text" name="tools">
+    `,
+
+      "Paid Advertising": `
+      <label>Advertising Platform</label>
+      <div>
+        <input type="checkbox" name="platform" value="Google"> Google
+        <input type="checkbox" name="platform" value="Facebook"> Facebook
+        <input type="checkbox" name="platform" value="Instagram"> Instagram
+        <input type="checkbox" name="platform" value="LinkedIn"> LinkedIn
+        <input type="checkbox" name="platform" value="YouTube"> YouTube
+      </div>
+      <label>Monthly Budget</label>
+      <input type="text" name="monthlyBudget" required>
+      <label>Target Audience</label>
+      <textarea name="audience" required></textarea>
+      <label>Location Targeting</label>
+      <input type="text" name="location" required>
+      <label>Existing Ad Account?</label>
+      <select name="adAccount" required>
+        <option>Yes</option><option>No</option>
+      </select>
+      <label>Goal of Campaign</label>
+      <select name="goal" required>
+        <option>Leads</option><option>Website Traffic</option><option>App Installs</option><option>Video Views</option><option>Awareness</option>
+      </select>
+    `,
+
+      "Social Media marketing": `
+      <label>Platforms</label>
+      <div>
+        <input type="checkbox" name="platforms" value="Facebook"> Facebook
+        <input type="checkbox" name="platforms" value="Instagram"> Instagram
+        <input type="checkbox" name="platforms" value="Twitter/X"> Twitter/X
+        <input type="checkbox" name="platforms" value="LinkedIn"> LinkedIn
+        <input type="checkbox" name="platforms" value="Pinterest"> Pinterest
+        <input type="checkbox" name="platforms" value="YouTube"> YouTube
+      </div>
+      <label>Current Followers</label>
+      <input type="text" name="followers">
+      <label>Do you need content creation?</label>
+      <select name="contentCreation">
+        <option>Yes</option><option>No</option>
+      </select>
+      <label>Posting Frequency</label>
+      <select name="posting">
+        <option>Daily</option><option>3x Week</option><option>Weekly</option><option>Monthly</option>
+      </select>
+      <label>Objective</label>
+      <select name="objective">
+        <option>Branding</option><option>Engagement</option><option>Leads</option><option>Community Growth</option>
+      </select>
+    `,
+
+      "Email Marketing & Automation": `
+      <label>Type of Emails</label>
+      <div>
+        <input type="checkbox" name="emails" value="Newsletters"> Newsletters
+        <input type="checkbox" name="emails" value="Offers"> Offers
+        <input type="checkbox" name="emails" value="Drip Campaigns"> Drip Campaigns
+        <input type="checkbox" name="emails" value="Welcome Series"> Welcome Series
+        <input type="checkbox" name="emails" value="Abandoned Cart"> Abandoned Cart
+      </div>
+      <label>Email Platform Used</label>
+      <input type="text" name="platform">
+      <label>Contact List Size</label>
+      <input type="text" name="contactSize">
+      <label>Frequency of Emails</label>
+      <select name="frequency">
+        <option>Daily</option><option>Weekly</option><option>Monthly</option>
+      </select>
+      <label>Do you need copywriting?</label>
+      <select name="copy">
+        <option>Yes</option><option>No</option>
+      </select>
+      <label>Do you need automation setup?</label>
+      <select name="automation">
+        <option>Yes</option><option>No</option>
+      </select>
+    `,
+
+      "Corporate Event": `
+      <label>Type of Event</label>
+      <select name="eventType">
+        <option>Conference</option><option>Seminar</option><option>Product Launch</option><option>Team Building</option><option>Networking</option>
+      </select>
+      <label>Expected Attendees</label>
+      <input type="number" name="attendees">
+      <label>Preferred Date</label>
+      <input type="date" name="date">
+      <label>Location / Venue</label>
+      <input type="text" name="venue">
+      <label>Duration</label>
+      <select name="duration">
+        <option>Half-Day</option><option>Full-Day</option><option>Multi-Day</option>
+      </select>
+      <label>Services Required</label>
+      <div>
+        <input type="checkbox" name="services" value="Venue"> Venue
+        <input type="checkbox" name="services" value="Catering"> Catering
+        <input type="checkbox" name="services" value="AV"> AV
+        <input type="checkbox" name="services" value="Branding"> Branding
+        <input type="checkbox" name="services" value="Photography"> Photography
+        <input type="checkbox" name="services" value="Hostess"> Hostess
+      </div>
+    `,
+
+      "Private Event": `
+      <label>Type of Private Event</label>
+  <select name="eventType">
+    <option>Birthday</option>
+    <option>Wedding</option>
+    <option>Anniversary</option>
+    <option>Housewarming</option>
+    <option>Engagement</option>
+    <option>Other</option>
+  </select>
+  <label>Guest Count</label>
+  <input type="number" name="guestCount" />
+  <label>Preferred Date</label>
+  <input type="date" name="preferredDate" />
+  <label>Venue Location</label>
+  <input type="text" name="venueLocation" />
+  <label>Special Requirements</label>
+  <textarea name="specialRequirements"></textarea>
+    `,
+
+      "Brand Activation": `
+<label>Brand Name</label>
+  <input type="text" name="brandName" />
+  <label>Activation Type</label>
+  <select name="activationType">
+    <option>In-Store</option><option>Outdoor</option><option>College</option>
+    <option>Corporate</option><option>Malls</option><option>Society</option><option>Events</option>
+  </select>
+  <label>Objective of Campaign</label>
+  <select name="campaignObjective">
+    <option>Sampling</option><option>Engagement</option>
+    <option>Launch</option><option>Feedback</option>
+  </select>
+  <label>Duration of Activation</label>
+  <select name="activationDuration">
+    <option>1 Day</option><option>1 Week</option><option>1 Month</option><option>Custom</option>
+  </select>
+  <label>Target Audience Profile</label>
+  <textarea name="audienceProfile"></textarea>
+  <label>Support Required</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="support" value="Promoters" /> Promoters</label>
+    <label><input type="checkbox" name="support" value="Branding" /> Branding</label>
+    <label><input type="checkbox" name="support" value="Logistics" /> Logistics</label>
+    <label><input type="checkbox" name="support" value="Permissions" /> Permissions</label>
+    <label><input type="checkbox" name="support" value="Reporting" /> Reporting</label>
+  </div>
+    `,
+
+      "Property Development & Acquisition": `
+<label>Interested In</label>
+  <select name="interestType">
+    <option>Joint Venture</option><option>Land Sale</option><option>Land Development</option><option>Collaboration</option>
+  </select>
+  <label>Property Type</label>
+  <select name="propertyType">
+    <option>Plot</option><option>Land</option><option>Agricultural</option><option>Residential</option><option>Commercial</option>
+  </select>
+  <label>Property Location</label>
+  <input type="text" name="propertyLocation" />
+  <label>Plot Size / Area</label>
+  <input type="text" name="plotSize" />
+  <label>Ownership Status</label>
+  <select name="ownershipStatus">
+    <option>Owned</option><option>Inherited</option><option>Under Dispute</option><option>Other</option>
+  </select>
+  <label>Expected ROI / Partnership Goals</label>
+  <textarea name="expectedROI"></textarea>
+    `,
+
+      "Buy, Sell, Lease & Rent Services": `
+<label>Transaction Type</label>
+  <select name="transactionType">
+    <option>Buy</option><option>Sell</option><option>Lease</option><option>Rent</option>
+  </select>
+  <label>Property Type</label>
+  <select name="propertyType">
+    <option>Apartment</option><option>Villa</option><option>Office</option>
+    <option>Retail</option><option>Warehouse</option><option>Land</option>
+  </select>
+  <label>Location</label>
+  <input type="text" name="location" />
+  <label>Budget Range</label>
+  <input type="text" name="budgetRange" />
+  <label>Furnishing Status</label>
+  <select name="furnishingStatus">
+    <option>Furnished</option><option>Semi-Furnished</option><option>Unfurnished</option>
+  </select>
+  <label>Preferred Possession Date</label>
+  <input type="date" name="possessionDate" />
+  <label>Specific Requirements</label>
+  <textarea name="specificRequirements"></textarea>
+    `,
+
+      "Residential Projects": `
+<label>Project Type</label>
+  <select name="projectType">
+    <option>Independent House</option><option>Villa</option><option>Apartment Complex</option>
+  </select>
+  <label>Land Status</label>
+  <select name="landStatus">
+    <option>Owned</option><option>Yet to Acquire</option><option>Joint Venture</option>
+  </select>
+  <label>Site Location</label>
+  <input type="text" name="siteLocation" />
+  <label>Built-up Area (approx)</label>
+  <input type="text" name="builtUpArea" />
+  <label>Number of Floors</label>
+  <input type="number" name="floors" />
+  <label>Budget Estimate</label>
+  <input type="text" name="budgetEstimate" />
+  <label>Preferred Start Date</label>
+  <input type="date" name="startDate" />
+    `,
+
+      "Commercial Construction": `
+ <label>Project Type</label>
+  <select name="projectType">
+    <option>Office Building</option><option>Retail</option><option>Warehouse</option>
+    <option>Factory</option><option>Hotel</option>
+  </select>
+  <label>Site Location</label>
+  <input type="text" name="siteLocation" />
+  <label>Plot Area</label>
+  <input type="text" name="plotArea" />
+  <label>Built-up Area Required</label>
+  <input type="text" name="builtUpArea" />
+  <label>Compliance Required</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="compliance" value="Fire NOC" /> Fire NOC</label>
+    <label><input type="checkbox" name="compliance" value="RERA" /> RERA</label>
+  </div>
+  <label>Budget Estimate</label>
+  <input type="text" name="budgetEstimate" />
+  <label>Timeline / Deadlines</label>
+  <input type="text" name="timeline" />
+    `,
+
+      "Government Online Services": `
+ <label>Required Service</label>
+  <select name="requiredService">
+    <option>PAN Card</option><option>Aadhaar Update</option><option>Voter ID</option>
+    <option>Passport Assistance</option><option>Ration Card</option><option>Birth Certificate</option><option>Other</option>
+  </select>
+  <label>Applicant Name (as per document)</label>
+  <input type="text" name="applicantName" />
+  <label>Date of Birth</label>
+  <input type="date" name="dob" />
+  <label>ID Proof Available</label>
+  <select name="idProof">
+    <option>Aadhaar</option><option>Voter ID</option><option>Passport</option><option>None</option>
+  </select>
+  <label>Urgency</label>
+  <select name="urgency">
+    <option>Normal</option><option>Urgent</option>
+  </select>
+    `,
+
+      "GST Registration": `
+<label>Type of Business</label>
+  <select name="businessType">
+    <option>Proprietorship</option><option>LLP</option><option>Pvt Ltd</option><option>Freelancer</option><option>Other</option>
+  </select>
+  <label>Annual Turnover</label>
+  <input type="text" name="turnover" />
+  <label>PAN of Business Owner</label>
+  <input type="text" name="pan" />
+  <label>Aadhaar of Business Owner</label>
+  <input type="text" name="aadhaar" />
+  <label>Business Address</label>
+  <textarea name="address"></textarea>
+    `,
+
+      "ITR Filing": `
+<label>ITR Type</label>
+  <select name="itrType">
+    <option>ITR 1</option><option>ITR 2</option><option>ITR 3</option><option>Not Sure</option>
+  </select>
+  <label>Employment Type</label>
+  <select name="employmentType">
+    <option>Salaried</option><option>Self-Employed</option><option>Freelancer</option><option>Other</option>
+  </select>
+  <label>Total Income</label>
+  <input type="text" name="totalIncome" />
+  <label>TDS Deducted</label>
+  <input type="text" name="tds" />
+  <label>PAN Number</label>
+  <input type="text" name="pan" />
+    `,
+
+      "Travel Ticket Booking": `
+<label>Type of Travel</label>
+  <select name="travelType">
+    <option>Flight</option><option>Train</option><option>Bus</option><option>Cruise</option>
+  </select>
+  <label>Travel From</label>
+  <input type="text" name="travelFrom" />
+  <label>Travel To</label>
+  <input type="text" name="travelTo" />
+  <label>Travel Date</label>
+  <input type="date" name="travelDate" />
+  <label>Return Date (if any)</label>
+  <input type="date" name="returnDate" />
+  <label>Number of Passengers</label>
+  <input type="number" name="passengers" />
+  <label>Class Preference</label>
+  <select name="classPref">
+    <option>Economy</option><option>Business</option><option>First Class</option>
+  </select>
+    `,
+
+      "Domestic Travel Package": `
+ <label>Preferred Destination</label>
+  <input type="text" name="destination" />
+  <label>Number of Travelers</label>
+  <input type="number" name="travelers" />
+  <label>Travel Start Date</label>
+  <input type="date" name="startDate" />
+  <label>Travel Duration</label>
+  <select name="duration">
+    <option>2-3 Days</option><option>4-7 Days</option><option>More than a Week</option>
+  </select>
+  <label>Travel Type</label>
+  <select name="travelType">
+    <option>Family</option><option>Honeymoon</option><option>Adventure</option><option>Solo</option><option>Religious</option>
+  </select>
+  <label>Hotel Category</label>
+  <select name="hotelCategory">
+    <option>3-Star</option><option>4-Star</option><option>5-Star</option><option>Budget Stay</option>
+  </select>
+  <label>Sightseeing Required?</label>
+  <select name="sightseeing">
+    <option>Yes</option><option>No</option>
+  </select>
+  <label>Budget Range</label>
+  <input type="text" name="budget" />
+  <label>Any Special Requests</label>
+  <textarea name="specialRequests"></textarea>
+    `,
+
+      "Personal Travel Planner": `
+ <label>Destination(s) of Interest</label>
+  <input type="text" name="destinationInterest" />
+  <label>Travel Start Date</label>
+  <input type="date" name="startDate" />
+  <label>Travel End Date</label>
+  <input type="date" name="endDate" />
+  <label>Purpose of Travel</label>
+  <select name="purpose">
+    <option>Leisure</option><option>Business</option><option>Adventure</option><option>Wellness</option><option>Spiritual</option>
+  </select>
+  <label>Accommodation Preference</label>
+  <select name="accommodation">
+    <option>Hotel</option><option>Resort</option><option>Hostel</option><option>Airbnb</option>
+  </select>
+  <label>Transportation Needs</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" value="Flight" name="transport" /> Flight</label>
+    <label><input type="checkbox" value="Train" name="transport" /> Train</label>
+    <label><input type="checkbox" value="Car Rental" name="transport" /> Car Rental</label>
+    <label><input type="checkbox" value="Local Transport" name="transport" /> Local Transport</label>
+  </div>
+  <label>Total Budget</label>
+  <input type="text" name="totalBudget" />
+    `,
+
+      "Utility Payment": `
+ <label>Type of Bill</label>
+  <select name="billType">
+    <option>Electricity</option><option>Gas</option><option>Water</option><option>Mobile Postpaid</option>
+    <option>Landline</option><option>Broadband</option><option>DTH</option><option>FASTag</option>
+    <option>Property Tax</option><option>Other</option>
+  </select>
+  <label>Bill Account Number</label>
+  <input type="text" name="accountNumber" />
+  <label>Bill Amount</label>
+  <input type="text" name="billAmount" />
+  <label>Bill Due Date</label>
+  <input type="date" name="billDue" />
+    `,
+
+      "Private Financing": `
+ <label>Financing Type</label>
+  <select name="financingType">
+    <option>Business Loan</option><option>Real Estate Funding</option><option>Bridge Loan</option><option>Project Finance</option>
+  </select>
+  <label>Required Amount</label>
+  <input type="text" name="amount" />
+  <label>Collateral Provided?</label>
+  <select name="collateralStatus">
+    <option>Yes</option><option>No</option><option>Partially Secured</option>
+  </select>
+  <label>Collateral Type (if any)</label>
+  <input type="text" name="collateralType" />
+  <label>Duration of Loan</label>
+  <select name="duration">
+    <option>6 Months</option><option>1 Year</option><option>2+ Years</option><option>Custom</option>
+  </select>
+  <label>Interest Rate Expectation</label>
+  <input type="text" name="interestRate" />
+  <label>Project Description / Use of Funds</label>
+  <textarea name="useOfFunds"></textarea>
+  <label>Company Name (if applicable)</label>
+  <input type="text" name="companyName" />
+  <label>Business Type</label>
+  <select name="businessType">
+    <option>LLP</option><option>Pvt Ltd</option><option>Listed</option><option>Proprietorship</option><option>Other</option>
+  </select>
+    `,
+
+      "Stocks": `
+ <label>Interest Type</label>
+  <select name="interestType">
+    <option>Unlisted Stocks</option><option>Listed Stocks</option><option>Pre-IPO Shares</option>
+  </select>
+  <label>Action Type</label>
+  <select name="actionType">
+    <option>Buy</option><option>Sell</option><option>Advisory</option>
+  </select>
+  <label>Company Name</label>
+  <input type="text" name="companyName" />
+  <label>Stock Quantity</label>
+  <input type="text" name="quantity" />
+  <label>Holding Status</label>
+  <select name="holdingStatus">
+    <option>Own Demat</option><option>Custodian</option><option>Other</option>
+  </select>
+  <label>Target Price (if applicable)</label>
+  <input type="text" name="targetPrice" />
+  <label>Time Horizon</label>
+  <select name="timeHorizon">
+    <option>Short-Term</option><option>Medium-Term</option><option>Long-Term</option>
+  </select>
+    `,
+
+      "Mutual Fund": `
+<label>Action Type</label>
+  <select name="actionType">
+    <option>New Investment</option>
+    <option>Portfolio Review</option>
+    <option>Redemption</option>
+    <option>SIP Setup</option>
+  </select>
+
+  <label>Investment Type</label>
+  <select name="investmentType">
+    <option>Equity</option>
+    <option>Debt</option>
+    <option>Hybrid</option>
+    <option>ELSS</option>
+    <option>Index Fund</option>
+  </select>
+
+  <label>Investment Amount</label>
+  <input type="text" name="investmentAmount" />
+
+  <label>SIP or One-time?</label>
+  <select name="investmentMode">
+    <option>SIP</option>
+    <option>One-Time</option>
+  </select>
+
+  <label>Risk Preference</label>
+  <select name="riskPreference">
+    <option>Low</option>
+    <option>Medium</option>
+    <option>High</option>
+  </select>
+
+  <label>Investment Goal</label>
+  <select name="investmentGoal">
+    <option>Wealth Creation</option>
+    <option>Tax Saving</option>
+    <option>Retirement</option>
+    <option>Child Education</option>
+    <option>Other</option>
+  </select>
+
+  <label>Time Horizon</label>
+  <select name="timeHorizon">
+    <option>1 Year</option>
+    <option>3 Years</option>
+    <option>5+ Years</option>
+  </select>
+    `
+
+    };
+
+
+  </script>
+
+  <script>
+
+
+
+    function validateStep3() {
+      const name = document.querySelector('input[name="name"]');
+      const phone = document.querySelector('input[name="mobile"]');
+      const email = document.querySelector('input[name="email"]');
+
+      let isValid = true;
+      [name, phone, email].forEach(field => {
+        field.classList.remove("invalid");
+        if (!field || !field.value.trim()) {
+          isValid = false;
+          field.classList.add("invalid");
+        }
+      });
+
+      return isValid;
+    }
+
+  </script>
+
+  <script>
+    function getStep3HTML() {
+      return `
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" required />
+      </div>
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" name="mobile" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label>Preferred Contact Method</label>
+        <select name="contactMethod" required>
+          <option value="Phone">Phone</option>
+          <option value="Email">Email</option>
+          <option value="WhatsApp">WhatsApp</option>
+        </select>
+      </div>
+      <div class="form-group" style="grid-column: span 2;">
+        <label>Remark</label>
+        <textarea name="remark" rows="3"></textarea>
+      </div>
+    </div>`;
+    }
+  </script>
+
+  <script>
+function submitEnquiry() {
+  if (!validateStep3()) {
+    alert("Please fill all required fields in Step 3.");
+    return;
+  }
+
+  document.getElementById("enquiryForm").submit();
+}
+  </script>
+
+  <script>
+    function wrapFieldsInFormGroup(rawHtml) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = rawHtml;
+
+      const grid = document.createElement('div');
+      grid.className = 'form-grid';
+
+      const children = Array.from(wrapper.children);
+
+      for (let i = 0; i < children.length; i++) {
+        const node = children[i];
+
+        if (node.tagName === 'LABEL') {
+          const group = document.createElement('div');
+          group.className = 'form-group';
+          group.appendChild(node);
+
+          // Pair the label with the next element (input, select, textarea, or div for checkboxes)
+          const nextNode = children[i + 1];
+          if (nextNode &&
+            (nextNode.tagName === 'INPUT' || nextNode.tagName === 'SELECT' ||
+              nextNode.tagName === 'TEXTAREA' || nextNode.tagName === 'DIV')) {
+            group.appendChild(nextNode);
+            i++; // skip next node
+          }
+
+          grid.appendChild(group);
+        }
+        else if (node.tagName === 'DIV' && node.className.includes('checkbox-group')) {
+          // If it's a checkbox-group div, wrap it directly to avoid breaking layout
+          const group = document.createElement('div');
+          group.className = 'form-group';
+          group.appendChild(node);
+          grid.appendChild(group);
+        }
+      }
+
+      return grid.outerHTML;
+    }
+  </script>
+
+  <script>
+async function submitForm(event) {
+  event.preventDefault();
+
+  const formData = new FormData(document.getElementById("enquiryForm"));
+  const data = {};
+
+  formData.forEach((value, key) => {
+    if (data[key]) {
+      if (Array.isArray(data[key])) {
+        data[key].push(value);
+      } else {
+        data[key] = [data[key], value];
+      }
+    } else {
+      data[key] = value;
+    }
+  });
+
+  // ✅ Frontend Validation
+  if (!data.name || !data.mobile || !data.email || !data.mainService) {
+    alert("Please fill all required fields!");
+    return;
+  }
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxcmCOz1TwF9mVctTOOq3zMu6httyeHtppVCLdz2j5QAN8XXLZOXHqQ2KXvb6a32h5h/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("Form submitted successfully!");
+      document.getElementById("enquiryForm").reset();
+    } else {
+      alert("Submission failed: " + result.error);
+    }
+  } catch (err) {
+    alert("Error submitting form: " + err.message);
+  }
+}
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  background: #fff;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.btn-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn-group button {
+  padding: 10px 20px;
+  background-color: #9a22f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-group button:hover {
+  background-color: #7c1fd1;
+  box-shadow: 0 4px 10px rgba(154, 34, 246, 0.3);
+}
+
+/* ---- Progress Bar ---- */
+.form-progressbar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 30px auto 50px;
+  counter-reset: step;
+  position: relative;
+  max-width: 800px;
+}
+
+.form-progressbar li {
+  flex: 1;
+  text-align: center;
+  color: #bbb;
+  position: relative;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-progressbar li::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  background: #eaeaea;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #ccc;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.form-progressbar li::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: #ccc;
+  top: 18px; /* Middle of circle */
+  left: -50%;
+  z-index: 1;
+}
+
+.form-progressbar li:first-child::after {
+  content: none;
+}
+
+.form-progressbar li.active {
+  color: #9a22f6;
+}
+
+.form-progressbar li.active::before {
+  background: #9a22f6;
+  color: white;
+  border-color: #9a22f6;
+}
+
+.form-progressbar li.completed::before {
+  background: #9a22f6;
+  color: white;
+  border-color: #9a22f6;
+}
+
+.form-progressbar li.completed + li::after {
+  background: #9a22f6;
+}
+
+/* ---- Grid Layout for Step Fields ---- */
+.form-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr; /* Desktop: Exactly 2 columns */
+  }
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+.checkbox-group label {
+  font-weight: 400;
+}
+#step-3 {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#step-3 .btn-group {
+  justify-content: center;
+}
