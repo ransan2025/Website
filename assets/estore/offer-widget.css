@@ -1,0 +1,90 @@
+/* 🎁 Offers Toggle Button */
+.offers-toggle-btn {
+  background: linear-gradient(to right, #9a22f6, #f96fdc);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+  position: relative;
+  z-index: 9999;
+}
+
+/* 📦 Offers Panel */
+.offers-panel {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  width: 280px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+.offers-panel.active {
+  display: block;
+}
+
+/* 🔁 Dynamic Deal Text */
+.rotating-deal {
+  font-weight: 600;
+  color: #f96fdc;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* 🔗 Offer Links */
+.offers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.offers-list li {
+  margin-bottom: 6px;
+}
+
+.offers-list a {
+  color: #9a22f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.offers-list a:hover {
+  text-decoration: underline;
+}
+
+/* 📱 Input Field */
+.offer-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* 📤 Submit Button */
+.buy-btn {
+  background: linear-gradient(to right, #9a22f6, #f96fdc);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.offer-success-msg {
+  color: green;
+  font-weight: 600;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}

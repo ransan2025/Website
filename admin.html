@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-funnel"></script>
+  <link rel="stylesheet" href="assets/estore/admin_dashboard.css" />
+  <script defer src="assets/estore/admin_dashboard.js"></script>
+
+  <style>
+    .tab-content.hidden,
+    .sub-tab-content.hidden,
+    .report-tab.hidden {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    .tab-content.active,
+    .sub-tab-content.active,
+    .report-tab.active {
+      display: block !important;
+      visibility: visible !important;
+    }
+
+    .sub-tab-content.hidden,
+    .tab-content.hidden,
+    .report-tab.hidden {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    .sub-tab-content.active,
+    .tab-content.active,
+    .report-tab.active {
+      display: block !important;
+      visibility: visible !important;
+    }
+
+    #salesTabs .tab-btn.active {
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+    }
+
+    #salesTabs .tab-btn {
+      border-radius: 30px;
+      padding: 8px 16px;
+    }
+
+    .tab-btn {
+      border-radius: 30px;
+      padding: 8px 16px;
+    }
+  </style>
+
+</head>
+
+<body class="text-gray-800 overflow-x-hidden">
+
+  <!-- 🔐 Login Screen -->
+  <div id="login-screen" class="fixed inset-0 bg-white z-[999] flex items-center justify-center">
+    <div class="glass-card p-8 rounded-xl shadow-lg max-w-sm w-full text-center space-y-4">
+      <h2 class="text-xl font-bold">🔐 Admin Login</h2>
+      <input id="username" type="text" placeholder="Username" class="w-full p-2 border rounded" />
+      <input id="password" type="password" placeholder="Password" class="w-full p-2 border rounded" />
+      <button onclick="checkLogin()"
+        class="bg-blue-600 text-white px-4 py-2 rounded-full w-full hover:bg-blue-700 transition">Login</button>
+      <div id="login-error" class="text-red-600 hidden">❌ Invalid Credentials</div>
+    </div>
+  </div>
+
+
+  <!-- Sidebar -->
+  <aside class="fixed top-0 left-[-260px] w-64 h-full glass-card z-50 p-6 shadow-lg" id="sidebar">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-xl font-bold">🧩 Admin</h2>
+      <button class="text-xl font-bold" id="closeSidebar">×</button>
+    </div>
+    <nav class="space-y-4">
+      <button class="tab-btn active" data-tab="estore">🛒 eStore</button>
+      <button class="tab-btn" data-tab="crm">📇 CRM</button>
+      <button class="tab-btn" data-tab="leads">📊 Leads</button>
+      <button class="tab-btn" data-tab="crm-dashboard">📈 CRM Dashboard</button>
+    </nav>
+  </aside>
+
+  <!-- Overlay -->
+  <div class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden" id="overlay"></div>
+
+  <!-- Header -->
+  <header class="flex items-center justify-between px-4 py-3 bg-white shadow-md sticky top-0 z-30">
+    <button class="text-2xl font-bold" id="openSidebar">☰</button>
+    <h1 class="text-xl font-semibold">🛍 Admin Panel</h1>
+    <div></div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="transition-all duration-300 p-6 ml-0" id="mainContent">
+
+    <!-- 📦 eStore -->
+    <div class="tab-content active" id="tab-estore">
+      <div class="flex gap-4 mb-4">
+        <button class="sub-tab-btn" data-subtab="add-estore" id="add-tab-btn">➕ Add Entries</button>
+        <button class="sub-tab-btn" data-subtab="view-estore" id="view-tab-btn">📄 View Entries</button>
+      </div>
+      <div class="sub-tab-content glass-card p-6" id="subtab-add-estore">
+        <form id="addForm" class="grid grid-cols-1 md:grid-cols-2 gap-4"></form>
+        <div class="mt-4 text-right">
+          <button onclick="submitForm()" type="button" class="tab-btn1">Submit</button>
+          <div class="mt-2 text-green-600 font-medium hidden" id="submit-message"></div>
+        </div>
+      </div>
+      <div class="sub-tab-content glass-card p-6" id="subtab-view-estore">
+        <div class="overflow-auto max-h-[600px]" id="estore-existing-table"></div>
+      </div>
+    </div>
+
+    <!-- 📇 CRM -->
+    <div class="tab-content" id="tab-crm">
+      <div class="flex gap-4 mb-4">
+        <button class="sub-tab-btn" data-subtab="view-leads" id="leads-view-tab-btn">📄 View CRM Leads</button>
+      </div>
+      <div class="sub-tab-content glass-card p-6" id="subtab-view-leads">
+        <div class="overflow-auto max-h-[600px]" id="crm-existing-table"></div>
+      </div>
+    </div>
+
+    <!-- 📊 Leads Placeholder -->
+    <div class="tab-content" id="tab-leads">
+      <div class="glass-card p-6">
+        <p>🛠 Leads dashboard coming soon...</p>
+      </div>
+    </div>
+
+    <!-- 📈 CRM Dashboard -->
+    <div class="tab-content" id="tab-crm-dashboard">
+      <div class="sub-tab-wrapper flex gap-4 mb-4">
+        <button class="sub-tab-btn" data-subtab="sales-dashboard">📊 Sales</button>
+        <button class="sub-tab-btn" data-subtab="leads-dashboard">📋 Leads</button>
+      </div>
+      <div class="sub-tab-content" id="subtab-sales-dashboard">
+        <h3 class="text-xl font-semibold mb-4">📈 Sales Dashboard</h3>
+        <div class="flex flex-col md:flex-row gap-6">
+          <!-- Report Buttons -->
+          <div id="salesTabs" class="flex flex-col space-y-2 w-full md:w-48">
+            <button class="tab-btn border p-2 rounded text-left" data-tab="leadVolumeTab">📊 Lead Volume</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="paidUnpaidTab">💰 Paid vs Unpaid</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="topProductsTab">⭐ Top Products</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="leadsByProductTab">🛒 Leads by
+              Product</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="revenueOverTimeTab">📈 Revenue Over
+              Time</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="conversionRateTab">🎯 Conversion
+              Rate</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="dailyRevenueTab">📅 Daily Revenue</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="uniqueUsersTab">👥 Unique Users</button>
+            <button class="tab-btn border p-2 rounded text-left" data-tab="abandonedLeadsTab">🚫 Abandoned
+              <button class="tab-btn border p-2 rounded text-left" data-tab="totalRevenueTab">📈 Total Revenue</button>
+          </div>
+
+          <!-- Report Panel Output -->
+          <div id="sales-report-container" class="flex-1">
+            <div id="leadVolumeTab" class="tab-content hidden"><canvas id="leadVolumeChart"></canvas>
+              <div id="leadVolumeTable"></div>
+            </div>
+            <div id="paidUnpaidTab" class="tab-content hidden"><canvas id="paidUnpaidChart"></canvas>
+              <div id="paidUnpaidTable"></div>
+            </div>
+            <div id="topProductsTab" class="tab-content hidden"><canvas id="topProductsChart"></canvas>
+              <div id="topProductsTable"></div>
+            </div>
+            <div id="leadsByProductTab" class="tab-content hidden"><canvas id="leadsByProductChart"></canvas>
+              <div id="leadsByProductTable"></div>
+            </div>
+            <div id="revenueOverTimeTab" class="tab-content hidden"><canvas id="revenueOverTimeChart"></canvas>
+              <div id="revenueOverTimeTable"></div>
+            </div>
+            <div id="conversionRateTab" class="tab-content hidden">
+              <div id="conversionRateKPI" class="font-bold text-xl mb-4"></div>
+              <div id="conversionRateTable"></div>
+            </div>
+            <div id="dailyRevenueTab" class="tab-content hidden"><canvas id="dailyRevenueChart"></canvas>
+              <div id="dailyRevenueTable"></div>
+            </div>
+            <div id="uniqueUsersTab" class="tab-content hidden">
+              <div id="uniqueUsersKPI" class="font-bold text-xl mb-4"></div>
+              <div id="uniqueUsersTable"></div>
+            </div>
+            <div id="abandonedLeadsTab" class="tab-content hidden">
+              <div id="abandonedLeadsTable"></div>
+            </div>
+            <div id="totalRevenueTab" class="tab-content hidden">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Total Revenue Report</h3>
+                <select id="revenueFilter" class="p-2 border rounded">
+                  <option value="day">By Day</option>
+                  <option value="month">By Month</option>
+                  <option value="year">By Year</option>
+                </select>
+              </div>
+              <canvas id="totalRevenueChart" height="300"></canvas>
+              <div id="totalRevenueTable" class="mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leads subtab can stay below -->
+      <div class="sub-tab-content" id="subtab-leads-dashboard">
+        <p>📋 Leads Dashboard coming soon...</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("sales-report-container");
+      if (container) {
+        container.classList.remove("hidden");
+        container.style.display = "block";
+        container.style.visibility = "visible";
+        console.log("✅ sales-report-container forced visible");
+      }
+
+      console.log("✅ Exists. Initial visibility:");
+      console.log("  - classList:", container.classList.toString());
+      console.log("  - computed display:", getComputedStyle(container).display);
+
+      // Force show for debugging
+      container.classList.remove("hidden");
+      container.style.display = "block";
+      container.style.visibility = "visible";
+
+      console.log("✅ Manually forced visible:");
+      console.log("  - classList:", container.classList.toString());
+      console.log("  - display:", getComputedStyle(container).display);
+    });
+
+
+    function showReport(id) {
+      const container = document.getElementById("sales-report-container");
+
+      if (!container) {
+        console.error("❌ #sales-report-container missing");
+        return;
+      }
+
+      console.log("📊 Showing report:", id);
+
+      // Ensure container is visible
+      container.classList.remove("hidden");
+      container.style.display = "block";
+      container.style.visibility = "visible";
+      console.log("✅ Made #sales-report-container visible");
+
+      // Hide all other reports
+      container.querySelectorAll(".report").forEach(r => r.classList.add("hidden"));
+
+      const report = document.getElementById(id);
+      if (report) {
+        report.classList.remove("hidden");
+        console.log("✅ Showing report:", id);
+      } else {
+        console.warn("⚠️ Report ID not found:", id);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('leadVolumeTab')?.classList.remove('hidden');
+      document.getElementById('sales-report-container')?.classList.remove('hidden');
+    });
+
+  </script>
+
+
+
+</body>
+
+</html>

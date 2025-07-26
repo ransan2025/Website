@@ -18,59 +18,64 @@
   <header
     style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #fff; border-bottom: 1px solid #eee; box-shadow: 0 2px 6px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000;">
     <div style="display: flex; align-items: center;">
-      <img src="https://www.ransangroups.com/images/logo.png" alt="RanSan Logo"
-        style="height: 40px; margin-right: 10px;">
+      <img src="assets/estore/RanSan_Logo_small.png" alt="RanSan Logo" style="height: 40px; margin-right: 10px;">
       <h1 style="margin: 0; font-size: 20px; color: #9a22f6;">RanSan Groups</h1>
     </div>
     <nav>
-      <a href="/" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">Home</a>
-      <a href="/about.html" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">About</a>
-      <a href="/services.html"
+      <a href="index.html" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">Home</a>
+      <a href="about.html" style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">About</a>
+      <a href="technology.html"
         style="margin: 0 12px; color: #333; text-decoration: none; font-weight: 500;">Services</a>
-      <a href="/contact.html"
+      <a href="contact.html"
         style="margin: 0 12px; color: #9a22f6; font-weight: bold; text-decoration: none;">Contact</a>
     </nav>
   </header>
 
 
-  <div class="form-container">
-    <ul class="form-progressbar">
-      <li class="active"></li>
-      <li></li>
-      <li></li>
-    </ul>
+  <div class="progress-container"
+    style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border-radius: 30px; overflow: hidden; margin-bottom: 20px;">
+    <div class="progress-bar" id="progressBar"
+      style="height: 12px; background: linear-gradient(90deg, #9a22f6, #f96fdc); width:0%; transition: width 0.5s ease;">
+    </div>
+  </div>
 
-    <form id="enquiryForm" onsubmit="submitForm(event)">
-      <div class="form-step active" id="step1">
-        <div class="form-group">
-          <label for="mainService">Select Service</label>
-          <select id="mainService" name="mainService" required>
-            <option value="">-- Choose Service --</option>
-            <option value="Technology">Technology</option>
-            <option value="Digital Marketing">Digital Marketing</option>
-            <option value="Event Management">Event Management</option>
-            <option value="Real Estate">Real Estate</option>
-            <option value="Online">Online</option>
-            <option value="Private Financing">Private Financing</option>
-            <option value="Stocks">Stocks</option>
-            <option value="Mutual Fund">Mutual Fund</option>
-          </select>
-        </div>
+  <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom:10px;">
+    <span>Service</span><span>Details</span><span>Contact</span>
+  </div>
 
-        <div class="form-group" id="subServiceContainer"></div>
+  <div id="formStatus" style="text-align:center; margin:15px; font-weight:600; color:green;"></div>
 
-        <div class="btn-group">
-          <button type="button" id="next1">Next</button>
-        </div>
+  <form id="enquiryForm" novalidate>
+    <div class="form-step active" id="step1">
+      <div class="form-group">
+        <label for="mainService">Select Service</label>
+        <select id="mainService" name="mainService" required>
+          <option value="">-- Choose Service --</option>
+          <option value="Technology">Technology</option>
+          <option value="Digital Marketing">Digital Marketing</option>
+          <option value="Event Management">Event Management</option>
+          <option value="Real Estate">Real Estate</option>
+          <option value="Online">Online</option>
+          <option value="Private Financing">Private Financing</option>
+          <option value="Stocks">Stocks</option>
+          <option value="Mutual Fund">Mutual Fund</option>
+        </select>
       </div>
 
-      <div class="form-step" id="step2"></div>
+      <div class="form-group" id="subServiceContainer"></div>
 
-      <div class="form-step" id="step3">
-        <h2>Thank you!</h2>
-        <p>Your enquiry was successfully submitted. Our team will contact you shortly.</p>
+      <div class="btn-group">
+        <button type="button" id="next1">Next</button>
       </div>
-    </form>
+    </div>
+
+    <div class="form-step" id="step2"></div>
+
+    <div class="form-step" id="step3">
+      <h2>Thank you!</h2>
+      <p>Your enquiry was successfully submitted. Our team will contact you shortly.</p>
+    </div>
+  </form>
   </div>
 
 
@@ -183,8 +188,11 @@
       step1.classList.remove('active');
       step2.classList.remove('active');
       step3.classList.remove('active');
+
       document.getElementById(`step${stepNum}`).classList.add('active');
-      updateProgressBar(stepNum);
+
+      // 🔥 Fix: Also update the progress bar here
+      updateProgressBarAnimated(stepNum);
     }
 
 function nextToStep3() {
@@ -192,22 +200,31 @@ function nextToStep3() {
   step3.innerHTML = step3Html + `
     <div class="btn-group">
       <button type="button" onclick="backToStep(2)">Back</button>
-      <button type="submit" id="submitBtn">Submit</button>
+      <button type="button" id="submitBtn">Submit</button>
     </div>`;
 
   goToStep(3);
   updateProgressBar(3);
 
-  // 🔥 Fix: Attach event listener after button is injected!
+  // ✅ Attach validation + submit trigger
   const submitBtn = document.getElementById("submitBtn");
-  submitBtn.addEventListener("click", submitForm);
+  submitBtn.addEventListener("click", () => {
+    const isValid = validateStep3();
+    if (isValid) {
+      document.getElementById("enquiryForm").requestSubmit();
+    } else {
+      document.getElementById("formStatus").innerText = "Please fill all required fields in Step 3.";
+      document.getElementById("formStatus").style.color = "red";
+    }
+  });
 }
 
     function goToStep(stepNum) {
       [step1, step2, step3].forEach((s, i) => {
         s.classList.toggle('active', i === stepNum - 1);
       });
-      updateProgressBar(stepNum);
+
+      updateProgressBarAnimated(stepNum);
     }
 
     function updateProgressBar(step) {
@@ -895,16 +912,6 @@ function nextToStep3() {
     }
   </script>
 
-  <script>
-function submitEnquiry() {
-  if (!validateStep3()) {
-    alert("Please fill all required fields in Step 3.");
-    return;
-  }
-
-  document.getElementById("enquiryForm").submit();
-}
-  </script>
 
   <script>
     function wrapFieldsInFormGroup(rawHtml) {
@@ -936,10 +943,21 @@ function submitEnquiry() {
           grid.appendChild(group);
         }
         else if (node.tagName === 'DIV' && node.className.includes('checkbox-group')) {
-          // If it's a checkbox-group div, wrap it directly to avoid breaking layout
           const group = document.createElement('div');
           group.className = 'form-group';
-          group.appendChild(node);
+
+          const checkboxes = node.querySelectorAll('input[type="checkbox"]');
+
+          checkboxes.forEach(input => {
+            const label = document.createElement('label');
+            label.style.display = "flex";
+            label.style.alignItems = "center";
+            label.style.marginBottom = "8px";
+            label.style.gap = "8px";
+            label.innerHTML = `<input type="checkbox" name="${input.name}" value="${input.value}" /> ✅ ${input.value}`;
+            group.appendChild(label);
+          });
+
           grid.appendChild(group);
         }
       }
@@ -948,50 +966,73 @@ function submitEnquiry() {
     }
   </script>
 
+
   <script>
-async function submitForm(event) {
-  event.preventDefault();
+    document.getElementById("enquiryForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-  const formData = new FormData(document.getElementById("enquiryForm"));
-  const data = {};
+      const form = event.target;
+      const formData = new FormData(form);
+      const params = new URLSearchParams();
 
-  formData.forEach((value, key) => {
-    if (data[key]) {
-      if (Array.isArray(data[key])) {
-        data[key].push(value);
-      } else {
-        data[key] = [data[key], value];
+      for (let pair of formData.entries()) {
+        params.append(pair[0], pair[1]);
       }
-    } else {
-      data[key] = value;
-    }
-  });
 
-  // ✅ Frontend Validation
-  if (!data.name || !data.mobile || !data.email || !data.mainService) {
-    alert("Please fill all required fields!");
-    return;
-  }
+      // Show in-screen message instead of alert
+      const step3 = document.getElementById("step3");
+      step3.innerHTML = `
+  <div style="
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    margin:40px auto;
+    width:250px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  ">
+    <div class="loader-ring"></div>
+    <p style="font-weight:600; color:#333; margin-top:10px;">Processing your enquiry...</p>
+  </div>
+`;
 
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxcmCOz1TwF9mVctTOOq3zMu6httyeHtppVCLdz2j5QAN8XXLZOXHqQ2KXvb6a32h5h/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbztBuNOixSYEGWjdkMVTrzUQGo8OQTFtXW8kd8WQn17fhC4WgQ792-xqr2PJfUToDEl/exec", {
+          method: "POST",
+          body: params
+        });
+
+        const result = await res.text();
+
+        // Show result in HTML, not alert
+        step3.innerHTML = `<p style="color:green;">${result.replace(/\n/g, "<br>")}</p>`;
+
+        // ✅ Reset form after 3 seconds
+        setTimeout(() => {
+          window.location.reload();  // Refreshes form page completely
+        }, 3000);
+
+      } catch (err) {
+        step3.innerHTML = `<p style="color:red;">❌ Submission failed: ${err.message}</p>`;
+      }
     });
+  </script>
 
-    const result = await response.json();
+  <script>
+    function updateProgressBarAnimated(step) {
+      const progressBar = document.getElementById("progressBar");
 
-    if (result.success) {
-      alert("Form submitted successfully!");
-      document.getElementById("enquiryForm").reset();
-    } else {
-      alert("Submission failed: " + result.error);
+      let width = "0%";
+      if (step === 1) width = "0%";
+      else if (step === 2) width = "50%";
+      else if (step === 3) width = "100%";
+
+      progressBar.style.width = width;
     }
-  } catch (err) {
-    alert("Error submitting form: " + err.message);
-  }
-}
   </script>
 
 </body>

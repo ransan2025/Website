@@ -1,0 +1,115 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: #eef1f5;
+  margin: 0;
+  padding: 1rem;
+  color: #333;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.tab-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.tab-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.tab-btn.disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.tab-btn.active {
+  background: #0056b3;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.card {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.glassmorph {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+}
+
+.form-grid label {
+  font-weight: 600;
+  align-self: center;
+}
+
+.form-grid input, .form-grid textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.scroll-section {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+button.edit-btn, button.del-btn, button.update-btn {
+  padding: 0.3rem 0.8rem;
+  margin: 0 0.2rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button.edit-btn { background-color: #ffc107; border: none; }
+button.del-btn { background-color: #dc3545; border: none; color: white; }
+button.update-btn { background-color: #28a745; border: none; color: white; }
+
+tr.editable input {
+  background-color: #fff8e1;
+}

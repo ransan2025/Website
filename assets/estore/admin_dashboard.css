@@ -1,0 +1,160 @@
+body {
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  transition: margin-left 0.3s ease;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(18px);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  color: #111827;
+}
+
+.tab-content,
+.sub-tab-content {
+  display: none;
+}
+
+.tab-content.active,
+.sub-tab-content.active {
+  display: block;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+
+.tab-btn1 {
+  display: right;
+  align-items: center;
+  gap: 8px;
+  width: 10%;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to right, #9a22f6, #f96fdc);
+  border-radius: 30px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+  background: linear-gradient(to right, #8b5cf6, #ec4899);
+  color: white;
+  transform: translateX(5px);
+}
+
+.sub-tab-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: 600;
+  color: #555;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sub-tab-btn:hover,
+.sub-tab-btn.active {
+  background: linear-gradient(to right, #9a22f6, #f96fdc);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.sidebar {
+  transition: left 0.3s ease;
+}
+
+#salesTabs {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  width: 200px !important;
+  background-color: white !important;
+  padding: 12px !important;
+}
+
+  canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+
+  #sales-report-container .tab-content {
+    display: block;
+    padding: 1rem;
+  }
+
+
+/* Specific to report panels only */
+#sales-report-container .tab-content {
+  display: none;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+#sales-report-container .tab-content.active {
+  display: block !important;
+  visibility: visible !important;
+  height: auto;
+}
+
+#openSidebar {
+  padding: 10px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+table.freeze-table {
+  table-layout: auto;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table.freeze-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f9fafb;
+  z-index: 10;
+}
+
+table.freeze-table td:first-child,
+table.freeze-table th:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 9;
+}
+
+table.freeze-table td:nth-child(2),
+table.freeze-table th:nth-child(2) {
+  position: sticky;
+  left: 50px;
+  background: #fff;
+  z-index: 9;
+}
+
+table.freeze-table td:last-child,
+table.freeze-table th:last-child {
+  position: sticky;
+  right: 0;
+  background: #fff;
+  z-index: 8;
+}

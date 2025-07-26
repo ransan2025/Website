@@ -1,0 +1,41 @@
+/* Flash Deals Ticker - Glassmorphic Bottom-Right */
+.fd-ticker {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f96fdc, #9a22f6); /* Pink to Purple */
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 250px;
+  max-width: 400px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Scrolling Text Inside Ticker */
+.fd-ticker-content {
+  display: inline-block;
+  animation: ticker-scroll 15s linear infinite;
+}
+
+/* Scrolling Animation */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

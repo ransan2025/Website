@@ -1,0 +1,126 @@
+/* Section Wrapper */
+.dotd-section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Heading */
+.dotd-heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+/* Grid Layout */
+.dotd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Each Card */
+.dotd-card {
+  background: linear-gradient(135deg, #9a22f6, #f96fdc);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dotd-card:hover {
+  animation: dotdPulse 0.6s ease-in-out;
+}
+
+/* Product Name */
+.dotd-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Price */
+.dotd-price {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.dotd-price del {
+  margin-right: 8px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Button */
+.dotd-button {
+  padding: 10px 16px;
+  background: white;
+  color: #9a22f6;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dotd-button:hover {
+  background: #f2f2f2;
+}
+/* 🌀 Animation Keyframes */
+@keyframes dotdFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes dotdPulse {
+  0%, 100% {
+    transform: scale(1.02);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+/* 🌀 Animation Trigger Class */
+.dotd-card.animate-in {
+  animation: dotdFadeInUp 0.6s ease forwards;
+  opacity: 0; /* Initially hidden before JS triggers it */
+}
+
+/* ⏳ Badge Container */
+.dotd-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* ⏳ Individual Badge Style */
+.dotd-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.dotd-badge.time {
+  color: #ffe082;
+}
+
+.dotd-badge.stock {
+  color: #b2ff59;
+}
