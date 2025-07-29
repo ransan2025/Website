@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="assets/estore/popup.css">
   <link rel="stylesheet" href="assets/estore/offer-widget.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <link rel="icon" type="image/png" href="assets/estore/RanSan_Logo_small.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -123,6 +123,18 @@
       font-size: 22px;
       font-family: Poppins, sans-serif;
     }
+
+  @media only screen and (max-width: 769px) {
+    .purchase-alert,
+    #recent-purchase-popup {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      pointer-events: none !important;
+    }
+  }
   </style>
 
 </head>
@@ -153,43 +165,32 @@
         <button class="icon-btn" aria-label="Search" id="searchToggle">🔍</button>
 
         <div id="searchBox" style="display:none;">
-          <input type="text" id="searchInput" placeholder="Search for products..."
-            style="padding:5px 10px; width: 200px;">
+          <input type="text" id="searchInput" placeholder="Search for products...">
         </div>
 
         <button class="icon-btn relative" aria-label="Cart">
           🛒<span class="cart-badge">3</span>
         </button>
 
-        <!-- ☰ Hamburger for Mobile -->
-        <button id="hamburgerBtn" class="icon-btn mobile-only" aria-label="Menu">☰</button>
+
       </div>
     </div>
   </header>
 
-  <!-- 📱 Hidden Mobile Menu -->
-  <nav id="mobileMenu" class="mobile-menu">
-    <ul>
-      <li><a href="#dotd-container">🔥 Deals</a></li>
-      <li><a href="#just-dropped-section">🆕 Just Dropped</a></li>
-      <li><a href="#combo-offers-section">📦 Combos</a></li>
-      <li><a href="#lead-modal">📱 Contact</a></li>
-    </ul>
-  </nav>
-  </header>
 
 
-    <!-- Hero Section -->
-<section class="hero-banner">
-  <div class="hero-content">
-    <h1>🚀 Power Your Business with Premium Digital Tools</h1>
-    <p class="hero-tagline">Instant Delivery. Secure Checkout. Limited-Time Offers!</p>
-    <div class="hero-timer">
-      ⚡ Mega Sale Ends In: <span id="countdown">03:00:00</span>
-    </div>    
-    <a href="#product-section" id="rotating-cta" class="hero-cta">🛍️ Shop Now</a>
-  </div>
-</section>
+
+  <!-- Hero Section -->
+  <section class="hero-banner">
+    <div class="hero-content">
+      <h1>🚀 Power Your Business with Premium Digital Tools</h1>
+      <p class="hero-tagline">Instant Delivery. Secure Checkout. Limited-Time Offers!</p>
+      <div class="hero-timer">
+        ⚡ Mega Sale Ends In: <span id="countdown">03:00:00</span>
+      </div>
+      <a href="#product-section" id="rotating-cta" class="hero-cta">🛍️ Shop Now</a>
+    </div>
+  </section>
 
 
 
@@ -211,13 +212,32 @@
   </div>
 
 
+  <!-- 🔳 CATEGORY NAVIGATION -->
+  <div class="category-nav-wrapper">
 
-  <div class="category-tabs">
-    <button class="category-btn active" data-category="all">All</button>
-    <button class="category-btn" data-category="office">🧾 Office & Tools</button>
-    <button class="category-btn" data-category="design">🧑‍🎨 Design & Media</button>
-    <button class="category-btn" data-category="marketing">💬 Marketing</button>
-    <button class="category-btn" data-category="ai">🤖 AI & Digital Tools</button>
+    <!-- 💻 Desktop Category Tabs -->
+    <div class="category-tabs desktop-only">
+      <button class="category-btn active" data-category="all">All</button>
+      <button class="category-btn" data-category="office">🧾 Office & Tools</button>
+      <button class="category-btn" data-category="design">🧑‍🎨 Design & Media</button>
+      <button class="category-btn" data-category="marketing">💬 Marketing</button>
+      <button class="category-btn" data-category="ai">🤖 AI & Digital Tools</button>
+    </div>
+
+    <!-- ☰ Mobile Toggle Button -->
+    <div class="mobile-category-toggle mobile-only">
+      <button id="toggleCategoryMenu" class="category-btn">☰ Categories</button>
+    </div>
+
+    <!-- 📱 Mobile Category Menu (Dropdown Style) -->
+    <div id="mobileCategoryMenu" class="mobile-category-menu">
+      <button class="category-btn" data-category="all">All</button>
+      <button class="category-btn" data-category="office">🧾 Office & Tools</button>
+      <button class="category-btn" data-category="design">🧑‍🎨 Design & Media</button>
+      <button class="category-btn" data-category="marketing">💬 Marketing</button>
+      <button class="category-btn" data-category="ai">🤖 AI & Digital Tools</button>
+    </div>
+
   </div>
 
   <main class="product-grid"></main>
@@ -241,21 +261,31 @@
 
 
 
+  <!-- 🔽 Modern BUYER EMAIL/PHONE MODAL -->
+  <div id="buyer-modal" class="buyer-modal-overlay" style="display: none;">
+    <div class="buyer-modal-content">
+      <span class="buyer-close-btn" onclick="closeBuyerModal()">×</span>
+      <h2 style="margin-bottom: 10px;">🧾 Enter Your Details</h2>
 
+      <label class="buyer-label">👤 Name
+        <input type="text" id="buyer-name" class="buyer-input" required>
+      </label>
 
-  <!-- 🔽 BUYER EMAIL/PHONE MODAL -->
-  <div id="buyer-modal" class="modal" style="display:none;">
-    <div class="modal-content fade-in">
-      <h2>Enter Your Details</h2>
-      <label>Name: <input type="text" id="buyer-name" required></label><br><br>
-      <label>Email: <input type="email" id="buyer-email" required></label><br><br>
-      <label>Phone: <input type="tel" id="buyer-phone" required></label><br><br>
+      <label class="buyer-label">📧 Email
+        <input type="email" id="buyer-email" class="buyer-input" required>
+      </label>
 
-      <!-- ✅ Status message area -->
-      <div id="status-msg" style="margin:10px 0; color:green;"></div>
+      <label class="buyer-label">📞 Phone
+        <input type="tel" id="buyer-phone" class="buyer-input" required>
+      </label>
 
-      <button onclick="proceedToPay()">OK</button>
-      <button onclick="closeBuyerModal()">Cancel</button>
+      <!-- ✅ Status message -->
+      <div id="status-msg" style="margin:10px 0; font-size: 0.9rem; color: green;"></div>
+
+      <div class="buyer-actions">
+        <button onclick="proceedToPay()" class="buyer-btn primary">✅ OK</button>
+        <button onclick="closeBuyerModal()" class="buyer-btn secondary">❌ Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -308,19 +338,23 @@
       <!-- Dynamic cards will load here -->Loading deals of the day...
     </div>
   </section>
+
   <script src="assets/estore/deals-of-the-day.js" defer></script>
 
 
-  <div id="just-dropped-section" class="just-dropped-section">
-    <h3>🆕 Just Dropped</h3>
-    <div id="just-dropped-container" class="just-dropped-container"></div>
-  </div>
 
-  <div id="combo-offers-section" class="combo-offers-section">
-    <h3>📦 Combo Offers</h3>
-    <div id="combo-offers-container" class="combo-offers-container"></div>
-  </div>
 
+  <!-- 🆕 Just Dropped -->
+  <section id="just-dropped-section" class="section-block fade-up">
+    <h2 class="section-title themed-text">🆕 Just Dropped</h2>
+    <div id="just-dropped" class="just-dropped-row">
+      <p>Loading fresh drops...</p>
+    </div>
+  </section>
+
+
+  <!-- 📦 Combo Offers -->
+  <section id="combo-offers" class="combo-offers"></section>
 
   <section id="amazon-banner" class="amazon-banner">
     <div class="amazon-box">
@@ -995,22 +1029,43 @@
         const res = await fetch(url);
         const data = await res.json();
         const rows = data.values;
-        const container = document.getElementById("just-dropped-container");
+        const container = document.getElementById("just-dropped");
+
         if (!container || !rows) return;
 
-        const nameCol = 16, imgCol = 17;
-        const valid = rows.filter(r => r[nameCol] && r[imgCol]);
+        const nameCol = 16, imgCol = 17, descCol = 1, priceCol = 3;
 
-        container.innerHTML = valid.map(r => `
-      <div class="just-dropped-card">
-        <img src="${r[imgCol]}" alt="${r[nameCol]}">
-        <div class="just-dropped-name">🆕 ${r[nameCol]}</div>
-      </div>
-    `).join("");
+        const validRows = rows.filter(r => r[nameCol] && r[imgCol]);
+
+        if (!validRows.length) {
+          container.innerHTML = `<p>No new drops available.</p>`;
+          return;
+        }
+
+        const htmlCards = validRows.map(r => {
+          const name = r[nameCol];
+          const img = r[imgCol];
+          const desc = r[descCol] || "No description.";
+          const price = r[priceCol] || "0";
+
+          return `
+        <div class="just-dropped-card">
+          <img src="${img}" alt="${name}">
+          <div class="product-title">${name}</div>
+          <div class="product-price">₹${price}</div>
+          <button class="drop-view-btn" onclick="showProductDetails('${name.replace(/'/g, "\\'")}', \`${desc}\`, ${price})">👁️ View</button>
+        </div>
+      `;
+        }).join("");
+
+        container.innerHTML = htmlCards;
+
       } catch (err) {
         console.error("Just Dropped Error:", err);
+        container.innerHTML = `<p>Error loading drops.</p>`;
       }
     }
+    loadJustDropped();
   </script>
 
   <script>
@@ -1020,22 +1075,55 @@
         const res = await fetch(url);
         const data = await res.json();
         const rows = data.values;
-        const container = document.getElementById("combo-offers-container");
+        const container = document.getElementById("combo-offers");
         if (!container || !rows) return;
 
-        const descCol = 18, priceCol = 19;
-        const valid = rows.filter(r => r[descCol] && r[priceCol]);
+        const descCol = 18; // Column S (zero-based index)
+        const priceCol = 19; // Column T
+        const benefit1 = 20; // Col U
+        const benefit2 = 21; // Col V
+        const benefit3 = 22; // Col W
 
-        container.innerHTML = valid.map(r => `
-      <div class="combo-offer-card">
-        <div class="combo-desc">${r[descCol]}</div>
-        <div class="combo-price">💰 ${r[priceCol]}</div>
-      </div>
-    `).join("");
+        const validRows = rows.filter(r => r[descCol] && r[priceCol]);
+
+        if (!validRows.length) {
+          container.innerHTML = `<p>No combo offers available.</p>`;
+          return;
+        }
+
+        const offerCards = validRows.map(r => `
+        <div class="combo-offer-card">
+          <div class="combo-desc">${r[descCol]}</div>
+
+
+<a class="view-benefits" onclick="toggleBenefits(this)">+ View Benefits</a>
+<ul class="combo-benefits hidden">
+  <li><span class="emoji tool">🔓</span> Unlock 3 Premium Tools</li>
+  <li><span class="emoji support">💬</span> 24x7 WhatsApp Support</li>
+  <li><span class="emoji invoice">📄</span> Instant PDF Invoice</li>
+</ul>
+
+          <div class="combo-price">💰 ${r[priceCol]}</div>
+          <a class="combo-buy-btn" onclick="showProductDetails('${r[descCol]}')">💳 Avail Now</a>
+          
+        </div>
+      `).join("");
+
+        container.innerHTML = `
+        <h2 style="margin-bottom:10px;">📦 Combo Offers</h2>
+        <div class="combo-offer-list">${offerCards}</div>
+      `;
       } catch (err) {
         console.error("Combo Offers Error:", err);
+        document.getElementById("combo-offers-container").innerHTML = `<p>Error loading combo offers.</p>`;
       }
+
+
+
     }
+
+    // Auto-call the function
+    loadComboOffers();
   </script>
 
   <script>
@@ -1045,6 +1133,13 @@
     });
   </script>
 
+  <script>
+    function toggleBenefits(el) {
+      const list = el.nextElementSibling;
+      list.classList.toggle('hidden');
+      el.textContent = list.classList.contains('hidden') ? '+ View Benefits' : '− Hide Benefits';
+    }
+  </script>
 
   <script>
     window.addEventListener('scroll', function () {
@@ -1196,34 +1291,77 @@
   <!--Scroll-->
 
   <!--Scrolling progress-->
-<script>
-  window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrolled = (scrollTop / docHeight) * 100;
-  document.getElementById("scrollProgress").style.width = `${scrolled}%`;
-});
-</script>
+  <script>
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / docHeight) * 100;
+      document.getElementById("scrollProgress").style.width = `${scrolled}%`;
+    });
+  </script>
 
   <!--Scrolling progress-->
 
-<!--Dark Mode-->
-<script>
-  document.getElementById("darkModeToggle").addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});
-</script>
-<!--Dark Mode-->
+  <!--Dark Mode-->
+  <script>
+    document.getElementById("darkModeToggle").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+  </script>
+  <!--Dark Mode-->
+
+  <!--Mobile catagory start-->
+  <script>
+    const toggleBtn = document.getElementById("toggleCategoryMenu");
+    const mobileMenu = document.getElementById("mobileCategoryMenu");
+    const allCatBtns = document.querySelectorAll(".category-btn[data-category]");
+
+    // 🧠 Helper to highlight active category
+    function setActiveCategory(category) {
+      allCatBtns.forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`.category-btn[data-category="${category}"]`)?.classList.add("active");
+    }
+
+    // 🔁 Toggle menu → always show all products
+    toggleBtn?.addEventListener("click", () => {
+      const isOpen = mobileMenu.style.display === "flex";
+      mobileMenu.style.display = isOpen ? "none" : "flex";
+
+      // ✅ Always show all products on toggle
+      if (typeof filterProducts === "function") {
+        filterProducts('all');
+        setActiveCategory('all');
+      }
+    });
+
+    // 🖱️ On category click → filter products
+    allCatBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const selected = btn.getAttribute("data-category");
+        setActiveCategory(selected);
+
+        if (typeof filterProducts === "function") {
+          filterProducts(selected);
+        }
+
+        // 🔒 Hide menu on mobile after click
+        if (window.innerWidth <= 768) {
+          mobileMenu.style.display = "none";
+        }
+      });
+    });
+
+    // 🚀 Show all products on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      if (typeof filterProducts === "function") {
+        filterProducts('all');
+        setActiveCategory('all');
+      }
+    });
+  </script>
+  <!--Mobile catagory end-->
 
 
-  <!-- Mobile Sticky Buy Bar -->
-  <div id="mobile-buy-bar" class="mobile-buy-bar hidden">
-    <button id="mobile-buy-btn">🔥 View Hot Deals</button>
-  </div>
-
-  <a href="https://wa.me/918148610567" class="whatsapp-float" target="_blank">
-    <img src="assets/estore/whatsapp-icon.png" alt="WhatsApp" style="width:50px; height:50px;">
-  </a>
 
   <div id="details-modal" class="modal">
     <div class="modal-content">
@@ -1253,6 +1391,11 @@
 
   <!-- Include the Popup Script -->
   <script src="assets/estore/popup.js"></script>
+  
+  <!-- That script likely injects something like this dynamically: -->
+  <div id="recent-purchase-popup" class="purchase-alert"></div>
+
+
 
 
   <!-- 🔥 Flash Deals (Ticker Floating Widget) -->
@@ -1270,9 +1413,12 @@
 
   <button id="backToTop" class="back-to-top">⬆️</button>
 
-<div id="scrollProgress"></div>
+  <div id="scrollProgress"></div>
 
-<button id="darkModeToggle">🌙</button>
+  
+
+
+
 
 </body>
 

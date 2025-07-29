@@ -5,11 +5,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
+
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-funnel"></script>
   <link rel="stylesheet" href="assets/estore/admin_dashboard.css" />
+
+
+
   <script defer src="assets/estore/admin_dashboard.js"></script>
+
 
   <style>
     .tab-content.hidden,
@@ -55,23 +61,166 @@
       border-radius: 30px;
       padding: 8px 16px;
     }
+
+
+    /* 📦 Modal Styling Fix */
+    .modal {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background: #fff;
+      color: #000;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* 🌈 Theme Gradient Background Modal */
+    .glass-modal-gradient {
+      background: linear-gradient(to right, #9a22f6, #f96fdc);
+      color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    /* Inputs and selects inside */
+    .glass-modal-gradient input,
+    .glass-modal-gradient select {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      padding: 10px;
+      border-radius: 6px;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    /* Buttons */
+    .btn-gradient {
+      background: linear-gradient(to right, #9a22f6, #f96fdc);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 18px rgba(154, 34, 246, 0.4);
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(249, 111, 220, 0.6);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.6);
+      color: #000;
+    }
+
+    /* Fade in */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .sticky-header thead th {
+      position: sticky;
+      top: 0;
+      background: #f9fafb;
+      z-index: 10;
+    }
+
+    .freeze-column td:nth-child(2),
+    .freeze-column th:nth-child(2) {
+      position: sticky;
+      left: 40px;
+      /* adjust based on your first column width */
+      background: #f0f0f0;
+      z-index: 5;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    @media (max-width: 768px) {
+      #salesTabs {
+        display: none !important;
+      }
+    }
   </style>
+
 
 </head>
 
 <body class="text-gray-800 overflow-x-hidden">
 
-  <!-- 🔐 Login Screen -->
+  <!-- 🔐 Login Screen
   <div id="login-screen" class="fixed inset-0 bg-white z-[999] flex items-center justify-center">
     <div class="glass-card p-8 rounded-xl shadow-lg max-w-sm w-full text-center space-y-4">
       <h2 class="text-xl font-bold">🔐 Admin Login</h2>
       <input id="username" type="text" placeholder="Username" class="w-full p-2 border rounded" />
       <input id="password" type="password" placeholder="Password" class="w-full p-2 border rounded" />
-      <button onclick="checkLogin()"
-        class="bg-blue-600 text-white px-4 py-2 rounded-full w-full hover:bg-blue-700 transition">Login</button>
+      <button onclick="checkLogin()" class="login">Login</button>
       <div id="login-error" class="text-red-600 hidden">❌ Invalid Credentials</div>
     </div>
-  </div>
+  </div> -->
 
 
   <!-- Sidebar -->
@@ -81,10 +230,12 @@
       <button class="text-xl font-bold" id="closeSidebar">×</button>
     </div>
     <nav class="space-y-4">
-      <button class="tab-btn active" data-tab="estore">🛒 eStore</button>
-      <button class="tab-btn" data-tab="crm">📇 CRM</button>
+      <button class="tab-btn active" data-tab="estore" role="button" aria-label="eStore Tab">
+        🛒 eStore
+      </button>
+      <button class="tab-btn" data-tab="crm">📇 Sales Report</button>
       <button class="tab-btn" data-tab="leads">📊 Leads</button>
-      <button class="tab-btn" data-tab="crm-dashboard">📈 CRM Dashboard</button>
+      <button class="tab-btn" data-tab="crm-dashboard">📈 Dashboard</button>
     </nav>
   </aside>
 
@@ -93,7 +244,11 @@
 
   <!-- Header -->
   <header class="flex items-center justify-between px-4 py-3 bg-white shadow-md sticky top-0 z-30">
-    <button class="text-2xl font-bold" id="openSidebar">☰</button>
+    <button id="openSidebar"
+      class="text-white text-2xl font-bold px-3 py-1 rounded shadow-md transition hover:scale-105"
+      style="background: linear-gradient(to right, #9a22f6, #f96fdc);">
+      ☰
+    </button>
     <h1 class="text-xl font-semibold">🛍 Admin Panel</h1>
     <div></div>
   </header>
@@ -104,13 +259,30 @@
     <!-- 📦 eStore -->
     <div class="tab-content active" id="tab-estore">
       <div class="flex gap-4 mb-4">
-        <button class="sub-tab-btn" data-subtab="add-estore" id="add-tab-btn">➕ Add Entries</button>
-        <button class="sub-tab-btn" data-subtab="view-estore" id="view-tab-btn">📄 View Entries</button>
+        <button class="sub-tab-btn" data-subtab="add-estore" id="add-tab-btn">➕ Add Products</button>
+
+
+
+        <button class="sub-tab-btn" data-subtab="view-estore" id="view-tab-btn">📄 View Products</button>
       </div>
-      <div class="sub-tab-content glass-card p-6" id="subtab-add-estore">
-        <form id="addForm" class="grid grid-cols-1 md:grid-cols-2 gap-4"></form>
+      <div class="sub-tab-content p-6 rounded-xl shadow-lg text-white" id="subtab-add-estore"
+        style="background: linear-gradient(to right, #9a22f6, #f96fdc);">
+        <form id="addForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fadeInUp"></form>
         <div class="mt-4 text-right">
-          <button onclick="submitForm()" type="button" class="tab-btn1">Submit</button>
+          <!-- ✅ Enhanced Submit Button with Gradient + Spinner -->
+
+          <button onclick="submitForm()" type="button" class="btn-gradient">✅ Submit</button>
+
+          <!-- Loader Spinner -->
+          <div id="submit-loader" class="hidden flex justify-center mt-4">
+            <div class="p-3 rounded-full bg-black/70 backdrop-blur-sm shadow-lg">
+              <svg class="animate-spin h-6 w-6" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="#ffc94d" stroke-width="4" fill="none" opacity="0.4" />
+                <path fill="#ffc94d" d="M4 12a8 8 0 018-8v8H4z" />
+              </svg>
+            </div>
+          </div>
+
           <div class="mt-2 text-green-600 font-medium hidden" id="submit-message"></div>
         </div>
       </div>
@@ -122,7 +294,7 @@
     <!-- 📇 CRM -->
     <div class="tab-content" id="tab-crm">
       <div class="flex gap-4 mb-4">
-        <button class="sub-tab-btn" data-subtab="view-leads" id="leads-view-tab-btn">📄 View CRM Leads</button>
+        <button class="sub-tab-btn" data-subtab="view-leads" id="leads-view-tab-btn">📄 View Sales Reports</button>
       </div>
       <div class="sub-tab-content glass-card p-6" id="subtab-view-leads">
         <div class="overflow-auto max-h-[600px]" id="crm-existing-table"></div>
@@ -142,11 +314,53 @@
         <button class="sub-tab-btn" data-subtab="sales-dashboard">📊 Sales</button>
         <button class="sub-tab-btn" data-subtab="leads-dashboard">📋 Leads</button>
       </div>
+
+      <div id="kpi-sales-report" class="hidden">
+        <!-- 📊 KPI Summary Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-400 text-white p-4 rounded-lg shadow">
+            <h4 class="text-sm font-medium">Total Sales</h4>
+            <p id="kpi-total-sales" class="text-2xl font-bold">0</p>
+          </div>
+          <div class="bg-gradient-to-r from-green-500 to-teal-400 text-white p-4 rounded-lg shadow">
+            <h4 class="text-sm font-medium">Conversion Rate</h4>
+            <p id="kpi-conversion-rate" class="text-2xl font-bold">0%</p>
+          </div>
+          <div class="bg-gradient-to-r from-yellow-500 to-orange-400 text-white p-4 rounded-lg shadow">
+            <h4 class="text-sm font-medium">Revenue</h4>
+            <p id="kpi-total-revenue" class="text-2xl font-bold">₹0</p>
+          </div>
+        </div>
+
+        <!-- 📅 KPI Last Updated -->
+        <div id="kpi-updated-time" class="text-sm text-gray-500 text-right mb-4">
+          Last updated: Never
+        </div>
+      </div>
+
       <div class="sub-tab-content" id="subtab-sales-dashboard">
         <h3 class="text-xl font-semibold mb-4">📈 Sales Dashboard</h3>
         <div class="flex flex-col md:flex-row gap-6">
+
+          <!-- 📱 Mobile Dropdown (only visible on mobile) -->
+          <div class="block md:hidden mb-4">
+            <select id="salesTabDropdown" class="w-full p-2 rounded border border-gray-300">
+              <option disabled selected>Select Sales Report</option>
+              <option value="leadVolumeTab">Lead Volume</option>
+              <option value="paidUnpaidTab">Paid vs Unpaid</option>
+              <option value="topProductsTab">Top Products</option>
+              <option value="leadsByProductTab">Leads by Product</option>
+              <option value="revenueOverTimeTab">Revenue Over Time</option>
+              <option value="conversionRateTab">Conversion Rate</option>
+              <option value="dailyRevenueTab">Daily Revenue</option>
+              <option value="uniqueUsersTab">Unique Users</option>
+              <option value="abandonedLeadsTab">Abandoned Leads</option>
+              <option value="totalRevenueTab">Total Revenue</option>
+            </select>
+          </div>
+
           <!-- Report Buttons -->
-          <div id="salesTabs" class="flex flex-col space-y-2 w-full md:w-48">
+          <div id="salesTabs" class="hidden md:flex flex-col space-y-2 w-full md:w-48">
             <button class="tab-btn border p-2 rounded text-left" data-tab="leadVolumeTab">📊 Lead Volume</button>
             <button class="tab-btn border p-2 rounded text-left" data-tab="paidUnpaidTab">💰 Paid vs Unpaid</button>
             <button class="tab-btn border p-2 rounded text-left" data-tab="topProductsTab">⭐ Top Products</button>
@@ -163,38 +377,66 @@
           </div>
 
           <!-- Report Panel Output -->
+           
+
           <div id="sales-report-container" class="flex-1">
-            <div id="leadVolumeTab" class="tab-content hidden"><canvas id="leadVolumeChart"></canvas>
-              <div id="leadVolumeTable"></div>
+            <div id="leadVolumeTab" class="tab-content hidden">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-leadVolumeTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="leadVolumeChart"></canvas>
+                <div id="leadVolumeTable"></div>
+              </div>
             </div>
-            <div id="paidUnpaidTab" class="tab-content hidden"><canvas id="paidUnpaidChart"></canvas>
-              <div id="paidUnpaidTable"></div>
+            <div id="paidUnpaidTab" class="tab-content hidden">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-paidUnpaidTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="paidUnpaidChart"></canvas>
+                <div id="paidUnpaidTable"></div>
+              </div>
             </div>
-            <div id="topProductsTab" class="tab-content hidden"><canvas id="topProductsChart"></canvas>
-              <div id="topProductsTable"></div>
+            <div id="topProductsTab" class="tab-content hidden">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-topProductsTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="topProductsChart"></canvas>
+                <div id="topProductsTable"></div>
+              </div>
             </div>
-            <div id="leadsByProductTab" class="tab-content hidden"><canvas id="leadsByProductChart"></canvas>
-              <div id="leadsByProductTable"></div>
+            <div id="leadsByProductTab" class="tab-content hidden">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-leadsByProductTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="leadsByProductChart"></canvas>
+                <div id="leadsByProductTable"></div>
+              </div>
             </div>
-            <div id="revenueOverTimeTab" class="tab-content hidden"><canvas id="revenueOverTimeChart"></canvas>
-              <div id="revenueOverTimeTable"></div>
+            <div id="revenueOverTimeTab" class="tab-content hidden">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-revenueOverTimeTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="revenueOverTimeChart"></canvas>
+                <div id="revenueOverTimeTable"></div>
+              </div>
             </div>
             <div id="conversionRateTab" class="tab-content hidden">
+              <div id="mini-metrics-conversionRateTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
               <div id="conversionRateKPI" class="font-bold text-xl mb-4"></div>
               <div id="conversionRateTable"></div>
             </div>
-            <div id="dailyRevenueTab" class="tab-content hidden"><canvas id="dailyRevenueChart"></canvas>
+            <div id="dailyRevenueTab" class="tab-content hidden">
+              <div id="mini-metrics-dailyRevenueTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+              <canvas id="dailyRevenueChart"></canvas>              
               <div id="dailyRevenueTable"></div>
             </div>
             <div id="uniqueUsersTab" class="tab-content hidden">
+              <div id="mini-metrics-uniqueUsersTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
               <div id="uniqueUsersKPI" class="font-bold text-xl mb-4"></div>
               <div id="uniqueUsersTable"></div>
             </div>
             <div id="abandonedLeadsTab" class="tab-content hidden">
+              <div id="mini-metrics-abandonedLeadsTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
               <div id="abandonedLeadsTable"></div>
             </div>
             <div id="totalRevenueTab" class="tab-content hidden">
               <div class="flex justify-between items-center mb-4">
+                <div id="mini-metrics-totalRevenueTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
                 <h3 class="text-lg font-semibold">Total Revenue Report</h3>
                 <select id="revenueFilter" class="p-2 border rounded">
                   <option value="day">By Day</option>
@@ -275,6 +517,58 @@
     });
 
   </script>
+
+
+
+  <!-- 🔧 EDIT POPUP MODAL -->
+  <!-- Just make sure this modal is in your body -->
+  <div id="editRowModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+    <div class="glass-modal-gradient w-full max-w-xl p-6 relative rounded-xl">
+
+      <!-- ❌ Close -->
+      <button onclick="closeEditModal()" class="absolute top-4 right-4 text-white text-2xl hover:scale-110">×</button>
+
+      <!-- 📝 Title -->
+      <h3 class="text-2xl font-semibold text-white mb-4">Edit Row Details</h3>
+
+      <!-- Feature selector -->
+      <label class="block text-white mb-2">Feature:
+        <select id="editFeatureSelect" onchange="loadEditFields(this.value)"
+          class="w-full mt-1 p-2 rounded bg-white text-black shadow">
+          <option value="all">All</option>
+          <option value="deals">Deals</option>
+          <option value="flash">Flash</option>
+          <option value="jd">JD</option>
+          <option value="combo">Combo</option>
+        </select>
+      </label>
+
+      <!-- Editable fields -->
+      <div id="editFieldsContainer" class="mt-4 max-h-[60vh] overflow-y-auto pr-2 space-y-3"></div>
+
+      <!-- Status -->
+      <div id="editStatusMsg" class="text-center text-sm my-2 text-white"></div>
+
+      <!-- Actions -->
+      <div class="flex justify-end gap-3 mt-6">
+        <!-- ✅ Update Button with Spinner and Message -->
+        <!-- Modal Footer Button -->
+        <button id="editUpdateButton" onclick="handleEditUpdate()" class="btn-gradient">
+          <span id="editUpdateSpinner"
+            class="hidden w-4 h-4 animate-spin inline-block border-2 border-white border-t-transparent rounded-full mr-2"></span>
+          ✅ Update
+        </button>
+        <span id="editUpdateStatus" class="ml-2 text-sm text-white font-medium"></span>
+        <button onclick="closeEditModal()" class="btn-ghost">❌ Cancel</button>
+      </div>
+
+    </div>
+  </div>
+
+  <form id="addForm" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- auto-generated field blocks will go here -->
+  </form>
+
 
 
 
