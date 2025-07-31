@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enhanced Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="charts.js" defer></script>
+  <script src="email_report.js" defer></script>
+  <style>
+    [data-theme="dark"] {
+      background-color: #1f2937;
+      color: white;
+    }
+    [data-theme="dark"] .card {
+      background-color: #374151;
+    }
+    .card {
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="p-6">
+
+  <h1 class="text-2xl font-bold mb-4">✨ Enhanced Admin Dashboard</h1>
+
+  <div class="flex items-center justify-between mb-6">
+    <button onclick="toggleTheme()" class="bg-indigo-600 text-white px-4 py-2 rounded">Toggle Dark Mode</button>
+    <button onclick="sendEmailReport()" class="bg-green-500 text-white px-4 py-2 rounded">📤 Send Email Report</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="card p-4 rounded shadow bg-white">
+      <h2 class="text-xl font-semibold mb-2">📈 Weekly Sales</h2>
+      <canvas id="myChart" height="150"></canvas>
+    </div>
+
+    <div class="card p-4 rounded shadow bg-white">
+      <h2 class="text-xl font-semibold mb-2">📬 Email Summary</h2>
+      <p>This area can show a preview of your daily report email.</p>
+    </div>
+
+    <div class="card p-4 rounded shadow bg-white">
+      <h2 class="text-xl font-semibold mb-2">📦 Orders Module</h2>
+      <ul class="list-disc list-inside">
+        <li>Order #101 - ✅ Completed</li>
+        <li>Order #102 - ❌ Failed</li>
+        <li>Order #103 - 🚚 Shipped</li>
+      </ul>
+    </div>
+
+    <div class="card p-4 rounded shadow bg-white">
+      <h2 class="text-xl font-semibold mb-2">🧾 Invoices</h2>
+      <ul class="list-disc list-inside">
+        <li>Invoice #INV-001 - ₹1200</li>
+        <li>Invoice #INV-002 - ₹750</li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  <!-- 👥 Employee Logs Module -->
+<div class="card bg-white p-4 rounded shadow mt-6">
+  <h2 class="text-xl font-semibold mb-2">👥 Employee Logs</h2>
+  <table class="table-auto w-full text-left border-collapse">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 py-2">Name</th>
+        <th class="px-4 py-2">Login Time</th>
+        <th class="px-4 py-2">Logout Time</th>
+        <th class="px-4 py-2">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t">
+        <td class="px-4 py-2">John Doe</td>
+        <td class="px-4 py-2">9:15 AM</td>
+        <td class="px-4 py-2">6:00 PM</td>
+        <td class="px-4 py-2 text-green-600">✔️ Present</td>
+      </tr>
+      <tr class="border-t">
+        <td class="px-4 py-2">Anita Shah</td>
+        <td class="px-4 py-2">—</td>
+        <td class="px-4 py-2">—</td>
+        <td class="px-4 py-2 text-red-600">❌ Absent</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 🧾 Support Tickets Module -->
+<div class="card bg-white p-4 rounded shadow mt-6">
+  <h2 class="text-xl font-semibold mb-2">🎫 Support Tickets</h2>
+  <ul class="space-y-2">
+    <li class="border p-3 rounded bg-gray-50">
+      <strong>#TCK-1001:</strong> Issue with dashboard loading <span class="text-yellow-600">⏳ Pending</span>
+    </li>
+    <li class="border p-3 rounded bg-gray-50">
+      <strong>#TCK-1002:</strong> Payment not processed <span class="text-green-600">✅ Resolved</span>
+    </li>
+  </ul>
+</div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute("data-theme");
+      html.setAttribute("data-theme", current === "light" ? "dark" : "light");
+    }
+	
+	document.addEventListener("DOMContentLoaded", () => {
+  const ctx = document.getElementById('myChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Sales ₹',
+          data: [200, 300, 250, 400, 350, 500, 420],
+          backgroundColor: 'rgba(99, 102, 241, 0.5)',
+          borderColor: 'rgba(99, 102, 241, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+});
+
+
+function sendEmailReport() {
+  alert("📧 Simulated: Email summary sent successfully!");
+  // You can integrate with EmailJS, Mailchimp API, or Gmail Apps Script for real functionality
+}
+
+	
+  </script>
+
+</body>
+</html>

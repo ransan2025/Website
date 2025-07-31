@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <!-- Style css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/config.js"></script>
 
     <style>
         a.active {
@@ -579,7 +580,8 @@
             }
 
             const formData = new FormData(this);
-            const scriptURL = "https://script.google.com/macros/s/AKfycbxqbr_sHRmqW-1pHpKauOCKlI_hdXn8PXPQieVrvGLPgKdES1hXEo3t_7K2fECkbW75/exec"; // Replace with your script URL
+
+            const scriptURL = getScriptURL("contact");
 
             document.getElementById("spinner").style.display = "inline-block";
             statusEl.textContent = "⏳ Sending your message, please wait...";

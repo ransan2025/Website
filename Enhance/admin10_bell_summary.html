@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Notification Bell</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- 🔔 Header with Bell Icon -->
+  <div class="w-full bg-white shadow p-4 flex justify-end items-center">
+    <div class="relative">
+      <button id="notifBell" class="relative p-2 bg-gray-100 rounded-full hover:bg-gray-200">
+        🔔
+        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5">3</span>
+      </button>
+
+      <!-- 📊 Dropdown Summary Panel -->
+      <div id="notifDropdown" class="hidden absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded shadow-lg z-50">
+        <div class="p-4 border-b font-semibold text-gray-700">📊 Summary (Today)</div>
+        <ul class="divide-y divide-gray-200 text-sm" id="notifList">
+          <li class="px-4 py-2">
+            <span class="text-gray-500">🆕 New Users:</span>
+            <span id="newUsersToday" class="font-medium text-indigo-600">...</span>
+          </li>
+          <li class="px-4 py-2">
+            <span class="text-gray-500">💰 Revenue:</span>
+            <span id="totalRevenue" class="font-medium text-green-600">...</span>
+          </li>
+          <li class="px-4 py-2">
+            <span class="text-gray-500">❌ Failed Payments:</span>
+            <span id="failedPayments" class="font-medium text-red-600">...</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📜 Script to Load Data -->
+  <script>
+    // Toggle bell dropdown
+    document.getElementById("notifBell").addEventListener("click", () => {
+      const dropdown = document.getElementById("notifDropdown");
+      dropdown.classList.toggle("hidden");
+    });
+
+    // CSV fetch helper
+    async function fetchCSV(url) {
+      const res = await fetch(url);
+      const text = await res.text();
+      return text.trim().split('\n').map(row => row.split(','));
+    }
+
+    async function loadNotificationSummary() {
+      const today = new Date().toISOString().split('T')[0];
+
+      const newsletterUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=255856917&single=true&output=csv"
+      );
+
+      const crmUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=0&single=true&output=csv"
+      );
+
+      let newUsers = 0, totalRevenue = 0, failedPayments = 0;
+
+      try {
+        const newsletter = await fetchCSV(newsletterUrl);
+        const crm = await fetchCSV(crmUrl);
+
+        // 🆕 Newsletter: Count rows with today's date in A
+        newsletter.slice(1).forEach(row => {
+          const date = row[0]?.trim();
+          if (date && date.startsWith(today)) newUsers++;
+        });
+
+        // 💰 CRM: Parse each row for status
+        crm.slice(1).forEach(row => {
+          const date = row[0]?.trim();
+          const amount = parseFloat(row[5]?.replace(/[^0-9.]/g, '') || 0); // F = Amount
+          const status = row[6]?.trim(); // G = Status
+
+          if (date && date.startsWith(today)) {
+            if (status === "Paid order") {
+              totalRevenue += amount;
+            } else if (status === "Interested - Not Paid Yet") {
+              failedPayments++;
+            }
+          }
+        });
+
+        // Update UI
+        document.getElementById("newUsersToday").textContent = newUsers;
+        document.getElementById("totalRevenue").textContent = "₹" + totalRevenue.toFixed(2);
+        document.getElementById("failedPayments").textContent = failedPayments;
+
+      } catch (err) {
+        console.error("⚠️ Failed to load summary data:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadNotificationSummary);
+  </script>
+
+</body>
+</html>

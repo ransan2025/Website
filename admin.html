@@ -6,18 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
 
-
+  <script src="assets/config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-funnel"></script>
   <link rel="stylesheet" href="assets/estore/admin_dashboard.css" />
-
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  
 
 
   <script defer src="assets/estore/admin_dashboard.js"></script>
 
 
   <style>
+    :root {
+      --color-primary: #9a22f6;
+      /* Default: Purple */
+      --color-secondary: #f96fdc;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    }
+
+    .tab-btn.active,
+    .report-toggle-btn.active {
+      background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    }
+
+
     .tab-content.hidden,
     .sub-tab-content.hidden,
     .report-tab.hidden {
@@ -206,7 +223,6 @@
     }
   </style>
 
-
 </head>
 
 <body class="text-gray-800 overflow-x-hidden">
@@ -243,14 +259,58 @@
   <div class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden" id="overlay"></div>
 
   <!-- Header -->
+
   <header class="flex items-center justify-between px-4 py-3 bg-white shadow-md sticky top-0 z-30">
-    <button id="openSidebar"
-      class="text-white text-2xl font-bold px-3 py-1 rounded shadow-md transition hover:scale-105"
-      style="background: linear-gradient(to right, #9a22f6, #f96fdc);">
-      ☰
-    </button>
-    <h1 class="text-xl font-semibold">🛍 Admin Panel</h1>
-    <div></div>
+
+    <!-- 📌 Left: Hamburger + Theme Picker -->
+    <div class="flex items-center space-x-2">
+      <button id="openSidebar"
+        class="text-white text-2xl font-bold px-3 py-1 rounded shadow-md transition hover:scale-105"
+        style="background: linear-gradient(to right, #9a22f6, #f96fdc);">
+        ☰
+      </button>
+      <select id="themePicker" class="p-2 rounded text-sm border">
+        <option value="purple">💜 Purple</option>
+        <option value="indigo">🔵 Indigo</option>
+        <option value="teal">🟢 Teal</option>
+      </select>
+    </div>
+
+    <!-- 🛍 Center title -->
+    <h1 class="text-xl font-semibold absolute left-1/2 transform -translate-x-1/2">🛍 Admin Panel</h1>
+
+    <!-- 🔔 Right: Notification Bell -->
+    <div class="relative">
+      <button id="notifBell" class="relative p-2 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none">
+        🔔
+        <span id="notifCount"
+          class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full px-1.5">0</span>
+      </button>
+
+      <!-- Dropdown -->
+      <div id="notifDropdown"
+        class="hidden absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded shadow-lg z-50">
+        <div class="p-4 border-b font-semibold text-gray-700">📌 Today’s Summary</div>
+        <ul class="divide-y divide-gray-200 text-sm" id="notifList">
+          <li class="px-4 py-2 flex justify-between">
+            <span>🆕 New Users:</span>
+            <span id="newUsersToday" class="font-medium text-indigo-600">0</span>
+          </li>
+          <li class="px-4 py-2 flex justify-between">
+            <span>💰 Revenue:</span>
+            <span id="totalRevenue" class="font-medium text-green-600">₹0.00</span>
+          </li>
+          <li class="px-4 py-2 flex justify-between">
+            <span>❌ Failed Payments:</span>
+            <span id="failedPayments" class="font-medium text-red-600">0</span>
+          </li>
+        </ul>
+        <div class="px-4 py-2 border-t text-sm text-gray-500">
+          🔔 <span id="totalAlertsLabel">0 alerts</span> today
+        </div>
+      </div>
+    </div>
+
   </header>
 
   <!-- Main Content -->
@@ -311,32 +371,20 @@
     <!-- 📈 CRM Dashboard -->
     <div class="tab-content" id="tab-crm-dashboard">
       <div class="sub-tab-wrapper flex gap-4 mb-4">
-        <button class="sub-tab-btn" data-subtab="sales-dashboard">📊 Sales</button>
+        <button id="salesBtn" class="sub-tab-btn" data-subtab="sales-dashboard"
+          style="position: relative; min-width: 120px; padding: 6px 12px; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+          <span class="btn-label" style="display: inline-flex; align-items: center; gap: 4px;">📊 Sales</span>
+          <span class="btn-spinner" style="display: none; align-items: center; gap: 6px;">
+            <svg class="animate-spin h-4 w-4 text-indigo-600" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            <span style="color: white; font-weight: 500;">Loading...</span>
+          </span>
+        </button>
         <button class="sub-tab-btn" data-subtab="leads-dashboard">📋 Leads</button>
       </div>
 
-      <div id="kpi-sales-report" class="hidden">
-        <!-- 📊 KPI Summary Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="bg-gradient-to-r from-purple-500 to-pink-400 text-white p-4 rounded-lg shadow">
-            <h4 class="text-sm font-medium">Total Sales</h4>
-            <p id="kpi-total-sales" class="text-2xl font-bold">0</p>
-          </div>
-          <div class="bg-gradient-to-r from-green-500 to-teal-400 text-white p-4 rounded-lg shadow">
-            <h4 class="text-sm font-medium">Conversion Rate</h4>
-            <p id="kpi-conversion-rate" class="text-2xl font-bold">0%</p>
-          </div>
-          <div class="bg-gradient-to-r from-yellow-500 to-orange-400 text-white p-4 rounded-lg shadow">
-            <h4 class="text-sm font-medium">Revenue</h4>
-            <p id="kpi-total-revenue" class="text-2xl font-bold">₹0</p>
-          </div>
-        </div>
-
-        <!-- 📅 KPI Last Updated -->
-        <div id="kpi-updated-time" class="text-sm text-gray-500 text-right mb-4">
-          Last updated: Never
-        </div>
-      </div>
 
       <div class="sub-tab-content" id="subtab-sales-dashboard">
         <h3 class="text-xl font-semibold mb-4">📈 Sales Dashboard</h3>
@@ -377,75 +425,120 @@
           </div>
 
           <!-- Report Panel Output -->
-           
 
           <div id="sales-report-container" class="flex-1">
-            <div id="leadVolumeTab" class="tab-content hidden">
+
+            <!-- Updated HTML block: Toggle for Chart/Table Views -->
+            <div id="report-toggle" class="flex gap-3 mb-4">
+              <button onclick="toggleReportView('chart')" class="report-toggle-btn active">📊 Charts</button>
+              <button onclick="toggleReportView('table')" class="report-toggle-btn">📋 Tables</button>
+            </div>
+
+            <!-- 📊 Lead Volume -->
+            <div id="leadVolumeTab" class="tab-content hidden report">
               <div class="bg-white p-4 rounded-lg shadow border mb-4">
-                <div id="mini-metrics-leadVolumeTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-                <canvas id="leadVolumeChart"></canvas>
-                <div id="leadVolumeTable"></div>
+                <div id="mini-metrics-leadVolumeTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+                </div>
+                <canvas id="leadVolumeChart" data-report-type="chart"></canvas>
+                <div id="leadVolumeTable" data-report-type="table"></div>
               </div>
             </div>
-            <div id="paidUnpaidTab" class="tab-content hidden">
+
+            <!-- 💰 Paid vs Unpaid -->
+            <div id="paidUnpaidTab" class="tab-content hidden report">
               <div class="bg-white p-4 rounded-lg shadow border mb-4">
-                <div id="mini-metrics-paidUnpaidTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-                <canvas id="paidUnpaidChart"></canvas>
-                <div id="paidUnpaidTable"></div>
+                <div id="mini-metrics-paidUnpaidTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+                </div>
+                <canvas id="paidUnpaidChart" data-report-type="chart"></canvas>
+                <div id="paidUnpaidTable" data-report-type="table"></div>
               </div>
             </div>
-            <div id="topProductsTab" class="tab-content hidden">
+
+            <!-- ⭐ Top Products -->
+            <div id="topProductsTab" class="tab-content hidden report">
               <div class="bg-white p-4 rounded-lg shadow border mb-4">
-                <div id="mini-metrics-topProductsTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-                <canvas id="topProductsChart"></canvas>
-                <div id="topProductsTable"></div>
+                <div id="mini-metrics-topProductsTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+                </div>
+                <canvas id="topProductsChart" data-report-type="chart"></canvas>
+                <div id="topProductsTable" data-report-type="table"></div>
               </div>
             </div>
-            <div id="leadsByProductTab" class="tab-content hidden">
+
+            <!-- 🛒 Leads by Product -->
+            <div id="leadsByProductTab" class="tab-content hidden report">
               <div class="bg-white p-4 rounded-lg shadow border mb-4">
-                <div id="mini-metrics-leadsByProductTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-                <canvas id="leadsByProductChart"></canvas>
-                <div id="leadsByProductTable"></div>
+                <div id="mini-metrics-leadsByProductTab"
+                  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="leadsByProductChart" data-report-type="chart"></canvas>
+                <div id="leadsByProductTable" data-report-type="table"></div>
               </div>
             </div>
-            <div id="revenueOverTimeTab" class="tab-content hidden">
+
+            <!-- 📈 Revenue Over Time -->
+            <div id="revenueOverTimeTab" class="tab-content hidden report">
               <div class="bg-white p-4 rounded-lg shadow border mb-4">
-                <div id="mini-metrics-revenueOverTimeTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-                <canvas id="revenueOverTimeChart"></canvas>
-                <div id="revenueOverTimeTable"></div>
+                <div id="mini-metrics-revenueOverTimeTab"
+                  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="revenueOverTimeChart" data-report-type="chart"></canvas>
+                <div id="revenueOverTimeTable" data-report-type="table"></div>
               </div>
             </div>
-            <div id="conversionRateTab" class="tab-content hidden">
-              <div id="mini-metrics-conversionRateTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-              <div id="conversionRateKPI" class="font-bold text-xl mb-4"></div>
-              <div id="conversionRateTable"></div>
-            </div>
-            <div id="dailyRevenueTab" class="tab-content hidden">
-              <div id="mini-metrics-dailyRevenueTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-              <canvas id="dailyRevenueChart"></canvas>              
-              <div id="dailyRevenueTable"></div>
-            </div>
-            <div id="uniqueUsersTab" class="tab-content hidden">
-              <div id="mini-metrics-uniqueUsersTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-              <div id="uniqueUsersKPI" class="font-bold text-xl mb-4"></div>
-              <div id="uniqueUsersTable"></div>
-            </div>
-            <div id="abandonedLeadsTab" class="tab-content hidden">
-              <div id="mini-metrics-abandonedLeadsTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
-              <div id="abandonedLeadsTable"></div>
-            </div>
-            <div id="totalRevenueTab" class="tab-content hidden">
-              <div class="flex justify-between items-center mb-4">
-                <div id="mini-metrics-totalRevenueTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
-                <h3 class="text-lg font-semibold">Total Revenue Report</h3>
-                <select id="revenueFilter" class="p-2 border rounded">
-                  <option value="day">By Day</option>
-                  <option value="month">By Month</option>
-                  <option value="year">By Year</option>
-                </select>
+
+            <!-- 🎯 Conversion Rate -->
+            <div id="conversionRateTab" class="tab-content hidden report">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-conversionRateTab"
+                  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <div id="conversionRateKPI" class="font-bold text-xl mb-4"></div>
+                <div id="conversionRateTable" data-report-type="table"></div>
               </div>
-              <canvas id="totalRevenueChart" height="300"></canvas>
-              <div id="totalRevenueTable" class="mt-4"></div>
+            </div>
+
+            <!-- 📅 Daily Revenue -->
+            <div id="dailyRevenueTab" class="tab-content hidden report">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-dailyRevenueTab"
+                  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <canvas id="dailyRevenueChart" data-report-type="chart"></canvas>
+                <div id="dailyRevenueTable" data-report-type="table"></div>
+              </div>
+            </div>
+
+            <!-- 👥 Unique Users -->
+            <div id="uniqueUsersTab" class="tab-content hidden report">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-uniqueUsersTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+                </div>
+                <div id="uniqueUsersKPI" class="font-bold text-xl mb-4"></div>
+                <div id="uniqueUsersTable" data-report-type="table"></div>
+              </div>
+            </div>
+
+            <!-- 🚫 Abandoned Leads -->
+            <div id="abandonedLeadsTab" class="tab-content hidden report">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div id="mini-metrics-abandonedLeadsTab"
+                  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4"></div>
+                <div id="abandonedLeadsTable" data-report-type="table"></div>
+              </div>
+            </div>
+
+            <!-- 📈 Total Revenue -->
+            <div id="totalRevenueTab" class="tab-content hidden report">
+              <div class="bg-white p-4 rounded-lg shadow border mb-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div id="mini-metrics-totalRevenueTab" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  </div>
+                  <h3 class="text-lg font-semibold">Total Revenue Report</h3>
+                  <select id="revenueFilter" class="p-2 border rounded">
+                    <option value="day">By Day</option>
+                    <option value="month">By Month</option>
+                    <option value="year">By Year</option>
+                  </select>
+                </div>
+                <canvas id="totalRevenueChart" height="300" data-report-type="chart"></canvas>
+                <div id="totalRevenueTable" class="mt-4" data-report-type="table"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -457,6 +550,25 @@
       </div>
     </div>
   </main>
+
+  <script>
+    function toggleReportView(type) {
+      // Remove active class from both
+      document.querySelectorAll('.report-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Add active to the clicked one
+      const targetBtn = document.querySelector(`.report-toggle-btn[onclick*="${type}"]`);
+      if (targetBtn) targetBtn.classList.add('active');
+
+      // Toggle visibility
+      document.querySelectorAll('#sales-report-container [data-report-type]').forEach(el => {
+        const reportType = el.getAttribute('data-report-type');
+        el.style.display = reportType === type ? '' : 'none';
+      });
+    }
+  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -569,7 +681,19 @@
     <!-- auto-generated field blocks will go here -->
   </form>
 
+  <script>
+    const themes = {
+      purple: ['#9a22f6', '#f96fdc'],
+      indigo: ['#6366f1', '#a855f7'],
+      teal: ['#14b8a6', '#06b6d4']
+    };
 
+    document.getElementById('themePicker').addEventListener('change', e => {
+      const [primary, secondary] = themes[e.target.value];
+      document.documentElement.style.setProperty('--color-primary', primary);
+      document.documentElement.style.setProperty('--color-secondary', secondary);
+    });
+  </script>
 
 
 </body>

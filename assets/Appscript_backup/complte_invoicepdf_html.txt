@@ -1,0 +1,18 @@
+function generateInvoiceFromTemplate(data, templateId) {
+  const copy = DriveApp.getFileById(templateId).makeCopy(`Invoice - ${data.name}`);
+  const doc = DocumentApp.openById(copy.getId());
+  const body = doc.getBody();
+
+  body.replaceText('{{company}}', data.company);
+  body.replaceText('{{email}}', data.email);
+  body.replaceText('{{address}}', data.address);
+  body.replaceText('{{invoice_no}}', data.invoice_no);
+  body.replaceText('{{date}}', data.date);
+  body.replaceText('{{name}}', data.name);
+  body.replaceText('{{product}}', data.product);
+  body.replaceText('{{amount}}', `₹ ${parseFloat(data.amount).toFixed(2)}`);
+  body.replaceText('{{txn_id}}', data.txn_id);
+
+  doc.saveAndClose();
+  return doc.getAs(MimeType.PDF).setName(`Invoice_${data.invoice_no}.pdf`);
+}

@@ -16,6 +16,7 @@
 
   <link rel="icon" type="image/png" href="assets/estore/RanSan_Logo_small.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="assets/config.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Swiper CSS -->
@@ -124,17 +125,18 @@
       font-family: Poppins, sans-serif;
     }
 
-  @media only screen and (max-width: 769px) {
-    .purchase-alert,
-    #recent-purchase-popup {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      height: 0 !important;
-      margin: 0 !important;
-      pointer-events: none !important;
+    @media only screen and (max-width: 769px) {
+
+      .purchase-alert,
+      #recent-purchase-popup {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        pointer-events: none !important;
+      }
     }
-  }
   </style>
 
 </head>
@@ -430,8 +432,15 @@
   </script>
 
   <script>
-    const sheetId = '1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU';
-    const apiKey = 'AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE';
+    
+    //Live
+    //const sheetId = '1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU';
+    //const apiKey = 'AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE';
+
+    //Test
+    const sheetId = '1WnErc845R9CFdhk_WGa5HiOZGE7wjCELmk2fQ4MlKdI';
+    const apiKey = 'AIzaSyBxDzAHIF_EghHtJs6LxYUJL_vaWV9kJNo';
+
     const range = 'Sheet1!A2:J';
     let allProducts = [];
     let selectedProductName = "";
@@ -670,7 +679,11 @@
       };
 
       try {
-        await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+
+        //App Script: CRM_Lead
+
+        await fetch(getScriptURL("estore_payment"), {
+
           method: "POST",
           body: JSON.stringify(leadData)
         });
@@ -709,7 +722,10 @@
           };
 
           try {
-            await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+
+            //App Script: CRM_Lead
+            await fetch(getScriptURL("estore_payment"), {
+
               method: "POST",
               body: JSON.stringify(paidData)
             });
@@ -723,7 +739,9 @@
               payment_id: paidData.payment_id
             });
 
-            const res = await fetch("https://script.google.com/macros/s/AKfycbzswQFu7aSP_JQN4bKh-4MOXxo77dLcMDAL-lc8HJK7TN-oCaqHr4B1i2UXkFrzCbV4/exec", {
+            //App script: complte_invoicepdf
+            const res = await fetch(getScriptURL("invoice_generation"), {
+
               method: "POST",
               body: postData
             });
@@ -858,7 +876,9 @@
 
       try {
         // News leed URL
-        await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+        //App Script: CRM_Lead
+        await fetch(getScriptURL("estore_payment"), {
+
           method: "POST",
           body: JSON.stringify(leadData)
         });
@@ -1361,7 +1381,31 @@
   </script>
   <!--Mobile catagory end-->
 
+  <!--Timestamp convert start-->
+  <script>
+    function formatToISTDate(timestamp) {
+      try {
+        const date = new Date(timestamp);
+        // Convert UTC to IST (UTC + 5:30)
+        const istOffset = 330; // in minutes
+        const istTime = new Date(date.getTime() + istOffset * 60000);
 
+        const options = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour12: true,
+          timeZone: 'Asia/Kolkata'
+        };
+
+        return istTime.toLocaleString('en-IN', options);
+      } catch (e) {
+        console.warn("Invalid timestamp:", timestamp);
+        return timestamp;
+      }
+    }
+
+  </script>
+  <!--Timestamp convert end-->
 
   <div id="details-modal" class="modal">
     <div class="modal-content">
@@ -1391,7 +1435,7 @@
 
   <!-- Include the Popup Script -->
   <script src="assets/estore/popup.js"></script>
-  
+
   <!-- That script likely injects something like this dynamically: -->
   <div id="recent-purchase-popup" class="purchase-alert"></div>
 
@@ -1415,7 +1459,6 @@
 
   <div id="scrollProgress"></div>
 
-  
 
 
 

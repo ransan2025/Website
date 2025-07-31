@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enhanced Admin Analytics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <h1 class="text-2xl font-bold text-gray-800 mb-4">📊 Enhanced Analytics Dashboard</h1>
+
+  <!-- 🧩 Analytics Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6">
+    <div class="bg-white shadow rounded-lg p-5">
+      <div class="text-sm text-gray-500">🧑‍💼 New Users Today</div>
+      <div class="text-3xl font-bold text-indigo-600 mt-1" id="cardNewUsers">0</div>
+      <div class="text-xs text-gray-500 mt-1" id="trendNewUsers">-</div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-5">
+      <div class="text-sm text-gray-500">💰 Revenue Today</div>
+      <div class="text-3xl font-bold text-green-600 mt-1" id="cardRevenue">₹0.00</div>
+      <div class="text-xs text-gray-500 mt-1" id="trendRevenue">-</div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-5">
+      <div class="text-sm text-gray-500">❌ Failed Payments</div>
+      <div class="text-3xl font-bold text-red-600 mt-1" id="cardFails">0</div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-5">
+      <div class="text-sm text-gray-500">🔁 Repeat Users</div>
+      <div class="text-3xl font-bold text-yellow-600 mt-1" id="cardRepeatUsers">0</div>
+    </div>
+    <div class="bg-white shadow rounded-lg p-5">
+      <div class="text-sm text-gray-500">📦 Orders Today</div>
+      <div class="text-3xl font-bold text-blue-600 mt-1" id="cardOrders">0</div>
+    </div>
+  </div>
+
+  <!-- 🔁 Reload button -->
+  <button onclick="loadAnalytics()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded shadow">
+    🔄 Reload Analytics
+  </button>
+
+  <script>
+    function getTodayISO(offset = 0) {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 330); // Convert to IST
+      now.setDate(now.getDate() - offset);
+      return now.toISOString().split("T")[0];
+    }
+
+    async function fetchCSV(url) {
+      const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url));
+      const text = await res.text();
+      return text.trim().split('\\n').map(row => row.split(','));
+    }
+
+    async function loadAnalytics() {
+      const today = getTodayISO();
+      const yesterday = getTodayISO(1);
+      const newsletterUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=255856917&single=true&output=csv";
+      const crmUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=0&single=true&output=csv";
+
+      let newUsers = 0, newUsersY = 0;
+      let revenue = 0, revenueY = 0;
+      let failedPayments = 0;
+      let repeatUsers = 0;
+      let orders = 0;
+      const seenNumbers = new Set();
+      const todayNumbers = new Set();
+
+      try {
+        const [newsletter, crm] = await Promise.all([
+          fetchCSV(newsletterUrl),
+          fetchCSV(crmUrl)
+        ]);
+
+        newsletter.forEach((row, i) => {
+          if (i === 0) return;
+          const date = (row[0] || "").trim();
+          if (date === today) newUsers++;
+          if (date === yesterday) newUsersY++;
+        });
+
+        crm.forEach((row, i) => {
+          if (i === 0) return;
+          const date = (row[0] || "").trim();
+          const rawAmount = (row[5] || "").trim();
+          const status = (row[6] || "").toLowerCase();
+          const phone = (row[1] || "").trim();
+
+          seenNumbers.add(phone);
+          if (date === today) {
+            todayNumbers.add(phone);
+            if (status === "paid order") {
+              orders++;
+              const cleaned = rawAmount.replace(/[^0-9.]/g, "");
+              revenue += parseFloat(cleaned) || 0;
+            } else if (status.includes("interested") && status.includes("not paid")) {
+              failedPayments++;
+            }
+          }
+
+          if (date === yesterday && status === "paid order") {
+            const cleanedY = rawAmount.replace(/[^0-9.]/g, "");
+            revenueY += parseFloat(cleanedY) || 0;
+          }
+        });
+
+        todayNumbers.forEach(phone => {
+          if (seenNumbers.has(phone)) repeatUsers++;
+        });
+
+        // Update UI
+        document.getElementById("cardNewUsers").textContent = newUsers;
+        document.getElementById("cardRevenue").textContent = "₹" + revenue.toFixed(2);
+        document.getElementById("cardFails").textContent = failedPayments;
+        document.getElementById("cardRepeatUsers").textContent = repeatUsers;
+        document.getElementById("cardOrders").textContent = orders;
+
+        const trendUser = newUsers - newUsersY;
+        const trendRevenue = revenue - revenueY;
+        document.getElementById("trendNewUsers").textContent = `📈 ${trendUser >= 0 ? '+' : ''}${trendUser} vs yesterday`;
+        document.getElementById("trendRevenue").textContent = `📈 ₹${trendRevenue.toFixed(2)} vs yesterday`;
+
+      } catch (err) {
+        console.error("❌ Error loading analytics:", err);
+        alert("Failed to load analytics.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadAnalytics);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+Admin DAshboard - JS
+
+//eStore Product URL
+//const scriptURL = 'https://script.google.com/macros/s/AKfycbzwsnLhg4BrK3LfCgL9ZKfzrVjZyd6omq0x4W2BG0GLIMMRbg8NqqZxFFAEND3J-1hI/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwv65EQKsSnUWOaxD8i0-zqnxuBRypeZN8Nir-jIszbc9lqiDvq3IHnMsQ-uR15k3SZ/exec';
+
+//test
+
+App Script: admin_dashboard
+
+
+//Live Sales URL
+//Admin_Leads (App script)
+const crmScriptURL = 'https://script.google.com/macros/s/AKfycbxFX-rVFLtHUlwrZVJxu6ZhZk25oKPUYqT6cLo2j359fe_BndAg6BjOvGz6Y1R9R4wqBw/exec';
+App Script: Admin_leads
+
+
+eStore - HTML
+
+
+Payment failed
+await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+App Script: CRM_Lead
+
+success order
+await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+App Script: CRM_Lead
+
+Invoice generation
+const res = await fetch("https://script.google.com/macros/s/AKfycbzswQFu7aSP_JQN4bKh-4MOXxo77dLcMDAL-lc8HJK7TN-oCaqHr4B1i2UXkFrzCbV4/exec", {
+App script: complte_invoicepdf
+
+
+Newslead
+await fetch("https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec", {
+App Script: CRM_Lead
+
+send whatsapp follow
+const proxyUrl = "https://script.google.com/macros/s/AKfycbzT24BfbjJ8xD051REQIR6fsUZuTiEGCqCYE40ciJtUaQTO0Q9K7LsTyj2BB8kPKOvBaQ/exec?action=sendFollowup";
+
+
+Enquiry - html
+const res = await fetch("https://script.google.com/macros/s/AKfycbztBuNOixSYEGWjdkMVTrzUQGo8OQTFtXW8kd8WQn17fhC4WgQ792-xqr2PJfUToDEl/exec", {
+app script: ransan_enquiry
+
+contact - html
+const scriptURL = "https://script.google.com/macros/s/AKfycbxqbr_sHRmqW-1pHpKauOCKlI_hdXn8PXPQieVrvGLPgKdES1hXEo3t_7K2fECkbW75/exec"; // Replace with your script URL
+App Script: website_contact_whatsup
+
+Popup:
+URL: https://script.google.com/macros/s/AKfycbzJDA5leOaZ0nRrJVLxKATfPwqs5lX-AazsK4dWyP2yNXFBfp4u5pzAcDpUoc7YbnVu4Q/exec
+App Script: Popup
+

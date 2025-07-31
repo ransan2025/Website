@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Live Notifications (Fixed)</title>
+  <link rel="stylesheet" href="admin_dashboard.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8 text-gray-800">
+
+  <header class="flex justify-end items-center gap-6 mb-8">
+    <div class="relative">
+      <button id="notifBell" class="relative text-xl px-3 py-2 hover:scale-110 transition">
+        🔔
+        <span id="notifCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">0</span>
+      </button>
+      <div id="notifDropdown"
+           class="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-xl z-50 hidden max-h-80 overflow-auto">
+        <ul id="notifList" class="text-sm text-gray-700 divide-y divide-gray-100">
+          <li class="px-4 py-2 text-gray-400 italic">Loading...</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="text-2xl font-bold mb-4">Live Notifications Test (CORS-Fixed)</h1>
+    <p>This version uses the AllOrigins proxy to load Google Sheet data safely.</p>
+  </main>
+
+  <script>
+    const notifBell = document.getElementById('notifBell');
+    const notifDropdown = document.getElementById('notifDropdown');
+    const notifList = document.getElementById('notifList');
+    const notifCount = document.getElementById('notifCount');
+
+    notifBell.addEventListener('click', () => {
+      notifDropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!notifBell.contains(e.target) && !notifDropdown.contains(e.target)) {
+        notifDropdown.classList.add('hidden');
+      }
+    });
+
+    async function fetchNotifications() {
+      try {
+        const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?output=csv";
+        const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(sheetUrl);
+
+        const res = await fetch(proxyUrl);
+        const text = await res.text();
+        const rows = text.trim().split('\n').slice(1);
+        notifList.innerHTML = '';
+        let validCount = 0;
+
+        rows.slice(0, 10).forEach(row => {
+          const cells = row.split(',');
+          const raw = cells.join(' ').replace(/<[^>]*>/g, '').trim();
+          if (!raw) return;
+
+          const item = document.createElement('li');
+          item.innerText = raw;
+          item.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+          notifList.appendChild(item);
+          validCount++;
+        });
+
+        notifCount.textContent = validCount;
+      } catch (e) {
+        notifList.innerHTML = '<li class="px-4 py-2 text-red-500">⚠️ Failed to load notifications</li>';
+        console.error("⚠️ Error loading notifications", e);
+      }
+    }
+
+    fetchNotifications();
+  </script>
+
+</body>
+</html>

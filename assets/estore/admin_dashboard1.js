@@ -1,5 +1,3 @@
-/* global getScriptURL */ // (optional hint for IDE)
-
 
 function checkLogin() {
   const user = document.getElementById('username').value.trim();
@@ -17,9 +15,22 @@ function checkLogin() {
   }
 }
 
-const scriptURL = getScriptURL("admin_dashboard");
-const crmScriptURL = getScriptURL("admin_leads");
+//App Script: admin_dashboard
+//const scriptURL = 'https://script.google.com/macros/s/AKfycbzwsnLhg4BrK3LfCgL9ZKfzrVjZyd6omq0x4W2BG0GLIMMRbg8NqqZxFFAEND3J-1hI/exec';
 
+//live
+//const scriptURL = 'https://script.google.com/macros/s/AKfycbwv65EQKsSnUWOaxD8i0-zqnxuBRypeZN8Nir-jIszbc9lqiDvq3IHnMsQ-uR15k3SZ/exec';
+
+//Test
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzD33-NXI9-u0gCBHokxLQvl9q2KnhHVlRfcoyf3xj53UIyuZes53kZcpR7GBNaIPys/exec';
+
+
+//App Script: Admin_leads
+//Live
+//const crmScriptURL = 'https://script.google.com/macros/s/AKfycbxFX-rVFLtHUlwrZVJxu6ZhZk25oKPUYqT6cLo2j359fe_BndAg6BjOvGz6Y1R9R4wqBw/exec';
+
+//Test
+const crmScriptURL = 'https://script.google.com/macros/s/AKfycbwpcmwMtlspR2Z5p9NAqZ1mROvZdZu7UAi5reEPktZ50UJLdrbTIM-wus7HpuFmsHPp/exec';
 
 let headers = [], crmHeaders = [];
 
@@ -1852,112 +1863,109 @@ document.querySelectorAll(".sub-tab-btn").forEach(btn => {
 
 //Bell notification
 
-document.getElementById("notifBell").addEventListener("click", () => {
-  document.getElementById("notifDropdown").classList.toggle("hidden");
-});
-
-function getTodayISO() {
-  const now = new Date();
-  now.setMinutes(now.getMinutes() + 330); // IST offset
-  return now.toISOString().split("T")[0]; // YYYY-MM-DD
-}
-
-// ✅ Enhanced format parser
-function convertToISTDate(rawDate) {
-  if (!rawDate) return "";
-
-  let date;
-
-  // Format 1: ISO string
-  if (rawDate.includes("T") && rawDate.includes("Z")) {
-    date = new Date(rawDate);
-  }
-
-  // Format 2: DD/MM/YYYY HH:mm:ss
-  else if (/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/.test(rawDate)) {
-    const [d, m, y, h, min, s] = rawDate.match(/\d+/g).map(Number);
-    date = new Date(Date.UTC(y, m - 1, d, h, min, s));
-  }
-
-  // Format 3: DD/MM/YYYY
-  else if (/^\d{2}\/\d{2}\/\d{4}$/.test(rawDate)) {
-    const [d, m, y] = rawDate.split('/').map(Number);
-    date = new Date(Date.UTC(y, m - 1, d));
-  }
-
-  // Format 4: YYYY-MM-DD
-  else if (/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) {
-    date = new Date(rawDate + "T00:00:00Z");
-  }
-
-  if (!date || isNaN(date.getTime())) return "";
-
-  // Convert to IST
-  date.setMinutes(date.getMinutes() + 330);
-  return date.toISOString().split("T")[0];
-}
-
-async function fetchCSV(url) {
-  const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url));
-  const text = await res.text();
-  return text.trim().split('\n').map(row => row.split(','));
-}
-
-async function loadNotificationSummary() {
-  const today = getTodayISO();
-
-  //const newsletterUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=255856917&single=true&output=csv";
-  //const crmUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=0&single=true&output=csv";
-
-  const newsletterUrl = getScriptURL("newsletter_url");
-  const crmUrl = getScriptURL("crm_url");
-
-  let newUsers = 0;
-  let totalRevenue = 0;
-  let failedPayments = 0;
-
-  try {
-    const [newsletter, crm] = await Promise.all([
-      fetchCSV(newsletterUrl),
-      fetchCSV(crmUrl)
-    ]);
-
-    newsletter.forEach((row, i) => {
-      if (i === 0) return;
-      const istDate = convertToISTDate((row[0] || "").trim());
-      if (istDate === today) newUsers++;
+    document.getElementById("notifBell").addEventListener("click", () => {
+      document.getElementById("notifDropdown").classList.toggle("hidden");
     });
 
-    crm.forEach((row, i) => {
-      if (i === 0) return;
-      const istDate = convertToISTDate((row[0] || "").trim());
-      const rawAmount = (row[5] || "").trim();
-      const status = (row[6] || "").toLowerCase();
+    function getTodayISO() {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + 330); // IST offset
+      return now.toISOString().split("T")[0]; // YYYY-MM-DD
+    }
 
-      if (istDate === today) {
-        const cleanedAmount = rawAmount.replace(/[^0-9.]/g, "");
-        const amount = parseFloat(cleanedAmount) || 0;
+    // ✅ Enhanced format parser
+    function convertToISTDate(rawDate) {
+      if (!rawDate) return "";
 
-        if (status === "paid order") {
-          totalRevenue += amount;
-        } else if (status.includes("interested") && status.includes("not paid")) {
-          failedPayments++;
-        }
+      let date;
+
+      // Format 1: ISO string
+      if (rawDate.includes("T") && rawDate.includes("Z")) {
+        date = new Date(rawDate);
       }
-    });
 
-    document.getElementById("newUsersToday").textContent = newUsers;
-    document.getElementById("totalRevenue").textContent = "₹" + totalRevenue.toFixed(2);
-    document.getElementById("failedPayments").textContent = failedPayments;
+      // Format 2: DD/MM/YYYY HH:mm:ss
+      else if (/^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}:\d{2}$/.test(rawDate)) {
+        const [d, m, y, h, min, s] = rawDate.match(/\d+/g).map(Number);
+        date = new Date(Date.UTC(y, m - 1, d, h, min, s));
+      }
 
-    const totalAlerts = newUsers + failedPayments + (totalRevenue > 0 ? 1 : 0);
-    document.getElementById("notifCount").textContent = totalAlerts;
-    document.getElementById("totalAlertsLabel").textContent = `${totalAlerts} alert${totalAlerts !== 1 ? 's' : ''}`;
-  } catch (err) {
-    console.error("❌ Error loading data:", err);
-    document.getElementById("notifList").innerHTML = '<li class="p-4 text-red-500">⚠️ Error loading summary</li>';
-  }
-}
+      // Format 3: DD/MM/YYYY
+      else if (/^\d{2}\/\d{2}\/\d{4}$/.test(rawDate)) {
+        const [d, m, y] = rawDate.split('/').map(Number);
+        date = new Date(Date.UTC(y, m - 1, d));
+      }
 
-document.addEventListener("DOMContentLoaded", loadNotificationSummary);
+      // Format 4: YYYY-MM-DD
+      else if (/^\d{4}-\d{2}-\d{2}$/.test(rawDate)) {
+        date = new Date(rawDate + "T00:00:00Z");
+      }
+
+      if (!date || isNaN(date.getTime())) return "";
+
+      // Convert to IST
+      date.setMinutes(date.getMinutes() + 330);
+      return date.toISOString().split("T")[0];
+    }
+
+    async function fetchCSV(url) {
+      const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url));
+      const text = await res.text();
+      return text.trim().split('\n').map(row => row.split(','));
+    }
+
+    async function loadNotificationSummary() {
+      const today = getTodayISO();
+
+      const newsletterUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=255856917&single=true&output=csv";
+      const crmUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=0&single=true&output=csv";
+
+      let newUsers = 0;
+      let totalRevenue = 0;
+      let failedPayments = 0;
+
+      try {
+        const [newsletter, crm] = await Promise.all([
+          fetchCSV(newsletterUrl),
+          fetchCSV(crmUrl)
+        ]);
+
+        newsletter.forEach((row, i) => {
+          if (i === 0) return;
+          const istDate = convertToISTDate((row[0] || "").trim());
+          if (istDate === today) newUsers++;
+        });
+
+        crm.forEach((row, i) => {
+          if (i === 0) return;
+          const istDate = convertToISTDate((row[0] || "").trim());
+          const rawAmount = (row[5] || "").trim();
+          const status = (row[6] || "").toLowerCase();
+
+          if (istDate === today) {
+            const cleanedAmount = rawAmount.replace(/[^0-9.]/g, "");
+            const amount = parseFloat(cleanedAmount) || 0;
+
+            if (status === "paid order") {
+              totalRevenue += amount;
+            } else if (status.includes("interested") && status.includes("not paid")) {
+              failedPayments++;
+            }
+          }
+        });
+
+        document.getElementById("newUsersToday").textContent = newUsers;
+        document.getElementById("totalRevenue").textContent = "₹" + totalRevenue.toFixed(2);
+        document.getElementById("failedPayments").textContent = failedPayments;
+
+        const totalAlerts = newUsers + failedPayments + (totalRevenue > 0 ? 1 : 0);
+        document.getElementById("notifCount").textContent = totalAlerts;
+        document.getElementById("totalAlertsLabel").textContent = `${totalAlerts} alert${totalAlerts !== 1 ? 's' : ''}`;
+      } catch (err) {
+        console.error("❌ Error loading data:", err);
+        document.getElementById("notifList").innerHTML = '<li class="p-4 text-red-500">⚠️ Error loading summary</li>';
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadNotificationSummary);
 
