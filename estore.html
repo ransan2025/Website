@@ -434,12 +434,12 @@
   <script>
     
     //Live
-    //const sheetId = '1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU';
-    //const apiKey = 'AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE';
+    const sheetId = '1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU';
+    const apiKey = 'AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE';
 
     //Test
-    const sheetId = '1WnErc845R9CFdhk_WGa5HiOZGE7wjCELmk2fQ4MlKdI';
-    const apiKey = 'AIzaSyBxDzAHIF_EghHtJs6LxYUJL_vaWV9kJNo';
+    //const sheetId = '1WnErc845R9CFdhk_WGa5HiOZGE7wjCELmk2fQ4MlKdI';
+    //const apiKey = 'AIzaSyBxDzAHIF_EghHtJs6LxYUJL_vaWV9kJNo';
 
     const range = 'Sheet1!A2:J';
     let allProducts = [];
@@ -698,7 +698,12 @@
       showProcessingOverlay("⏳ Processing Payment", "Please wait, do not refresh the page...");
 
       const options = {
-        key: "rzp_test_iOdWWEhKlikqRy",
+        
+        //live
+        key: "rzp_live_s9MPozpmKsY792",
+        
+        //Test
+        //key: "rzp_test_iOdWWEhKlikqRy",
         amount: selectedPrice * 100,
         currency: "INR",
         name: "RanSan Groups",
