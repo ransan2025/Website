@@ -1,4 +1,5 @@
-const POPUP_SHEET_URL = 'https://docs.google.com/spreadsheets/d/19hdWhlLDz7dsGlCwY87j4CLj4DaH4LGpD64u2StivDs/gviz/tq?tqx=out:json&sheet=CRM Leads';
+
+const POPUP_SHEET_URL = getPopupSheetURL();
 const POPUP_JSON_URL = 'assets/estore/popup-data.json';
 
 let popupData = [];

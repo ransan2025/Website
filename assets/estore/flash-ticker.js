@@ -1,5 +1,6 @@
-const tickerSheetId = "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU";
-const tickerApiKey = "AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE";
+
+const tickerSheetId = getTickerSheetId();
+const tickerApiKey = getTickerApiKey();
 const tickerRange = "Sheet1!K2:L50"; // K = Deal Text, L = URL (optional)
 
 let tickerIndex = 0;
@@ -40,17 +41,21 @@ function showDeal(text) {
   container.classList.remove("fade-in");
 
   setTimeout(() => {
-    // Try to find product in allProducts by matching Flash Deal text to Column A (Product Name)
-    const match = allProducts.find(p => text.includes(p[0]));
+    const match = allProducts.find(p => text.includes(p[0])); // Match flash text with Product Name
 
     if (match) {
-      const [name, desc, , price] = match;
-      container.innerHTML = `<span 
-  onclick="showProductDetails(\`${name}\`, \`${desc}\`, ${price})" 
-  style="cursor:pointer;" 
-  role="button" 
-  tabindex="-1"
->${text}</span>`;
+      const [name, desc, orig, disc, img] = match;
+
+      container.innerHTML = `
+        <span 
+          onclick="showProductDetails('${name}', \`${desc}\`, ${disc}, '${img}', ${orig})"
+          style="cursor:pointer;" 
+          role="button" 
+          tabindex="0"
+          aria-label="Flash Deal: ${name}"
+        >
+          ${text}
+        </span>`;
     } else {
       container.innerHTML = `<span>${text}</span>`;
     }
