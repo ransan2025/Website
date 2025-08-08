@@ -1,7 +1,7 @@
 // config.js
 
 // STEP 1: Choose environment
-const ENV = "live"; // Change to "live" when needed
+const ENV = "test"; // Change to "live" when needed
 
 // STEP 2: Define URLs per environment
 const CONFIG = {
@@ -9,8 +9,7 @@ const CONFIG = {
     admin_dashboard: "https://script.google.com/macros/s/AKfycbwv65EQKsSnUWOaxD8i0-zqnxuBRypeZN8Nir-jIszbc9lqiDvq3IHnMsQ-uR15k3SZ/exec",
     admin_leads: "https://script.google.com/macros/s/AKfycbxFX-rVFLtHUlwrZVJxu6ZhZk25oKPUYqT6cLo2j359fe_BndAg6BjOvGz6Y1R9R4wqBw/exec",
     estore_payment: "https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec",
-    //invoice_generation: "https://script.google.com/macros/s/AKfycbzl5VkR8bIHlES6dB-sgesO8_PyWHqzMHn37Z5GDA9JZwUZO6MKkQU1FPNv5iROMvlw9A/exec",
-    invoice_generation: "https://script.google.com/macros/s/AKfycbydUB4AlOxzd7jdJKeYj7W2RXomAloHNP-P81991jeHJm4rpF10sSh_o3V7UsIl0bxLgQ/exec",
+    invoice_generation: "https://script.google.com/macros/s/AKfycbzswQFu7aSP_JQN4bKh-4MOXxo77dLcMDAL-lc8HJK7TN-oCaqHr4B1i2UXkFrzCbV4/exec",
     whatsapp_followup: "https://script.google.com/macros/s/AKfycbzT24BfbjJ8xD051REQIR6fsUZuTiEGCqCYE40ciJtUaQTO0Q9K7LsTyj2BB8kPKOvBaQ/exec",
     enquiry: "https://script.google.com/macros/s/AKfycbztBuNOixSYEGWjdkMVTrzUQGo8OQTFtXW8kd8WQn17fhC4WgQ792-xqr2PJfUToDEl/exec",
     contact: "https://script.google.com/macros/s/AKfycbxqbr_sHRmqW-1pHpKauOCKlI_hdXn8PXPQieVrvGLPgKdES1hXEo3t_7K2fECkbW75/exec",
