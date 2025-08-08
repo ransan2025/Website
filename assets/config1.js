@@ -1,7 +1,7 @@
 // config.js
 
 // STEP 1: Choose environment
-const ENV = "live"; // Change to "live" when needed
+const ENV = "test"; // Change to "live" when needed
 
 // STEP 2: Define URLs per environment
 const CONFIG = {
@@ -9,8 +9,7 @@ const CONFIG = {
     admin_dashboard: "https://script.google.com/macros/s/AKfycbwv65EQKsSnUWOaxD8i0-zqnxuBRypeZN8Nir-jIszbc9lqiDvq3IHnMsQ-uR15k3SZ/exec",
     admin_leads: "https://script.google.com/macros/s/AKfycbxFX-rVFLtHUlwrZVJxu6ZhZk25oKPUYqT6cLo2j359fe_BndAg6BjOvGz6Y1R9R4wqBw/exec",
     estore_payment: "https://script.google.com/macros/s/AKfycbxYnypoWta9wv27RDEi_iPI_ISn3ZeRCW-RW_bNW8h3YBysU5HPtu1BGekR2-yhUytkaQ/exec",
-    //invoice_generation: "https://script.google.com/macros/s/AKfycbzl5VkR8bIHlES6dB-sgesO8_PyWHqzMHn37Z5GDA9JZwUZO6MKkQU1FPNv5iROMvlw9A/exec",
-    invoice_generation: "https://script.google.com/macros/s/AKfycbydUB4AlOxzd7jdJKeYj7W2RXomAloHNP-P81991jeHJm4rpF10sSh_o3V7UsIl0bxLgQ/exec",
+    invoice_generation: "https://script.google.com/macros/s/AKfycbzswQFu7aSP_JQN4bKh-4MOXxo77dLcMDAL-lc8HJK7TN-oCaqHr4B1i2UXkFrzCbV4/exec",
     whatsapp_followup: "https://script.google.com/macros/s/AKfycbzT24BfbjJ8xD051REQIR6fsUZuTiEGCqCYE40ciJtUaQTO0Q9K7LsTyj2BB8kPKOvBaQ/exec",
     enquiry: "https://script.google.com/macros/s/AKfycbztBuNOixSYEGWjdkMVTrzUQGo8OQTFtXW8kd8WQn17fhC4WgQ792-xqr2PJfUToDEl/exec",
     contact: "https://script.google.com/macros/s/AKfycbxqbr_sHRmqW-1pHpKauOCKlI_hdXn8PXPQieVrvGLPgKdES1hXEo3t_7K2fECkbW75/exec",
@@ -19,14 +18,14 @@ const CONFIG = {
     crm_url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8RmYsk-sUDiHF6t4Xfaj9Gzr0FaCvhurkDTV0bd-gJgqS8drz-warzxfgIyuchSPd4vpMeDkyw8tX/pub?gid=0&single=true&output=csv",
     sheetId: "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU",
     apiKey: "AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE",
-    testimonial_sheet_id: "1qErGOyV9AjxYEqJAqokhOhNtipp2ehcPKo3zwvhpAZo",
-    followup_proxy_url: "https://script.google.com/macros/s/AKfycbzT24BfbjJ8xD051REQIR6fsUZuTiEGCqCYE40ciJtUaQTO0Q9K7LsTyj2BB8kPKOvBaQ/exec?action=sendFollowup",
-    newsletter_submit: "https://script.google.com/macros/s/AKfycbxsM_63aeXPU8LfRNrCMKjoWVd-jcSffg8x21Rtykr6bso0eLloql75Q9TAm0uVbNH4/exec",
+    testimonial_sheet_id: "",
+    followup_proxy_url: "",
+    newsletter_submit: "",
     combo_sheetId: "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU", // Use live Sheet ID
     combo_apiKey: "AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE",
     deal_sheetId: "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU",
     deal_apiKey: "AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE",
-    popup_sheet_url: "https://docs.google.com/spreadsheets/d/19hdWhlLDz7dsGlCwY87j4CLj4DaH4LGpD64u2StivDs/gviz/tq?tqx=out:json&sheet=CRM Leads",
+    popup_sheet_url: "",
     tickerSheetId: "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU",
     tickerApiKey: "AIzaSyD910WtP7mqTugPsEv8ZQIMUbyNxOJlDqE",
     megaSaleSheetId: "1jdD5SbymV6oNdJZSWZXsSijLcYEwsd_Kc3_Z40YB1lU",
@@ -37,9 +36,7 @@ const CONFIG = {
     admin_dashboard: "https://script.google.com/macros/s/AKfycbxqJ2Jby87CEW5oJOeaDUrSHE5wsdi8YsTaXb0n0Jn_dhtWc_C9oE-zKUAzTgQlub1O/exec",
     admin_leads: "https://script.google.com/macros/s/AKfycbz8dycSFT-TzlCDDQoJhNMtN7Bc9KXR46WxiiaCH2-hrNqvVDjWgLCAtAGmwkBurQc8cA/exec",
     estore_payment: "https://script.google.com/macros/s/AKfycbwE5KLVVS7LF0lui7nVrpiEVzSOt_eEXDTfrSWCoRFN87k7s_1yfeYqcTc5gERjkK1UQQ/exec",
-    //invoice_generation: "https://script.google.com/macros/s/AKfycbw7cZSYm7JL94XEdKJG1gF7u_8LSQZO4mu3SMVYlLtLZB9DVg8mhpinU2pHJ0WVBVbW/exec",
-    //combo:invoice_generation: "https://script.google.com/macros/s/AKfycbzGBk7SVLz-UX45deqaWii6Vq1jeaectRfqM9Vt8SGpu3Vto1Qwyp_JyKMqW-A5Sy50qQ/exec",
-    invoice_generation: "https://script.google.com/macros/s/AKfycbzJ1KIOaSRcFWuiX4q87xA_68RVlaE9vqW8Kgafg1mfojKJwJDHZBU1If_ei9YTfXpoRA/exec",
+    invoice_generation: "https://script.google.com/macros/s/AKfycbyQmJMeZ8gviOULbf7I345gS2Beg7Y4NZRcM4nNOHO5Vk-yZ3lZb85uqEMrbrIcZuMY/exec",
     whatsapp_followup: "#",
     enquiry: "https://script.google.com/macros/s/AKfycbxWFxGxQvhLPGNVTmGWpiBOeuRKwJvdK5B4LqbuaqURuOPAvDc5hMbRGR7nO_o-EJTheQ/exec",
     contact: "https://script.google.com/macros/s/AKfycbw4yAuaL4zl05Q_OTsnD2DZh178tgy1kCWAKnJ9pwkI2tH0-ZuDmTmuTFSoKo8t-nB_9A/exec",

@@ -73,3 +73,10 @@
     from { width: 100%; }
     to { width: 0%; }
 }
+
+@media (max-width: 768px) {
+  #popup {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}

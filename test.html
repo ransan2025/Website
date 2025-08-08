@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🧪 Combo/Single Test Trigger</title>
+  <style>
+    body { font-family: Arial; padding: 30px; background: #f4f4f4; }
+    .container { max-width: 600px; background: #fff; padding: 20px; border-radius: 8px; }
+    button { padding: 10px 20px; margin-top: 10px; font-size: 16px; }
+    select, input { padding: 8px; margin: 8px 0; width: 100%; }
+    pre { background: #222; color: #0f0; padding: 15px; font-size: 14px; border-radius: 6px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📦 Test Purchase Simulator</h2>
+
+    <label for="mode">Purchase Type:</label>
+    <select id="mode">
+      <option value="combo">Combo</option>
+      <option value="single">Single Product</option>
+    </select>
+
+    <label>Name:</label>
+    <input type="text" id="name" value="Sudhakar" />
+
+    <label>Email:</label>
+    <input type="email" id="email" value="sudhakar.r1980@gmail.com" />
+
+    <label>Phone:</label>
+    <input type="text" id="phone" value="9967219563" />
+
+    <label>Product Name:</label>
+    <input type="text" id="product" value="Combo1" />
+
+    <label>Amount:</label>
+    <input type="number" id="amount" value="2999" />
+
+    <button onclick="runTest()">🚀 Submit Test</button>
+
+    <h3>🔧 Response</h3>
+    <pre id="log">Waiting for test run...</pre>
+  </div>
+
+  <script>
+    const DOPOST_URL = "https://script.google.com/macros/s/AKfycbzwpN5kKd082RHXn0WONKqsG7BZZ2aIgRgvt5rEjuyxgxJ9bgDbALhZi8ZxP5gP0bu9tQ/exec";
+
+    async function runTest() {
+      const log = document.getElementById("log");
+      log.textContent = "⏳ Sending test request...";
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const product = document.getElementById("product").value;
+      const amount = document.getElementById("amount").value;
+      const mode = document.getElementById("mode").value;
+
+      const fakePaymentId = mode === "combo" ? "TEST-COMBO-" + Date.now() : "TEST-SINGLE-" + Date.now();
+
+      const data = new URLSearchParams({
+        name, email, phone, product, amount,
+        payment_id: fakePaymentId
+      });
+
+      try {
+        const res = await fetch(DOPOST_URL, {
+          method: "POST",
+          body: data
+        });
+
+        const text = await res.text();
+        log.textContent = `✅ Response: \n\n${text}`;
+      } catch (err) {
+        log.textContent = `❌ Error:\n\n${err}`;
+      }
+    }
+  </script>
+</body>
+</html>

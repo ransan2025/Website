@@ -1,4 +1,5 @@
-const POPUP_SHEET_URL = 'https://docs.google.com/spreadsheets/d/19hdWhlLDz7dsGlCwY87j4CLj4DaH4LGpD64u2StivDs/gviz/tq?tqx=out:json&sheet=CRM Leads';
+
+const POPUP_SHEET_URL = getPopupSheetURL();
 const POPUP_JSON_URL = 'assets/estore/popup-data.json';
 
 let popupData = [];
@@ -91,11 +92,18 @@ function showPopup(item) {
 // Rotate popups in order
 function startRotation() {
     let index = 0;
-    setInterval(() => {
-        if (popupData.length === 0) return;
+
+    // Show first popup after delay
+    setTimeout(() => {
         showPopup(popupData[index]);
         index = (index + 1) % popupData.length;
-    }, 7000);
+
+        // Continue showing popups every 15 sec
+        setInterval(() => {
+            showPopup(popupData[index]);
+            index = (index + 1) % popupData.length;
+        }, 30000); // popup every 15 seconds
+    }, 30000); // wait 10 sec after page load
 }
 
 // Initialize popup system
@@ -115,7 +123,15 @@ async function initPopup() {
     startRotation();
 }
 
-window.addEventListener('load', initPopup);
+window.addEventListener('load', () => {
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+    if (!isMobile) {
+        initPopup();
+    } else {
+        console.log("✅ Popup is disabled on mobile view");
+    }
+});
 
 // Inject popup container and styles dynamically
 function injectPopupStyles() {
