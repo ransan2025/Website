@@ -100,7 +100,7 @@
         margin: 0 !important;
         pointer-events: none !important;
       }
-    }    
+    }
   </style>
 
 </head>
@@ -813,10 +813,10 @@
       const phone = document.getElementById("buyer-phone").value.trim();
       const status = document.getElementById("status-msg");
 
-  if (!name || !email || !phone) {
-    status.innerText = "⚠️ Please fill all fields.";
-    return;
-  }
+      if (!name || !email || !phone) {
+        status.innerText = "⚠️ Please fill all fields.";
+        return;
+      }
 
       status.innerText = "⏳ Capturing your details...";
 
@@ -853,7 +853,9 @@
       showProcessingOverlay("⏳ Processing Payment", "Please wait, do not refresh the page...");
 
       const options = {
-        key: "rzp_test_iOdWWEhKlikqRy",
+        key: getRazorpayKey(),
+        //Test
+        //key: "rzp_test_iOdWWEhKlikqRy",
         amount: selectedPrice * 100,
         currency: "INR",
         name: "RanSan Groups",
@@ -885,14 +887,14 @@
               body: JSON.stringify(paidData)
             });
 
-        const postData = new URLSearchParams({
-          name: paidData.name,
-          email: paidData.email,
-          phone: paidData.phone,
-          product: paidData.product,
-          amount: paidData.amount,
-          payment_id: paidData.payment_id
-        });
+            const postData = new URLSearchParams({
+              name: paidData.name,
+              email: paidData.email,
+              phone: paidData.phone,
+              product: paidData.product,
+              amount: paidData.amount,
+              payment_id: paidData.payment_id
+            });
 
             //App script: complte_invoicepdf
             const res = await fetch(getScriptURL("invoice_generation"), {
@@ -901,7 +903,7 @@
               body: postData
             });
 
-        const text = await res.text();
+            const text = await res.text();
 
             if (text.includes("Success")) {
               showProcessingOverlay("✅ Order Completed!", "🎁 Delivery sent to Email & WhatsApp. Redirecting...");
