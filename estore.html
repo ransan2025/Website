@@ -100,7 +100,7 @@
         margin: 0 !important;
         pointer-events: none !important;
       }
-    }
+    }    
   </style>
 
 </head>
@@ -299,35 +299,45 @@
   <!-- Hidden iframe (not used in demo, placeholder) -->
   <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-  <script>
-    function lockScroll() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      document.body.classList.add('buyer-scroll-lock');
-      document.body.style.top = `-${scrollY}px`;
-      document.body.setAttribute('data-scroll-lock', scrollY);
+  <style>
+    .modal {
+      display: none;
+      /* ✅ Always hidden unless toggled via JS */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
     }
 
-    function unlockScroll() {
-      const scrollY = document.body.getAttribute('data-scroll-lock');
-      document.body.classList.remove('buyer-scroll-lock');
-      document.body.style.top = '';
-      document.body.removeAttribute('data-scroll-lock');
-      window.scrollTo(0, parseInt(scrollY || '0'));
+    .modal.show {
+      display: flex !important;
+      /* ✅ Only show via JS when needed */
     }
 
-    function openBuyerModal(productName, productPrice) {
-      selectedProductName = productName;
-      selectedPrice = productPrice;
-      document.getElementById("buyer-modal").classList.add("show");
-      document.getElementById("buyer-name").focus();
-      lockScroll();
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 700px;
+      text-align: left;
     }
 
-    function closeBuyerModal() {
-      document.getElementById("buyer-modal").classList.remove("show");
-      unlockScroll();
+    .modal-content input {
+      width: 90%;
+      padding: 8px;
+      margin: 5px 0;
     }
-  </script>
+
+    .modal-content button {
+      margin: 10px 5px;
+      padding: 8px 16px;
+    }
+  </style>
 
   <!-- 🚀 Deals of the Day -->
   <section id="deals-of-the-day" class="dotd-section">
@@ -797,73 +807,83 @@
 
 
 
-async function proceedToPay() {
-  const name = document.getElementById("buyer-name").value.trim();
-  const email = document.getElementById("buyer-email").value.trim();
-  const phone = document.getElementById("buyer-phone").value.trim();
-  const status = document.getElementById("status-msg");
-  const spinner = document.getElementById("buyer-spinner");
+    async function proceedToPay() {
+      const name = document.getElementById("buyer-name").value.trim();
+      const email = document.getElementById("buyer-email").value.trim();
+      const phone = document.getElementById("buyer-phone").value.trim();
+      const status = document.getElementById("status-msg");
 
   if (!name || !email || !phone) {
     status.innerText = "⚠️ Please fill all fields.";
     return;
   }
 
-  status.innerText = "⏳ Capturing your details...";
-  spinner.style.display = "inline-block";
+      status.innerText = "⏳ Capturing your details...";
 
-  const uniqueTimestamp = getISTTimestampISO();
+      const uniqueTimestamp = new Date().toISOString();
 
-  const leadData = {
-    name,
-    email,
-    phone,
-    product: selectedProductName,
-    amount: selectedPrice,
-    intent: "Interested - Not Paid Yet",
-    payment_id: "",
-    timestamp: uniqueTimestamp
-  };
-
-  try {
-    await fetch(getScriptURL("estore_payment"), {
-      method: "POST",
-      body: JSON.stringify(leadData)
-    });
-  } catch (e) {
-    console.warn("⚠️ Lead save failed, continuing to payment.");
-  }
-
-  document.getElementById('buyer-modal').classList.remove('show');
-  showInvoiceProcessingOverlay("⏳ Processing Payment", "Please wait, do not refresh the page...");
-  startInvoiceProcessingProgress();
-
-  const options = {
-    key: getRazorpayKey(),
-    //Test
-    //key: "rzp_test_iOdWWEhKlikqRy",
-    amount: selectedPrice * 100,
-    currency: "INR",
-    name: "RanSan eStore",
-    description: selectedProductName,
-    
-
-    handler: async function (response) {
-      showInvoiceProcessingOverlay("✅ Payment Successful", "⏳ Generating Invoice & Delivery...");
-      updateInvoiceSteps();
-      startInvoiceProcessingProgress();
-
-      const paidData = {
-        ...leadData,
-        intent: "Paid Order",
-        payment_id: response.razorpay_payment_id
+      const leadData = {
+        name: name,
+        email: email,
+        phone: phone,
+        product: selectedProductName,
+        amount: selectedPrice,
+        intent: "Interested - Not Paid Yet",
+        payment_id: "",
+        timestamp: uniqueTimestamp
       };
 
       try {
+
+        //App Script: CRM_Lead
+
         await fetch(getScriptURL("estore_payment"), {
+
           method: "POST",
-          body: JSON.stringify(paidData)
+          body: JSON.stringify(leadData)
         });
+      } catch (e) {
+        console.log("Lead save failed, proceeding to payment anyway.");
+      }
+
+      // Close buyer modal
+      document.getElementById('buyer-modal').classList.remove('show');
+
+      // Show overlay for processing
+      showProcessingOverlay("⏳ Processing Payment", "Please wait, do not refresh the page...");
+
+      const options = {
+        key: "rzp_test_iOdWWEhKlikqRy",
+        amount: selectedPrice * 100,
+        currency: "INR",
+        name: "RanSan Groups",
+        description: selectedProductName,
+
+        handler: async function (response) {
+          console.log("Razorpay handler fired");
+
+          // Show success message
+          showProcessingOverlay("✅ Payment Successful", "⏳ Generating Invoice & Delivery...");
+
+          const paidData = {
+            name: name,
+            email: email,
+            phone: phone,
+            product: selectedProductName,
+            amount: selectedPrice,
+            intent: "Paid Order",
+            payment_id: response.razorpay_payment_id,
+            timestamp: uniqueTimestamp
+          };
+
+          try {
+
+            //App Script: CRM_Lead
+            await fetch(getScriptURL("estore_payment"), {
+
+              method: "POST",
+              body: JSON.stringify(paidData)
+            });
 
         const postData = new URLSearchParams({
           name: paidData.name,
@@ -874,57 +894,58 @@ async function proceedToPay() {
           payment_id: paidData.payment_id
         });
 
-        const res = await fetch(getScriptURL("invoice_generation"), {
-          method: "POST",
-          body: postData
-        });
+            //App script: complte_invoicepdf
+            const res = await fetch(getScriptURL("invoice_generation"), {
+
+              method: "POST",
+              body: postData
+            });
 
         const text = await res.text();
 
-        if (text.includes("Success")) {
-          showInvoiceProcessingOverlay("✅ Order Completed!", "🎁 Delivery sent to Email & WhatsApp. Redirecting...");
-          completeInvoiceProcessingProgress();
-          launchConfetti();
-          setTimeout(() => {
-            hideInvoiceProcessingOverlay();
-            window.location.href = "https://www.ransangroups.com/thank-you.html";
-          }, 3000);
-        } else {
-          showInvoiceProcessingOverlay("⚠️ Invoice Failed", "Payment succeeded but delivery failed. Please contact support.");
-        }
+            if (text.includes("Success")) {
+              showProcessingOverlay("✅ Order Completed!", "🎁 Delivery sent to Email & WhatsApp. Redirecting...");
+              setTimeout(() => {
+                window.location.href = "https://www.ransangroups.com/thank-you.html";
+              }, 3000);
+            } else {
+              showProcessingOverlay("⚠️ Invoice Failed", "Payment succeeded but delivery failed. Please contact support.");
+            }
+
+          } catch (err) {
+            console.error(err);
+            showProcessingOverlay("❌ Post-processing Failed", "Payment captured, but delivery failed. Contact support.");
+          }
+        },
+
+        modal: {
+          ondismiss: function () {
+            console.log("User closed Razorpay without paying");
+            showProcessingOverlay("❌ Payment Cancelled", "You have closed the payment. No amount was deducted.");
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          }
+        },
+
+        prefill: {
+          name: name,
+          email: email,
+          contact: phone
+        },
+
+        theme: { color: "#9A22F6" }
+      };
+
+      try {
+        const rzp = new Razorpay(options);
+        rzp.open();
       } catch (err) {
-        console.error("❌ Post-payment error:", err);
-        showInvoiceProcessingOverlay("❌ Delivery Failed", "Payment captured, but delivery failed. Contact support.");
-      } finally {
-        spinner.style.display = "none";
+        alert("⚠️ Razorpay could not load. Check your key or internet connection.");
+        hideProcessingOverlay();
       }
-    },
-
-    modal: {
-      ondismiss: function () {
-        showInvoiceProcessingOverlay("❌ Payment Cancelled", "You have closed the payment. No amount was deducted.");
-        spinner.style.display = "none";
-        setTimeout(() => {
-          hideInvoiceProcessingOverlay();
-          window.location.reload();
-        }, 3000);
-      }
-    },
-
-    prefill: { name, email, contact: phone },
-    theme: { color: "#9A22F6" }
-  };
-
-  try {
-    const rzp = new Razorpay(options);
-    rzp.open();
-  } catch (err) {
-    alert("⚠️ Razorpay failed to load. Please check your key.");
-    hideInvoiceProcessingOverlay();
-    spinner.style.display = "none";
-  }
-}
-
+    }
 
     document.querySelectorAll('.category-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1517,627 +1538,6 @@ async function proceedToPay() {
   </script>
   <!--Timestamp convert end-->
 
-  <!--Load more start -->
-  <script>
-    function showLoadingSpinner() {
-      document.getElementById("loading-spinner").style.display = "block";
-    }
-    function hideLoadingSpinner() {
-      document.getElementById("loading-spinner").style.display = "none";
-    }
-    function updateCounter() {
-      const counterEl = document.getElementById('product-counter');
-      const total = allFilteredProducts.length;
-      const current = Math.min(currentIndex, total);
-
-      if (total === 0) {
-        counterEl.innerHTML = `
-      <span class="icon-ring">
-        <svg class="receipt-icon" viewBox="0 0 24 24" fill="none">
-          <path d="M4 2V22L6 20L8 22L10 20L12 22L14 20L16 22L18 20L20 22V2H4Z" stroke="currentColor" stroke-width="1.5" />
-          <line x1="8" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.5" />
-          <line x1="8" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="1.5" />
-          <line x1="8" y1="14" x2="12" y2="14" stroke="currentColor" stroke-width="1.5" />
-        </svg>
-      </span>
-      <strong>No products found</strong>`;
-        return;
-      }
-
-      // First: render both numbers as 0
-      counterEl.innerHTML = `
-    <span class="icon-ring">
-      <svg class="receipt-icon" viewBox="0 0 24 24" fill="none">
-        <path d="M4 2V22L6 20L8 22L10 20L12 22L14 20L16 22L18 20L20 22V2H4Z" stroke="currentColor" stroke-width="1.5" />
-        <line x1="8" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="1.5" />
-        <line x1="8" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="1.5" />
-        <line x1="8" y1="14" x2="12" y2="14" stroke="currentColor" stroke-width="1.5" />
-      </svg>
-    </span>
-    Showing <strong class="highlight-number" id="countNow">0</strong>
-    of <strong class="highlight-number" id="countTotal">0</strong> products
-  `;
-
-      // Second: wait a few ms before triggering animation
-      setTimeout(() => {
-        animateNumber(document.getElementById("countNow"), current);
-        animateNumber(document.getElementById("countTotal"), total);
-      }, 50); // Ensures DOM flushes and 0 is visible first
-    }
-
-    function initAutoLoadOnScroll() {
-      const anchor = document.getElementById('observer-anchor');
-      if (!anchor) return;
-      const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          showLoadingSpinner();
-          setTimeout(() => {
-            displayProductsBatch(allFilteredProducts);
-            updateCounter();
-            hideLoadingSpinner();
-          }, 500);
-        }
-      }, { rootMargin: '200px' });
-      observer.observe(anchor);
-    }
-  </script>
-  <!--Load more end -->
-
-
-  <!--Progress bar start-->
-  <script>
-    function updateProgressBar(current, total) {
-      const clampedCurrent = Math.min(current, total); // ✅ prevent overfill
-      const percent = Math.round((clampedCurrent / total) * 100);
-
-      const fill = document.getElementById('progressBarFill');
-      const label = document.getElementById('progressLabel');
-
-      fill.style.width = percent + '%';
-      label.textContent = percent + '%';
-    }
-  </script>
-  <!--Progress bar end-->
-
-  <!--animate number start-->
-  <script>
-    const tick = document.getElementById("tickSound");
-
-    function animateNumber(el, target) {
-      let current = 0;
-      const step = Math.ceil(target / 30);
-      const interval = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          el.textContent = target;
-          clearInterval(interval);
-        } else {
-          el.textContent = current;
-          tick?.play(); // ✅ play sound
-        }
-      }, 40);
-    }
-  </script>
-  <!--animate number end-->
-
-
-  <script>
-    function filterByCategory(category) {
-      const grid = document.getElementById('productGrid');
-      grid.classList.add('opacity-0');
-
-      setTimeout(() => {
-        // Update products here (clear + render new set)
-        renderProducts(category);
-        grid.classList.remove('opacity-0');
-      }, 200);
-    }
-  </script>
-
-  <script>
-    let processingPercent = 0;
-    let progressInterval = null;
-
-    function showProcessingOverlay(mainText, subText) {
-      document.getElementById("overlay-main-text").innerText = mainText;
-      document.getElementById("overlay-sub-text").innerText = subText;
-      document.getElementById("order-processing-overlay").style.display = "flex";
-    }
-
-    function hideProcessingOverlay() {
-      document.getElementById("order-processing-overlay").style.display = "none";
-    }
-
-    function startProcessingProgress() {
-      clearInterval(progressInterval);
-      processingPercent = 0;
-
-      const percentEl = document.getElementById("processing-percentage");
-      percentEl.textContent = "0%";
-      percentEl.classList.remove("fade-out");
-
-      // ⏳ Wait until DOM visually renders the overlay before counting
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          progressInterval = setInterval(() => {
-            if (processingPercent < 98) {
-              processingPercent += 1;
-              percentEl.textContent = processingPercent + "%";
-            } else {
-              clearInterval(progressInterval); // ⏸️ pause at 98%
-            }
-          }, 100);
-        }, 200); // ✅ Give DOM ~200ms to paint the spinner and % text
-      });
-    }
-
-    function completeProcessingProgress() {
-      clearInterval(progressInterval);
-      const percentEl = document.getElementById("processing-percentage");
-
-      // Animate to 100%
-      let temp = processingPercent;
-      const finalInterval = setInterval(() => {
-        if (temp < 100) {
-          temp += 1;
-          percentEl.textContent = temp + "%";
-        } else {
-          clearInterval(finalInterval);
-          percentEl.classList.add("fade-out");
-          setTimeout(() => {
-            percentEl.innerHTML = "✅";
-            percentEl.classList.remove("fade-out");
-            percentEl.classList.add("fade-in");
-          }, 500);
-        }
-      }, 30);
-    }
-  </script>
-
-  <!-- Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-  <!-- Google Sheet Testimonial Loader (Cleaned & Final) -->
-  <script>
-    function loadTestimonialsFromGoogleSheet() {
-      const sheetID = getTestimonialSheetId();
-      console.log("🎤 Testimonial Sheet ID:", sheetID)
-      const sheetName = "Testimonial";
-      const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
-
-      fetch(url)
-        .then((res) => res.text())
-        .then((text) => {
-          const json = JSON.parse(text.substring(47).slice(0, -2));
-          const rows = json.table.rows;
-
-          const wrapper = document.querySelector(".estore_testimonial-swiper .swiper-wrapper");
-          wrapper.innerHTML = "";
-
-          // ✅ Skip the first row (header) and filter valid rows only
-          rows.slice(1).forEach((row) => {
-            const name = row.c[0]?.v?.trim();
-            const quote = row.c[1]?.v?.trim();
-            const avatar = row.c[2]?.v?.trim();
-
-            if (!name || !quote || !avatar) return; // ✅ Skip empty rows
-
-            const slide = document.createElement("div");
-            slide.className = "swiper-slide";
-            slide.innerHTML = `
-            <div class="estore_testimonial-card">
-              <p class="estore_testimonial-quote">“${quote}”</p>
-              <div class="estore_testimonial-user">
-                <img src="${avatar}" class="estore_testimonial-avatar" alt="${name}">
-                <div class="estore_testimonial-name">${name}</div>
-              </div>
-            </div>
-          `;
-            wrapper.appendChild(slide);
-          });
-
-          // ✅ Initialize Swiper AFTER content is populated
-          new Swiper(".estore_testimonial-swiper", {
-            loop: true,
-            autoplay: {
-              delay: 4000,
-              disableOnInteraction: false
-            },
-            slidesPerView: 2,
-            spaceBetween: 30,
-            breakpoints: {
-              0: { slidesPerView: 1 },
-              768: { slidesPerView: 2 }
-            },
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev"
-            },
-            pagination: {
-              el: ".swiper-pagination",
-              clickable: true
-            }
-          });
-        })
-        .catch((err) => {
-          console.error("Failed to fetch testimonials:", err);
-        });
-    }
-
-    window.addEventListener("DOMContentLoaded", loadTestimonialsFromGoogleSheet);
-  </script>
-
-  <!-- Footer validation with submit) -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const emailInput = document.getElementById("newsletter-email");
-      const phoneInput = document.getElementById("newsletter-phone");
-      const feedback = document.getElementById("newsletter-error");
-      const subscribeBtn = document.getElementById("subscribe-btn");
-
-      const originalBtnHTML = subscribeBtn.innerHTML;
-
-      function validateEmail(email) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      }
-
-      function validatePhone(phone) {
-        return /^[6-9]\d{9}$/.test(phone);
-      }
-
-      function showSpinner() {
-        subscribeBtn.innerHTML = `<span class="spinner"></span>`;
-        subscribeBtn.disabled = true;
-      }
-
-      function resetButton() {
-        subscribeBtn.innerHTML = originalBtnHTML;
-        subscribeBtn.disabled = false;
-      }
-
-      async function sendWhatsAppMessage(phone, message) {
-
-        const proxyUrl = getFollowupProxyURL();
-
-        const payload = {
-          phone: phone.startsWith("91") ? phone : "91" + phone,
-          message: message
-        };
-
-        try {
-          await fetch(proxyUrl, {
-            method: "POST",
-            body: JSON.stringify(payload)
-          });
-        } catch (e) {
-          console.error("WhatsApp message failed:", e);
-        }
-      }
-
-      async function submitNewsletter() {
-        const email = emailInput.value.trim();
-        const phone = phoneInput.value.trim();
-
-        feedback.style.color = "#f96fdc";
-        feedback.textContent = "";
-
-        const isEmailValid = validateEmail(email);
-        const isPhoneValid = validatePhone(phone);
-
-        if (!isEmailValid && !isPhoneValid) {
-          feedback.textContent = "⚠️ Please enter a valid email and 10-digit mobile number.";
-          return;
-        } else if (!isEmailValid) {
-          feedback.textContent = "⚠️ Please enter a valid email address.";
-          return;
-        } else if (!isPhoneValid) {
-          feedback.textContent = "⚠️ Please enter a valid 10-digit mobile number.";
-          return;
-        }
-
-        showSpinner();
-        feedback.textContent = "";
-
-        try {
-
-          const sheetURL = getNewsletterSubmitURL();
-
-          const res = await fetch(sheetURL, {
-            method: "POST",
-            body: JSON.stringify({ email, phone })
-          });
-
-          const result = await res.json();
-
-          if (result.status === "success") {
-            feedback.style.color = "#7cf6a5";
-            feedback.textContent = "✅ Subscribed successfully!";
-            emailInput.value = "";
-            phoneInput.value = "";
-            subscribeBtn.innerHTML = "✅ Subscribed";
-
-            // WhatsApp message (optional)
-            await sendWhatsAppMessage(phone, `🎉 Thank you for subscribing to RanSan Groups Deals! We’ll send you exclusive discounts soon.`);
-
-            // Optional: soft refresh after delay
-            setTimeout(() => {
-              resetButton();
-              location.reload(); // remove this if you want no reload
-            }, 2000);
-          } else {
-            throw new Error(result.message || "Unknown error");
-          }
-        } catch (err) {
-          feedback.style.color = "#f96fdc";
-          feedback.textContent = "❌ Submission failed. Try again later.";
-          resetButton();
-        }
-      }
-
-      subscribeBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        submitNewsletter();
-      });
-    });
-  </script>
-
-
-  <script>
-
-
-    async function fetchSaleTimes() {
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Information!A2:B?key=${apiKey}`;
-      try {
-        const res = await fetch(url);
-        const data = await res.json();
-        const rows = data.values;
-
-        let start = null, end = null;
-
-        for (let row of rows) {
-          const key = row[0]?.toLowerCase().trim();
-          const val = row[1];
-          if (key === "sale_start_time") start = new Date(val);
-          if (key === "sale_end_time") end = new Date(val);
-        }
-
-        return { start, end };
-      } catch (err) {
-        console.error("❌ Error fetching timer data", err);
-        return null;
-      }
-    }
-
-    function getColorClass(diff) {
-      if (diff <= 6 * 3600000) return "time-red";
-      if (diff <= 24 * 3600000) return "time-orange";
-      return "time-green";
-    }
-
-    function renderTimer(diff) {
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((diff % (1000 * 60)) / 1000);
-      const cls = getColorClass(diff);
-
-      return `
-      <div class="time-block ${cls}">
-        <div class="time-num">${String(d).padStart(2, '0')}</div>
-        <div class="time-label">D</div>
-      </div>
-      <div class="time-block ${cls}">
-        <div class="time-num">${String(h).padStart(2, '0')}</div>
-        <div class="time-label">H</div>
-      </div>
-      <div class="time-block ${cls}">
-        <div class="time-num">${String(m).padStart(2, '0')}</div>
-        <div class="time-label">M</div>
-      </div>
-      <div class="time-block ${cls}">
-        <div class="time-num">${String(s).padStart(2, '0')}</div>
-        <div class="time-label">S</div>
-      </div>
-    `;
-    }
-
-    async function initMegaSaleCountdown() {
-      const { start, end } = await fetchSaleTimes();
-      if (!start || !end) return;
-
-      const timerEl = document.getElementById("mega-sale-timer");
-      const progressBar = document.getElementById("mega-sale-progress");
-      const cta = document.getElementById("rotating-cta");
-
-      function update() {
-        const now = new Date();
-        const total = end - start;
-        const remaining = end - now;
-        const elapsed = now - start;
-
-        if (remaining <= 0) {
-          timerEl.innerHTML = "<strong>⏰ Offer Ended!</strong>";
-          if (cta) cta.style.display = "none";
-          progressBar.style.width = "100%";
-          progressBar.style.background = "#e74c3c";
-          clearInterval(intervalId);
-          return;
-        }
-
-        timerEl.innerHTML = renderTimer(remaining);
-
-        const percent = Math.min(100, Math.max(0, (elapsed / total) * 100));
-        progressBar.style.width = percent.toFixed(2) + "%";
-
-        // Color sync
-        if (remaining <= 6 * 3600000) progressBar.style.background = "#e74c3c";
-        else if (remaining <= 24 * 3600000) progressBar.style.background = "#f39c12";
-        else progressBar.style.background = "#2ecc71";
-      }
-
-      update();
-      const intervalId = setInterval(update, 1000);
-    }
-
-    window.addEventListener("DOMContentLoaded", initMegaSaleCountdown);
-  </script>
-
-  <script>
-    let invoiceProgressInterval;
-    let invoiceProgress = 0;
-
-    function showInvoiceProcessingOverlay(title = "Processing...", message = "") {
-      document.getElementById("invoice-overlay-title").innerText = title;
-      document.getElementById("invoice-overlay-message").innerText = message;
-      document.getElementById("invoice-overlay").classList.add("show");
-      document.body.style.overflow = "hidden";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
-      invoiceProgress = 0;
-      document.getElementById("invoiceProgressBar").style.width = "0%";
-      document.getElementById("invoiceProgressText").innerText = "0%";
-      document.getElementById("invoiceCheckmark").classList.remove("show");
-    }
-
-    function hideInvoiceProcessingOverlay() {
-      document.getElementById("invoice-overlay").classList.remove("show");
-      document.body.style.overflow = "auto";
-      clearInterval(invoiceProgressInterval);
-    }
-
-    function startInvoiceProcessingProgress() {
-      const bar = document.getElementById("invoiceProgressBar");
-      const text = document.getElementById("invoiceProgressText");
-
-      clearInterval(invoiceProgressInterval);
-      invoiceProgress = 0;
-      bar.style.width = "0%";
-      text.innerText = "0%";
-
-      invoiceProgressInterval = setInterval(() => {
-        if (invoiceProgress >= 96) return; // cap to 96% to allow final bump
-
-        const increment = Math.random() * 3 + 1.5;
-        invoiceProgress = Math.min(invoiceProgress + increment, 96);
-
-        bar.style.width = `${invoiceProgress}%`;
-        text.innerText = `${Math.round(invoiceProgress)}%`;
-      }, 250);
-    }
-
-    function completeInvoiceProcessingProgress() {
-      clearInterval(invoiceProgressInterval);
-
-      const bar = document.getElementById("invoiceProgressBar");
-      const text = document.getElementById("invoiceProgressText");
-      const check = document.getElementById("invoiceCheckmark");
-
-      bar.style.width = "100%";
-      text.innerText = "";
-      check.classList.add("show");
-
-      setTimeout(() => {
-        hideInvoiceProcessingOverlay();
-      }, 3000);
-    }
-
-    function updateInvoiceSteps() {
-      const steps = [
-        { msg: "⏳ Preparing Invoice...", delay: 1500 },
-        { msg: "📤 Sending to WhatsApp & Email...", delay: 2000 },
-        { msg: "🔐 Verifying delivery status...", delay: 1500 }
-      ];
-
-      let index = 0;
-
-      function nextStep() {
-        if (index >= steps.length) return;
-
-        const step = steps[index];
-        document.getElementById("invoice-overlay-message").innerText = step.msg;
-
-        index++;
-        setTimeout(nextStep, step.delay);
-      }
-
-      // Delay start by 300ms to avoid overwrite by immediate message
-      setTimeout(nextStep, 300);
-    }
-
-
-    function launchConfetti() {
-      const canvas = document.getElementById("invoice-confetti-canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const particles = Array.from({ length: 150 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height - canvas.height,
-        size: Math.random() * 8 + 4,
-        color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-        velocity: Math.random() * 3 + 2,
-        angle: Math.random() * Math.PI * 2,
-        spin: Math.random() * 0.2 - 0.1
-      }));
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        for (const p of particles) {
-          p.y += p.velocity;
-          p.angle += p.spin;
-
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.angle);
-          ctx.fillStyle = p.color;
-          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-          ctx.restore();
-
-          if (p.y > canvas.height) p.y = -10;
-        }
-
-        requestAnimationFrame(draw);
-      }
-
-      draw();
-
-      setTimeout(() => {
-        canvas.width = 1;
-        canvas.height = 1;
-      }, 3000); // Auto-stop after 3 seconds
-    }
-  </script>
-
-  <script>
-    // ✅ Returns ISO format with +05:30 offset for saving
-    function getISTTimestampISO() {
-      const now = new Date();
-      const istOffset = 330; // IST is +5:30 in minutes
-      const istTime = new Date(now.getTime() + istOffset * 60000);
-      const iso = istTime.toISOString().slice(0, -1); // Remove trailing Z
-      return `${iso}+05:30`;
-    }
-
-    // ✅ Converts ISO string with +05:30 back to readable format
-    function formatISTDate(isoStr) {
-      const date = new Date(isoStr.replace('+05:30', 'Z')); // Convert back for parsing
-      const options = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-        timeZone: "Asia/Kolkata"
-      };
-      return date.toLocaleString("en-IN", options);
-    }
-  </script>
-
-
-
   <div id="details-modal" class="modal">
     <div class="modal-content">
       <span class="close-button" onclick="closeDetailsModal()">&times;</span>
@@ -2192,35 +1592,17 @@ async function proceedToPay() {
   <script src="assets/estore/flash-ticker.js" defer></script>
 
 
-
-  <!-- Invoice Progress Overlay -->
-
-  <div id="invoice-overlay" class="invoice-overlay">
-    <div class="invoice-overlay-content">
-      <div class="invoice-spinner"></div>
-      <h2 id="invoice-overlay-title">Processing...</h2>
-      <p id="invoice-overlay-message">Please wait...</p>
-      <div class="invoice-progress-bar">
-        <div id="invoiceProgressBar" class="invoice-progress"></div>
-      </div>
-      <div id="invoiceProgressText" class="invoice-progress-text">0%</div>
-      <div id="invoiceCheckmark" class="invoice-checkmark">✅</div>
-    </div>
+  <div id="order-processing-overlay" style="display: none;">
+    <div id="overlay-main-text">✅ Payment Successful</div>
+    <div id="overlay-sub-text">⏳ Generating Invoice & Sending Delivery Details...</div>
   </div>
-  <canvas id="invoice-confetti-canvas"
-    style="position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;"></canvas>
 
 
-  <!-- Back to Top Button -->
-  <button id="backToTop" class="back-to-top" aria-label="Back to Top" data-tooltip="Back to Top">⬆️</button>
+  <button id="backToTop" class="back-to-top">⬆️</button>
 
   <div id="scrollProgress"></div>
 
-  <div id="combo-modal" style="display:none">
-  <input id="user-name" placeholder="Your Name" />
-  <input id="user-phone" placeholder="Phone Number" />
-  <button onclick="submitComboForm()">Proceed to Pay</button>
-</div>
+
 
 
 
