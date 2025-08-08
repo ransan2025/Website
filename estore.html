@@ -839,9 +839,9 @@ async function proceedToPay() {
   startInvoiceProcessingProgress();
 
   const options = {
-    //key: getRazorpayKey(),
+    key: getRazorpayKey(),
     //Test
-    key: "rzp_test_iOdWWEhKlikqRy",
+    //key: "rzp_test_iOdWWEhKlikqRy",
     amount: selectedPrice * 100,
     currency: "INR",
     name: "RanSan eStore",

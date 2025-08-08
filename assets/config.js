@@ -1,7 +1,7 @@
 // config.js
 
 // STEP 1: Choose environment
-const ENV = "test"; // Change to "live" when needed
+const ENV = "live"; // Change to "live" when needed
 
 // STEP 2: Define URLs per environment
 const CONFIG = {
